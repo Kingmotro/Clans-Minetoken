@@ -48,6 +48,9 @@ public class Smelt1 extends Enchantment {
         if (type == Material.LOG) return new ItemStack(Material.COAL, 1, (short) 1);
         if (type == Material.CACTUS) return new ItemStack(Material.INK_SACK, 1, (short) 2);
         if (type == Material.SPONGE && data == (byte) 1) return new ItemStack(Material.SPONGE, 1);
-        return null;
+        if (type == Material.LEAVES) return new ItemStack(Material.DEAD_BUSH, 1);
+        if (type == Material.LEAVES_2) return new ItemStack(Material.DEAD_BUSH, 1);
+        if (type == Material.SMOOTH_BRICK && data == (byte) 1) return new ItemStack(Material.SMOOTH_BRICK, 1);
+        return new ItemStack(block.getType() , 1 , block.getData());
     }
 }
