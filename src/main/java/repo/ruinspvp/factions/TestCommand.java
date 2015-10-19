@@ -25,7 +25,11 @@ public class TestCommand implements CommandExecutor, Listener {
     public boolean onCommand(final CommandSender commandSender, Command command, String s, String[] strings) {
         final Player player = (Player) commandSender;
 
-        missle(player, 30);
+        if(player.hasPermission("ruinspvp.leader")) {
+            missle(player, 30);
+        } else {
+            player.sendMessage("You don't have permission for this.");
+        }
 
         return false;
     }
@@ -53,7 +57,7 @@ public class TestCommand implements CommandExecutor, Listener {
             double t = 0;
 
             public void run() {
-                t = t + 0.01;
+                t = t + 0.5;
                 Location loc = player.getLocation();
                 Vector direction = loc.getDirection().normalize();
                 double x = direction.getX() * t;

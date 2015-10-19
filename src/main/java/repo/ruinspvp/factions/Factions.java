@@ -1,7 +1,10 @@
 package repo.ruinspvp.factions;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import repo.ruinspvp.factions.structure.enchant.EnchantManager;
 import repo.ruinspvp.factions.structure.inventory.MenuManager;
+import repo.ruinspvp.factions.structure.rank.RankManager;
+import repo.ruinspvp.factions.structure.voting.VoteManager;
 
 public class Factions extends JavaPlugin {
 
@@ -14,6 +17,10 @@ public class Factions extends JavaPlugin {
         instance = this;
 
         getCommand("test").setExecutor(new TestCommand(this));
+
+        RankManager rankManager = new RankManager(this);
+        new VoteManager(rankManager, this);
+        new EnchantManager(this);
 
         setupMenus();
     }
@@ -29,6 +36,5 @@ public class Factions extends JavaPlugin {
 
     public void setupMenus() {
         menuManager = new MenuManager(this);
-
     }
 }
