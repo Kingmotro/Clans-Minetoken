@@ -7,11 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Firework;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
+import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -57,7 +53,7 @@ public class TestCommand implements CommandExecutor, Listener {
             double t = 0;
 
             public void run() {
-                t = t + 0.5;
+                t = t + 0.01;
                 Location loc = player.getLocation();
                 Vector direction = loc.getDirection().normalize();
                 double x = direction.getX() * t;
@@ -82,23 +78,25 @@ public class TestCommand implements CommandExecutor, Listener {
                 }
 
                 for (Entity e : loc.getChunk().getEntities()) {
-                    if (e.getLocation().distance(loc) < 3.0) {
-                        if (e != player) {
-                            LivingEntity livingEntity = (LivingEntity) e;
-                            livingEntity.damage(5);
-                            livingEntity.setVelocity(direction.multiply(2).add(new Vector(0, 1, 0)));
-                            FireworkEffect effect = FireworkEffect.builder().trail(false).flicker(false).withColor(Color.WHITE).withFade(Color.YELLOW).with(FireworkEffect.Type.BURST).build();
-                            final Firework fw = loc.getWorld().spawn(loc, Firework.class);
-                            FireworkMeta meta = fw.getFireworkMeta();
-                            meta.addEffect(effect);
-                            meta.setPower(0);
-                            fw.setFireworkMeta(meta);
-                            new BukkitRunnable() {
-                                public void run() {
-                                    fw.detonate();
-                                }
-                            }.runTaskLater(factions, 2);
-                            this.cancel();
+                    if(e instanceof Player || e instanceof Monster) {
+                        if (e.getLocation().distance(loc) < 3.0) {
+                            if (e != player) {
+                                LivingEntity livingEntity = (LivingEntity) e;
+                                livingEntity.damage(5);
+                                livingEntity.setVelocity(direction.multiply(2).add(new Vector(0, 1, 0)));
+                                FireworkEffect effect = FireworkEffect.builder().trail(false).flicker(false).withColor(Color.WHITE).withFade(Color.YELLOW).with(FireworkEffect.Type.BURST).build();
+                                final Firework fw = loc.getWorld().spawn(loc, Firework.class);
+                                FireworkMeta meta = fw.getFireworkMeta();
+                                meta.addEffect(effect);
+                                meta.setPower(0);
+                                fw.setFireworkMeta(meta);
+                                new BukkitRunnable() {
+                                    public void run() {
+                                        fw.detonate();
+                                    }
+                                }.runTaskLater(factions, 2);
+                                this.cancel();
+                            }
                         }
                     }
                 }
