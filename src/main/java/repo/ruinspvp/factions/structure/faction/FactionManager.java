@@ -1,4 +1,14 @@
 package repo.ruinspvp.factions.structure.faction;
 
-public class FactionManager {
+import org.bukkit.plugin.java.JavaPlugin;
+import repo.ruinspvp.factions.structure.database.Database;
+
+public class FactionManager extends Database {
+
+    JavaPlugin plugin;
+
+    public FactionManager(JavaPlugin plugin) {
+        super("root", "ThePyxel", "", "3306", "localhost");
+        this.plugin = plugin;
+    }
 }
