@@ -5,13 +5,13 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import repo.ruinspvp.factions.structure.enchant.EnchantManager;
-import repo.ruinspvp.factions.structure.enchant.enchantments.Repair1;
+import repo.ruinspvp.factions.structure.enchant.enchantments.Repair2;
 
-public class Repair1Runnable implements Runnable {
+public class Repair2Runnable implements Runnable {
 
     EnchantManager enchantManager;
 
-    public Repair1Runnable(EnchantManager enchantManager) {
+    public Repair2Runnable(EnchantManager enchantManager) {
         this.enchantManager = enchantManager;
         enchantManager.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(enchantManager.plugin, this, 20, 20);
     }
@@ -24,9 +24,9 @@ public class Repair1Runnable implements Runnable {
 
                 if (!itemStacks.getItemMeta().hasLore()) continue;
 
-                if (enchantManager.hasEnchant(new Repair1(enchantManager), itemStacks)) {
+                if (enchantManager.hasEnchant(new Repair2(enchantManager), itemStacks)) {
                     if (itemStacks.getDurability() > 0) {
-                        if (enchantManager.percentChance(20.0) == true) {
+                        if (enchantManager.percentChance(40.0) == true) {
                             itemStacks.setDurability((short) (itemStacks.getDurability() - 1));
                         }
                     }

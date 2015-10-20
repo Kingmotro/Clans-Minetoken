@@ -7,15 +7,14 @@ import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
-import repo.ruinspvp.factions.structure.enchant.enchantments.Repair1;
-import repo.ruinspvp.factions.structure.enchant.enchantments.Smelt1;
+import repo.ruinspvp.factions.structure.enchant.enchantments.*;
 import repo.ruinspvp.factions.structure.enchant.enchantments.runnables.Repair1Runnable;
+import repo.ruinspvp.factions.structure.enchant.enchantments.runnables.Repair2Runnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-
 
 public class EnchantManager implements Listener {
 
@@ -26,13 +25,17 @@ public class EnchantManager implements Listener {
         this.plugin = plugin;
 
         enchantments.put("Repair 1", new Repair1(this));
+        enchantments.put("Repair 2", new Repair2(this));
         enchantments.put("Smelt 1", new Smelt1(this));
+        enchantments.put("Smelt 2", new Smelt2(this));
+        enchantments.put("Smelt 3", new Smelt3(this));
 
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         for (Enchantment enchantment : enchantments.values()) {
             plugin.getServer().getPluginManager().registerEvents(enchantment, plugin);
         }
         new Repair1Runnable(this);
+        new Repair2Runnable(this);
     }
 
     @EventHandler
@@ -67,8 +70,9 @@ public class EnchantManager implements Listener {
             for (int i = 0; i < newLore.size(); i++) {
                 if (newLore.get(i).contains(ChatColor.GRAY + enchantment.getName())) {
                     String[] lore = newLore.get(i).split(" ");
-                    System.out.println(lore[0]);
-                    System.out.println(lore[1]);
+                    if (enchantment.getLevel() > romanToNumber(lore[1])) {
+                        newLore.remove(i);
+                    }
                 }
             }
         }

@@ -7,10 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-/**
- * Created by sebas on 10/19/2015.
- */
-public class teleportcmd implements CommandExecutor {
+public class TeleportManager implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command c, String s, String[] args) {
         Player player = (Player) sender;
