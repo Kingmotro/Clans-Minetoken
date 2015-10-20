@@ -10,8 +10,7 @@ public class RankChangeEvent extends Event{
 	private static final HandlerList handlers = new HandlerList();
 	private Player player;
 	private Ranks ranks;
-	
-	
+
 	public RankChangeEvent(Player player, Ranks rank) {
 		this.player = player;
 		this.ranks = rank;
