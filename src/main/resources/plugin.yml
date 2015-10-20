@@ -5,3 +5,5 @@ commands:
     test:
     money:
     rank:
+    setrank:
+    givemoney:

@@ -11,9 +11,9 @@ import java.util.UUID;
 
 public class ApplyCommand implements SubCommand {
 
-    public RankComand rankComand;
+    public RankCommand rankComand;
 
-    public ApplyCommand(RankComand rankComand) {
+    public ApplyCommand(RankCommand rankComand) {
         this.rankComand = rankComand;
     }
 

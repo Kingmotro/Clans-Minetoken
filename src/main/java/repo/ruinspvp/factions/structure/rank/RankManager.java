@@ -14,7 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import repo.ruinspvp.factions.structure.database.Database;
 import repo.ruinspvp.factions.structure.rank.calls.FPlayer;
 import repo.ruinspvp.factions.structure.rank.calls.FRank;
-import repo.ruinspvp.factions.structure.rank.commands.RankComand;
+import repo.ruinspvp.factions.structure.rank.commands.RankCommand;
 import repo.ruinspvp.factions.structure.rank.enums.Ranks;
 import repo.ruinspvp.factions.structure.rank.enums.Result;
 import repo.ruinspvp.factions.structure.rank.events.RankChangeEvent;
@@ -72,7 +72,7 @@ public class RankManager extends Database implements Listener {
 
         this.playerPermission = new HashMap<>();
 
-        plugin.getCommand("rank").setExecutor(new RankComand(plugin, this));
+        plugin.getCommand("rank").setExecutor(new RankCommand(plugin, this));
 
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }

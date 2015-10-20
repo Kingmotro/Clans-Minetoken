@@ -6,11 +6,11 @@ import repo.ruinspvp.factions.structure.command.CommandManager;
 import repo.ruinspvp.factions.structure.rank.RankManager;
 import repo.ruinspvp.factions.utilities.Format;
 
-public class RankComand extends CommandManager {
+public class RankCommand extends CommandManager {
 
     public RankManager rankManager;
 
-    public RankComand(JavaPlugin plugin, RankManager rankManager) {
+    public RankCommand(JavaPlugin plugin, RankManager rankManager) {
         super(plugin, "Rank", "ruinspvp.admin");
         this.rankManager = rankManager;
 
