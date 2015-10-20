@@ -14,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import repo.ruinspvp.factions.structure.database.Database;
 import repo.ruinspvp.factions.structure.rank.calls.FPlayer;
 import repo.ruinspvp.factions.structure.rank.calls.FRank;
+import repo.ruinspvp.factions.structure.rank.commands.RankComand;
 import repo.ruinspvp.factions.structure.rank.enums.Ranks;
 import repo.ruinspvp.factions.structure.rank.enums.Result;
 import repo.ruinspvp.factions.structure.rank.events.RankChangeEvent;
@@ -70,6 +71,8 @@ public class RankManager extends Database implements Listener {
         this.plugin = plugin;
 
         this.playerPermission = new HashMap<>();
+
+        plugin.getCommand("rank").setExecutor(new RankComand(plugin, this));
 
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -170,17 +173,19 @@ public class RankManager extends Database implements Listener {
 
     @EventHandler
     public void onRankChange(RankChangeEvent event) {
-        if (event.getPlayer().isOnline() == true) {
-            Ranks rank = event.getRank();
-            String name = event.getPlayer().getName();
-            String prefix;
-            if (rank.getPermLevel() > Ranks.DEFAULT.getPermLevel()) {
-                prefix = rank.getTag(true, false) + " " + ChatColor.YELLOW + name;
-            } else {
-                prefix = ChatColor.YELLOW + name;
+        try {
+            if (event.getPlayer().isOnline() == true) {
+                Ranks rank = event.getRank();
+                String name = event.getPlayer().getName();
+                String prefix;
+                if (rank.getPermLevel() > Ranks.DEFAULT.getPermLevel()) {
+                    prefix = rank.getTag(true, false) + " " + ChatColor.YELLOW + name;
+                } else {
+                    prefix = ChatColor.YELLOW + name;
+                }
+                event.getPlayer().setDisplayName(prefix);
             }
-            event.getPlayer().setDisplayName(prefix);
-        }
+        } catch (Exception ignore) {}
     }
 
     @EventHandler

@@ -64,5 +64,4 @@ public class EconomyManager extends Database implements Listener {
             }
         }
     }
-
 }

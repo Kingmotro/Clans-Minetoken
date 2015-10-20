@@ -33,7 +33,6 @@ public class FPlayer extends DatabaseCall<RankManager> {
         }
     }
 
-    @Deprecated
     public UUID getUUID(String name) {
         plugin.checkConnection();
         try {

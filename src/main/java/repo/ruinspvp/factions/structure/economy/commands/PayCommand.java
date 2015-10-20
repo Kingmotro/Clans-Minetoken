@@ -20,6 +20,10 @@ public class PayCommand implements SubCommand {
     public boolean onCommand(Player player, String[] args) {
         if (args.length > 1) {
             String name = args[0];
+            if(name.equalsIgnoreCase(player.getName())) {
+                player.sendMessage(Format.main("Error", "You can't pay your self."));
+                return true;
+            }
             if (economyCommand.economyManager.fPlayer.checkExists(economyCommand.economyManager.fPlayer.getUUID(name)) == Result.TRUE) {
                 if (isInt(args[1])) {
                     int amount = Integer.parseInt(args[1]);
@@ -33,8 +37,7 @@ public class PayCommand implements SubCommand {
                                 if (Bukkit.getPlayer(uuid).isOnline()) {
                                     Bukkit.getPlayer(uuid).sendMessage(Format.main("Money", player.getName() + " has payed you $" + amount + " bucks."));
                                 }
-                            } catch (Exception e) {
-                            }
+                            } catch (Exception ignore) {}
                         } else {
                             player.sendMessage(Format.main("Error", "Insufficient funds."));
                         }
@@ -52,7 +55,7 @@ public class PayCommand implements SubCommand {
     }
 
     @Override
-    public String help(Player p) {
+    public String help(Player player) {
         return Format.help("/money pay {player} {amount}");
     }
 

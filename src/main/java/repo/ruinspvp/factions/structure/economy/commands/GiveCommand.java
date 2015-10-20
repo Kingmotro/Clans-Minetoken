@@ -20,6 +20,10 @@ public class GiveCommand implements SubCommand {
     public boolean onCommand(Player player, String[] args) {
         if (args.length > 1) {
             String name = args[0];
+            if(name.equalsIgnoreCase(player.getName())) {
+                player.sendMessage(Format.main("Error", "You can't give your self money."));
+                return true;
+            }
             if (economyCommand.economyManager.fPlayer.checkExists(economyCommand.economyManager.fPlayer.getUUID(name)) == Result.TRUE) {
                 if (isInt(args[1])) {
                     int amount = Integer.parseInt(args[1]);
@@ -29,10 +33,9 @@ public class GiveCommand implements SubCommand {
                         player.sendMessage(Format.main("Money", "You gave " + name + ", $" + amount + " bucks."));
                         try {
                             if (Bukkit.getPlayer(uuid).isOnline()) {
-                                Bukkit.getPlayer(uuid).sendMessage(Format.main("Money", player.getName() + " has given you $" + amount + " bucks."));
+                                Bukkit.getPlayer(uuid).sendMessage(Format.main("Money", " You have been given $" + amount + " bucks."));
                             }
-                        } catch (Exception e) {
-                        }
+                        } catch (Exception ignore) {}
                     } else {
                         player.sendMessage(Format.main("Error", "Sorry your amount isn't valid, try putting numbers between 0 and 5000."));
                     }
@@ -47,7 +50,7 @@ public class GiveCommand implements SubCommand {
     }
 
     @Override
-    public String help(Player p) {
+    public String help(Player player) {
         return Format.help("/money give {player} {amount}");
     }
 

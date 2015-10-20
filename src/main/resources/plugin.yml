@@ -4,3 +4,4 @@ main: repo.ruinspvp.factions.Factions
 commands:
     test:
     money:
+    rank:
