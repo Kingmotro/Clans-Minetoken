@@ -33,7 +33,7 @@ public abstract class CommandManager implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-        if (commandSender instanceof Player) {
+        if (!(commandSender instanceof Player)) {
             Bukkit.getServer().getConsoleSender().sendMessage(Format.main("Error", "Only players can use this command."));
             return true;
         }
