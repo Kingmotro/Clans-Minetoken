@@ -4,7 +4,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import repo.ruinspvp.factions.structure.economy.EconomyManager;
-import repo.ruinspvp.factions.structure.rank.enums.Ranks;
 import repo.ruinspvp.factions.structure.rank.enums.Result;
 import repo.ruinspvp.factions.utilities.Format;
 
@@ -42,7 +41,7 @@ public class MoneyCommand implements CommandExecutor {
 
     public void help(CommandSender commandSender) {
         commandSender.sendMessage(Format.main("Money", "Commands:"));
-        commandSender.sendMessage(Format.help("/givemoney {player} amount"));
+        commandSender.sendMessage(Format.help("/givemoney {player} {amount}"));
     }
 
     public boolean isInt(String i) {
