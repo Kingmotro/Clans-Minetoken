@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import repo.ruinspvp.factions.structure.database.Database;
 import repo.ruinspvp.factions.structure.economy.calls.FEco;
 import repo.ruinspvp.factions.structure.economy.calls.FPlayer;
+import repo.ruinspvp.factions.structure.economy.commands.EconomyCommand;
 import repo.ruinspvp.factions.structure.rank.enums.Result;
 
 import java.sql.Connection;
@@ -39,6 +40,8 @@ public class EconomyManager extends Database implements Listener {
         this.fPlayer = new FPlayer(this);
         this.fEco = new FEco(this);
         this.plugin = plugin;
+
+        plugin.getCommand("money").setExecutor(new EconomyCommand(plugin, this));
 
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }

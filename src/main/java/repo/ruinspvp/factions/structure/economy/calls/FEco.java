@@ -70,13 +70,28 @@ public class FEco extends DatabaseCall<EconomyManager> {
         }
     }
 
-
     public Result addMoney(UUID uuid, int amount) {
         plugin.checkConnection();
         PreparedStatement ps;
         try {
             ps = plugin.connection.prepareStatement("UPDATE `eco` SET money = ? WHERE uuid = ?");
             ps.setInt(1, getMoney(uuid) + amount);
+            ps.setString(2, uuid.toString());
+            ps.executeUpdate();
+            Bukkit.getPluginManager().callEvent(new MoneyChangeEvent(Bukkit.getPlayer(uuid), amount));
+            return Result.SUCCESS;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Result.ERROR;
+        }
+    }
+
+    public Result removeMoney(UUID uuid, int amount) {
+        plugin.checkConnection();
+        PreparedStatement ps;
+        try {
+            ps = plugin.connection.prepareStatement("UPDATE `eco` SET money = ? WHERE uuid = ?");
+            ps.setInt(1, getMoney(uuid) - amount);
             ps.setString(2, uuid.toString());
             ps.executeUpdate();
             Bukkit.getPluginManager().callEvent(new MoneyChangeEvent(Bukkit.getPlayer(uuid), amount));

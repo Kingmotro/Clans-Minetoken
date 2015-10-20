@@ -34,7 +34,6 @@ public class FPlayer extends DatabaseCall<EconomyManager> {
         }
     }
 
-    @Deprecated
     public UUID getUUID(String name) {
         plugin.checkConnection();
         try {
