@@ -11,8 +11,9 @@ public class EconomyCommand extends CommandManager {
     public EconomyManager economyManager;
 
     public EconomyCommand(JavaPlugin plugin, EconomyManager economyManager) {
-        super(plugin, "Money");
+        super(plugin, "Money", "ruinspvp.default");
         this.economyManager = economyManager;
+
         addCommand("pay", new PayCommand(this));
         addCommand("give", new GiveCommand(this));
     }
