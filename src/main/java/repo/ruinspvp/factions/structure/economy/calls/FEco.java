@@ -17,7 +17,7 @@ public class FEco extends DatabaseCall<EconomyManager> {
         super(plugin);
     }
 
-    public int getJewels(UUID uuid) {
+    public int getMoney(UUID uuid) {
         plugin.checkConnection();
         try {
             PreparedStatement ps = plugin.connection.prepareStatement("SELECT money FROM eco WHERE uuid = ?");
@@ -34,9 +34,9 @@ public class FEco extends DatabaseCall<EconomyManager> {
         }
     }
 
-    public Result updateJewels(UUID uuid, int amount) {
+    public Result updateMoney(UUID uuid, int amount) {
         int currentPoints = -1;
-        currentPoints = getJewels(uuid);
+        currentPoints = getMoney(uuid);
         if (currentPoints == -1) {
             return Result.ERROR;
         }
@@ -54,7 +54,7 @@ public class FEco extends DatabaseCall<EconomyManager> {
         }
     }
 
-    public Result setJewels(UUID uuid, int amount) {
+    public Result setMoney(UUID uuid, int amount) {
         plugin.checkConnection();
         PreparedStatement ps;
         try {
@@ -68,6 +68,22 @@ public class FEco extends DatabaseCall<EconomyManager> {
             e.printStackTrace();
             return Result.ERROR;
         }
+    }
 
+
+    public Result addMoney(UUID uuid, int amount) {
+        plugin.checkConnection();
+        PreparedStatement ps;
+        try {
+            ps = plugin.connection.prepareStatement("UPDATE `eco` SET money = ? WHERE uuid = ?");
+            ps.setInt(1, getMoney(uuid) + amount);
+            ps.setString(2, uuid.toString());
+            ps.executeUpdate();
+            Bukkit.getPluginManager().callEvent(new MoneyChangeEvent(Bukkit.getPlayer(uuid), amount));
+            return Result.SUCCESS;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Result.ERROR;
+        }
     }
 }

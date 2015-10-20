@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import repo.ruinspvp.factions.structure.database.Database;
+import repo.ruinspvp.factions.structure.economy.EconomyManager;
 import repo.ruinspvp.factions.structure.rank.RankManager;
 import repo.ruinspvp.factions.structure.rank.enums.Result;
 import repo.ruinspvp.factions.structure.voting.calls.FVote;
@@ -27,8 +28,9 @@ public class VoteManager extends Database implements Listener {
     public Connection connection;
     public FVote vote;
     public RankManager rankManager;
+    public EconomyManager economyManager;
 
-    public VoteManager(RankManager rankManager, JavaPlugin plugin) {
+    public VoteManager(JavaPlugin plugin, RankManager rankManager, EconomyManager economyManager) {
         super("root", "ThePyxel", "", "3306", "localhost");
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         connection = openConnection();
@@ -42,6 +44,7 @@ public class VoteManager extends Database implements Listener {
         }
 
         this.rankManager = rankManager;
+        this.economyManager = economyManager;
 
         vote = new FVote(this);
     }
@@ -62,21 +65,24 @@ public class VoteManager extends Database implements Listener {
         if(vote.checkExists(uuid) == Result.FALSE) {
             if(rankManager.fPlayer.checkExists(uuid) == Result.FALSE) {
                 Bukkit.getServer().broadcastMessage(Format.main("Vote", Format.highlight(player.getName()) + " just voted but isn't registered on our client system."));
-                Bukkit.getServer().broadcastMessage(Format.main("Vote", "If you see this message contact a Admin/Owner or post a forum thread."));
+                Bukkit.getServer().broadcastMessage(Format.main("Vote", "If you see this message contact a Leader/Admin or post a forum thread."));
                 return;
             } else {
                 //TODO: Reward Player
+                economyManager.fEco.addMoney(player.getUniqueId(), 1000);
                 return;
             }
         } else {
             if(rankManager.fPlayer.checkExists(uuid) == Result.FALSE) {
                 Bukkit.getServer().broadcastMessage(Format.main("Vote", Format.highlight(player.getName()) + " just voted but isn't registered on our client system."));
-                Bukkit.getServer().broadcastMessage(Format.main("Vote", "If you see this message contact a Admin/Owner or post a forum thread."));
+                Bukkit.getServer().broadcastMessage(Format.main("Vote", "If you see this message contact a Leader/Admin or post a forum thread."));
                 return;
             } else {
                 Bukkit.getServer().broadcastMessage(Format.main("Vote", Format.highlight(player.getName()) + " just voted for RuinsPvP on " + Format.highlight(event.getVote().getServiceName())));
                 //TODO: Reward Player
                 vote.setVotes(uuid, vote.getVotes(uuid) + 1);
+                economyManager.fEco.addMoney(player.getUniqueId(), 1000);
+                player.sendMessage(Format.main("Vote", "You have received $1000 dollars, for voting be sure to vote once a day on all the sites."));
                 return;
             }
         }
