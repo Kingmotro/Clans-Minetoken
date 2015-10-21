@@ -2,12 +2,18 @@ package repo.ruinspvp.factions.structure.faction;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import repo.ruinspvp.factions.structure.database.Database;
 import repo.ruinspvp.factions.structure.faction.command.FactionCommand;
 import repo.ruinspvp.factions.structure.faction.factionCalls.FFaction;
 import repo.ruinspvp.factions.structure.faction.playerCalls.FPlayer;
+import repo.ruinspvp.factions.structure.rank.RankManager;
+import repo.ruinspvp.factions.structure.rank.enums.Ranks;
+import repo.ruinspvp.factions.structure.rank.enums.Result;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

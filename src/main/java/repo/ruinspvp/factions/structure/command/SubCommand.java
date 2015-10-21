@@ -6,7 +6,7 @@ public interface SubCommand {
 
     boolean onCommand(Player player, String[] args);
 
-    String help(Player player);
+    String help();
 
     String permission();
 

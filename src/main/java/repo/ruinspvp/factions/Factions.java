@@ -21,12 +21,12 @@ public class Factions extends JavaPlugin {
 
         getCommand("test").setExecutor(new TestCommand(this));
 
-        RankManager rankManager = new RankManager(this);
+        FactionManager factionManager = new FactionManager(this);
+        RankManager rankManager = new RankManager(this, factionManager);
         EconomyManager economyManager = new EconomyManager(this);
         new VoteManager(this, rankManager, economyManager);
         new EnchantManager(this);
         new ConsoleManager(this, rankManager, economyManager);
-        new FactionManager(this);
 
         setupMenus();
     }

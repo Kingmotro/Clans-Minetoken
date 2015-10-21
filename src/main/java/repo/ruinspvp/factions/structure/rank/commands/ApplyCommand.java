@@ -47,13 +47,13 @@ public class ApplyCommand implements SubCommand {
                 }
             }
         } else {
-            help(player);
+            player.sendMessage(help());
         }
         return false;
     }
 
     @Override
-    public String help(Player player) {
+    public String help() {
         return Format.help("/rank apply {player} {rank}");
     }
 

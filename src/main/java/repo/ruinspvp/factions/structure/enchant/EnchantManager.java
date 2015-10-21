@@ -50,7 +50,9 @@ public class EnchantManager implements Listener {
                         if (levelCost > enchantment.getLevelRequirement()) {
                             if (percentChance(enchantment.getChance()) == true) {
                                 if (hasEnchant(enchantment, itemStack) == false) {
-                                    addEnchantment(enchantment, itemStack);
+                                    if(event.getEnchanter().hasPermission(enchantment.getPermission())) {
+                                        addEnchantment(enchantment, itemStack);
+                                    }
                                 }
                             }
                         }

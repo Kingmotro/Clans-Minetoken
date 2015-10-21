@@ -2,18 +2,20 @@ package repo.ruinspvp.factions.structure.faction.enums;
 
 public enum FactionRanks {
 
-    FOUNDER("Founder", 50),
-    LEADER("Leader", 40),
-    ADMIN("Admin", 30),
-    MOD("Mod", 20),
-    PLEB("Pleb", 10);
+    FOUNDER("Founder", 50, "F"),
+    LEADER("Leader", 40, "L"),
+    ADMIN("Admin", 30, "A"),
+    MOD("Mod", 20, "M"),
+    PLEB("Pleb", 10, "P");
 
     public String name;
     private int permLevel;
+    public String abv;
 
-    FactionRanks(String name, int permLevel) {
+    FactionRanks(String name, int permLevel, String abv) {
         this.name = name;
         this.permLevel = permLevel;
+        this.abv = abv;
     }
 
     public String getName() {
@@ -22,5 +24,9 @@ public enum FactionRanks {
 
     public int getPermLevel() {
         return permLevel;
+    }
+
+    public String getAbv() {
+        return abv;
     }
 }

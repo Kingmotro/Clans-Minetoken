@@ -25,7 +25,7 @@ public class TestCommand implements CommandExecutor, Listener {
     public boolean onCommand(final CommandSender commandSender, Command command, String s, String[] strings) {
         final Player player = (Player) commandSender;
 
-        if(player.hasPermission("ruinspvp.leader")) {
+        if(player.hasPermission("ruinspvp.pioneer")) {
             missle(player, 30);
         } else {
             player.sendMessage("You don't have permission for this.");

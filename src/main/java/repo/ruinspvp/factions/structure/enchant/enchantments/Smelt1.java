@@ -12,7 +12,8 @@ import repo.ruinspvp.factions.structure.enchant.Enchantment;
 public class Smelt1 extends Enchantment {
 
     public Smelt1(EnchantManager enchantManager) {
-        super(enchantManager, "Smelt", 1, enchantManager.plugin, new String[]{"PICKAXE", "SHOVEL", "AXE"}, 15.0, 25);
+        super(enchantManager, "Smelt", 1, enchantManager.plugin,
+                new String[]{"PICKAXE", "SHOVEL", "AXE"}, 15.0, 25, "ruinspvp.default");
     }
 
     @EventHandler

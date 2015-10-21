@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.java.JavaPlugin;
 import repo.ruinspvp.factions.structure.database.Database;
+import repo.ruinspvp.factions.structure.faction.FactionManager;
 import repo.ruinspvp.factions.structure.rank.calls.FPlayer;
 import repo.ruinspvp.factions.structure.rank.calls.FRank;
 import repo.ruinspvp.factions.structure.rank.commands.RankCommand;
@@ -34,27 +35,29 @@ public class RankManager extends Database implements Listener {
     public FRank fRank;
     public JavaPlugin plugin;
 
+    public FactionManager factionManager;
+
     public HashMap<UUID, PermissionAttachment> playerPermission;
 
     /**
      * Player Ranks
      */
     String[] Default = {"ruinspvp.default"};
-    String[] Pioneer = {"ruinspvp.default", "ruinspvp.pioneer"};
-    String[] Hunter = {"ruinspvp.default", "ruinspvp.pioneer", "ruinspvp.hunter"};
-    String[] Excavator = {"ruinspvp.default", "ruinspvp.pioneer", "ruinspvp.hunter", "ruinspvp.excavator"};
-    String[] Lost = {"ruinspvp.default", "ruinspvp.pioneer", "ruinspvp.hunter", "ruinspvp.excavator", "ruinspvp.lost"};
-    String[] Forgotten = {"ruinspvp.default", "ruinspvp.pioneer", "ruinspvp.hunter", "ruinspvp.excavator", "ruinspvp.lost", "ruinspvp.forgotten"};
-    String[] Youtube = {"ruinspvp.default", "ruinspvp.pioneer", "ruinspvp.hunter", "ruinspvp.excavator", "ruinspvp.lost", "ruinspvp.forgotten", "ruinspvp.youtube"};
+    String[] Pioneer = {"ruinspvp.pioneer", "ruinspvp.repair2"};
+    String[] Hunter = {"ruinspvp.hunter", "ruinspvp.repair2", "ruinspvp.smelt2"};
+    String[] Excavator = {"ruinspvp.excavator", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
+    String[] Lost = {"ruinspvp.lost", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
+    String[] Forgotten = {"ruinspvp.forgotten", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
+    String[] Youtube = {"ruinspvp.youtube", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
     /**
      * Staff Ranks
      */
-    String[] Assistant = {"ruinspvp.default", "ruinspvp.pioneer", "ruinspvp.hunter", "ruinspvp.excavator", "ruinspvp.lost", "ruinspvp.forgotten", "ruinspvp.youtube", "ruinspvp.assistant"};
-    String[] MOD = {"ruinspvp.default", "ruinspvp.pioneer", "ruinspvp.hunter", "ruinspvp.excavator", "ruinspvp.lost", "ruinspvp.forgotten", "ruinspvp.youtube", "ruinspvp.assistant", "ruinspvp.mod"};
-    String[] Admin = {"ruinspvp.default", "ruinspvp.pioneer", "ruinspvp.hunter", "ruinspvp.excavator", "ruinspvp.lost", "ruinspvp.forgotten", "ruinspvp.youtube", "ruinspvp.assistant", "ruinspvp.mod", "ruinspvp.admin"};
-    String[] Leader = {"ruinspvp.default", "ruinspvp.pioneer", "ruinspvp.hunter", "ruinspvp.excavator", "ruinspvp.lost", "ruinspvp.forgotten", "ruinspvp.youtube", "ruinspvp.assistant", "ruinspvp.mod", "ruinspvp.admin", "ruinspvp.leader", "*.*"};
+    String[] Assistant = {"ruinspvp.assistant", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
+    String[] MOD = {"ruinspvp.mod", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
+    String[] Admin = {"ruinspvp.admin", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
+    String[] Leader = {"ruinspvp.leader", "*.*"};
 
-    public RankManager(JavaPlugin plugin) {
+    public RankManager(JavaPlugin plugin, FactionManager factionManager) {
         super("root", "ThePyxel", "", "3306", "localhost");
         connection = openConnection();
         try {
@@ -69,6 +72,7 @@ public class RankManager extends Database implements Listener {
         this.fPlayer = new FPlayer(this);
         this.fRank = new FRank(this);
         this.plugin = plugin;
+        this.factionManager = factionManager;
 
         this.playerPermission = new HashMap<>();
 
@@ -91,9 +95,20 @@ public class RankManager extends Database implements Listener {
         Ranks rank = fRank.getRank(player.getUniqueId());
         event.setJoinMessage(Format.main("Join", player.getName()));
         if (fRank.getRank(player.getUniqueId()) == Ranks.DEFAULT) {
-            player.setDisplayName(player.getName());
+            if(factionManager.fPlayer.hasFaction(player.getUniqueId()) == Result.TRUE) {
+                player.setDisplayName(ChatColor.YELLOW + factionManager.fPlayer.getFaction(player.getUniqueId())
+                        + ChatColor.RED + "[" + factionManager.fPlayer.getFRank(player.getUniqueId()).getAbv() + "]" + player.getName());
+            } else {
+                player.setDisplayName(player.getName());
+            }
         } else {
-            player.setDisplayName(rank.getTag(true, true) + ChatColor.RESET + " " + player.getName());
+            if(factionManager.fPlayer.hasFaction(player.getUniqueId()) == Result.TRUE) {
+                player.setDisplayName(ChatColor.YELLOW + factionManager.fPlayer.getFaction(player.getUniqueId())
+                        + ChatColor.RED + "[" + factionManager.fPlayer.getFRank(player.getUniqueId()).getAbv() + "]"
+                        + rank.getTag(true, true) + ChatColor.RESET + " " + player.getName());
+            } else {
+                player.setDisplayName(rank.getTag(true, true) + ChatColor.RESET + " " + player.getName());
+            }
         }
         if (fPlayer.checkExists(player.getUniqueId()) == Result.FALSE) {
             try {
@@ -113,57 +128,57 @@ public class RankManager extends Database implements Listener {
 
         switch (rank) {
             case DEFAULT:
-                for(String perms : Default) {
+                for(String perms : getDefault()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case PIONEER:
-                for(String perms : Pioneer) {
+                for(String perms : getPioneer()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case HUNTER:
-                for(String perms : Hunter) {
+                for(String perms : getHunter()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case EXCAVATOR:
-                for(String perms : Excavator) {
+                for(String perms : getExcavator()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case LOST:
-                for(String perms : Lost) {
+                for(String perms : getLost()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case FORGOTTEN:
-                for(String perms : Forgotten) {
+                for(String perms : getForgotten()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case YOUTUBE:
-                for(String perms : Youtube) {
+                for(String perms : getYoutube()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case ASSISTANT:
-                for(String perms : Assistant) {
+                for(String perms : getAssistant()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case MOD:
-                for(String perms : MOD) {
+                for(String perms : getMOD()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case ADMIN:
-                for(String perms : Admin) {
+                for(String perms : getAdmin()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case LEADER:
-                for(String perms : Leader) {
+                for(String perms : getLeader()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
@@ -184,6 +199,65 @@ public class RankManager extends Database implements Listener {
                     prefix = ChatColor.YELLOW + name;
                 }
                 event.getPlayer().setDisplayName(prefix);
+                PermissionAttachment permissionAttachment = playerPermission.get(event.getPlayer().getUniqueId());
+
+                switch (rank) {
+                    case DEFAULT:
+                        for(String perms : getDefault()) {
+                            permissionAttachment.setPermission(perms, true);
+                        }
+                        break;
+                    case PIONEER:
+                        for(String perms : getPioneer()) {
+                            permissionAttachment.setPermission(perms, true);
+                        }
+                        break;
+                    case HUNTER:
+                        for(String perms : getHunter()) {
+                            permissionAttachment.setPermission(perms, true);
+                        }
+                        break;
+                    case EXCAVATOR:
+                        for(String perms : getExcavator()) {
+                            permissionAttachment.setPermission(perms, true);
+                        }
+                        break;
+                    case LOST:
+                        for(String perms : getLost()) {
+                            permissionAttachment.setPermission(perms, true);
+                        }
+                        break;
+                    case FORGOTTEN:
+                        for(String perms : getForgotten()) {
+                            permissionAttachment.setPermission(perms, true);
+                        }
+                        break;
+                    case YOUTUBE:
+                        for(String perms : getYoutube()) {
+                            permissionAttachment.setPermission(perms, true);
+                        }
+                        break;
+                    case ASSISTANT:
+                        for(String perms : getAssistant()) {
+                            permissionAttachment.setPermission(perms, true);
+                        }
+                        break;
+                    case MOD:
+                        for(String perms : getMOD()) {
+                            permissionAttachment.setPermission(perms, true);
+                        }
+                        break;
+                    case ADMIN:
+                        for(String perms : getAdmin()) {
+                            permissionAttachment.setPermission(perms, true);
+                        }
+                        break;
+                    case LEADER:
+                        for(String perms : getLeader()) {
+                            permissionAttachment.setPermission(perms, true);
+                        }
+                        break;
+                }
             }
         } catch (Exception ignore) {}
     }
@@ -192,13 +266,19 @@ public class RankManager extends Database implements Listener {
     public void onPlayerChat(AsyncPlayerChatEvent e) throws SQLException {
         Player player = e.getPlayer();
         String rank;
+        String faction;
         if (fRank.getRank(player.getUniqueId()) == Ranks.DEFAULT) {
             rank = ChatColor.DARK_AQUA + player.getName();
         } else {
             Ranks ranks = fRank.getRank(player.getUniqueId());
             rank = ranks.getTag(true, true) + " " + ChatColor.DARK_AQUA + player.getName();
         }
-        e.setFormat(rank + ChatColor.GRAY + ": " + ChatColor.WHITE + e.getMessage());
+        if(factionManager.fPlayer.hasFaction(player.getUniqueId()) == Result.TRUE) {
+            faction = ChatColor.RED + "[" + factionManager.fPlayer.getFRank(player.getUniqueId()).getAbv() + "] " + ChatColor.YELLOW + factionManager.fPlayer.getFaction(player.getUniqueId()) + " ";
+        } else {
+            faction = "";
+        }
+        e.setFormat(faction + rank + ChatColor.GRAY + ": " + ChatColor.WHITE + e.getMessage());
     }
 
     @EventHandler
@@ -212,5 +292,56 @@ public class RankManager extends Database implements Listener {
         } else {
             event.allow();
         }
+    }
+
+    public static String[] combine(String[] arg1, String[] arg2) {
+        String[] result = new String[arg1.length + arg2.length];
+        System.arraycopy(arg1, 0, result, 0, arg1.length);
+        System.arraycopy(arg2, 0, result, arg1.length, arg2.length);
+        return result;
+    }
+
+    public String[] getDefault() {
+        return Default;
+    }
+
+    public String[] getPioneer() {
+        return combine(getDefault(), Pioneer);
+    }
+
+    public String[] getHunter() {
+        return combine(getPioneer(), Hunter);
+    }
+
+    public String[] getExcavator() {
+        return combine(getHunter(), Excavator);
+    }
+
+    public String[] getLost() {
+        return combine(getExcavator(), Lost);
+    }
+
+    public String[] getForgotten() {
+        return combine(getLost(), Forgotten);
+    }
+
+    public String[] getYoutube() {
+        return combine(getForgotten(), Youtube);
+    }
+
+    public String[] getAssistant() {
+        return combine(getYoutube(), Assistant);
+    }
+
+    public String[] getMOD() {
+        return combine(getAssistant(), MOD);
+    }
+
+    public String[] getAdmin() {
+        return combine(getMOD(), Admin);
+    }
+
+    public String[] getLeader() {
+        return combine(getAdmin(), Leader);
     }
 }

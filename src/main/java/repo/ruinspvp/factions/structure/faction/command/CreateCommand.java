@@ -19,8 +19,12 @@ public class CreateCommand implements SubCommand {
             String name = args[0];
             if (factionCommand.factionManager.fPlayer.hasFaction(player.getUniqueId()) == Result.FALSE) {
                 if (factionCommand.factionManager.fFaction.checkExists(name) == Result.FALSE) {
-                    //TODO: Replace "" for ruin that they are in.
-                    factionCommand.factionManager.fFaction.createFaction(name, "", player);
+                    if(name.length() <= 16) {
+                        //TODO: Replace "" for ruin that they are in.
+                        factionCommand.factionManager.fFaction.createFaction(name, "", player);
+                    } else {
+                        player.sendMessage(Format.main("Error", "Sorry that faction name is too long."));
+                    }
                 } else {
                     player.sendMessage(Format.main("Error", "Sorry that faction already exist."));
                 }
@@ -28,13 +32,13 @@ public class CreateCommand implements SubCommand {
                 player.sendMessage(Format.main("Error", "Sorry your already in a faction."));
             }
         } else {
-            help(player);
+           player.sendMessage(help());
         }
         return false;
     }
 
     @Override
-    public String help(Player player) {
+    public String help() {
         return Format.help("/faction create {name}");
     }
 

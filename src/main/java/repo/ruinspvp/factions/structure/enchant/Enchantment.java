@@ -13,7 +13,9 @@ public abstract class Enchantment implements Listener {
     public double chance;
     public int levelRequirement;
 
-    public Enchantment(EnchantManager enchantManager, String name, int level, JavaPlugin plugin, String[] itemType, double chance, int levelRequirement) {
+    String permission;
+
+    public Enchantment(EnchantManager enchantManager, String name, int level, JavaPlugin plugin, String[] itemType, double chance, int levelRequirement, String permission) {
         this.enchantManager = enchantManager;
         this.name = name;
         this.level = level;
@@ -21,6 +23,7 @@ public abstract class Enchantment implements Listener {
         this.itemType = itemType;
         this.chance = chance;
         this.levelRequirement = levelRequirement;
+        this.permission = permission;
     }
 
     public String getName() {
@@ -45,6 +48,10 @@ public abstract class Enchantment implements Listener {
 
     public int getLevelRequirement() {
         return levelRequirement;
+    }
+
+    public String getPermission() {
+        return permission;
     }
 
     public String getRomanNumber(int level) {

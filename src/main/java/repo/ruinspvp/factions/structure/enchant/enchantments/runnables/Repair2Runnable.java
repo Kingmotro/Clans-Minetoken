@@ -13,7 +13,7 @@ public class Repair2Runnable implements Runnable {
 
     public Repair2Runnable(EnchantManager enchantManager) {
         this.enchantManager = enchantManager;
-        enchantManager.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(enchantManager.plugin, this, 20, 20);
+        enchantManager.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(enchantManager.plugin, this, 0, 40);
     }
 
     public void run() {
