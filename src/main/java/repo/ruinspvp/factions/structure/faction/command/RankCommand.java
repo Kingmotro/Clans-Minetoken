@@ -28,17 +28,22 @@ public class RankCommand implements SubCommand {
                     if(factionManager.fPlayer.getRankFromString(rankName) != null) {
                         FactionRanks rank = factionManager.fPlayer.getRankFromString(rankName);
                         if(factionManager.fPlayer.getFRank(player.getUniqueId()).getPermLevel() >= rank.getPermLevel()) {
-                            if(factionManager.fPlayer.checkExists(factionManager.fPlayer.getUUID(name)) == Result.TRUE) {
-                                player.sendMessage(Format.main("Factions", "You have made " + name + "'s rank " + rank.getName() + "."));
-                                UUID uuid = factionManager.fPlayer.getUUID(name);
-                                factionManager.fPlayer.setFRank(uuid, rank);
-                                try {
+                            if(factionManager.fPlayer.getUUID(name) != null) {
+                                if (factionManager.fPlayer.checkExists(factionManager.fPlayer.getUUID(name)) == Result.TRUE) {
+                                    player.sendMessage(Format.main("Factions", "You have made " + name + "'s rank " + rank.getName() + "."));
+                                    UUID uuid = factionManager.fPlayer.getUUID(name);
+                                    factionManager.fPlayer.setFRank(uuid, rank);
+                                    try {
 
-                                    if(Bukkit.getPlayer(uuid).isOnline()) {
-                                        Player target = Bukkit.getPlayer(uuid);
-                                        target.sendMessage(Format.main("Factions", player.getName() + " has set your rank to " + rank.getName() + "."));
+                                        if (Bukkit.getPlayer(uuid).isOnline()) {
+                                            Player target = Bukkit.getPlayer(uuid);
+                                            target.sendMessage(Format.main("Factions", player.getName() + " has set your rank to " + rank.getName() + "."));
+                                        }
+                                    } catch (Exception ignore) {
                                     }
-                                } catch (Exception ignore) {}
+                                } else {
+                                    player.sendMessage(Format.main("Factions", "According to the database this player doesn't exist, please contact staff."));
+                                }
                             } else {
                                 player.sendMessage(Format.main("Factions", "According to the database this player doesn't exist, please contact staff."));
                             }
