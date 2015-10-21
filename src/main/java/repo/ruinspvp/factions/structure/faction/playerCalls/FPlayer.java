@@ -1,16 +1,18 @@
 package repo.ruinspvp.factions.structure.faction.playerCalls;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import repo.ruinspvp.factions.structure.database.DatabaseCall;
 import repo.ruinspvp.factions.structure.faction.FactionManager;
 import repo.ruinspvp.factions.structure.faction.enums.FactionRanks;
-import repo.ruinspvp.factions.structure.faction.events.FactionRankChangeEvent;
-import repo.ruinspvp.factions.structure.faction.events.PlayerJoinFactionEvent;
+import repo.ruinspvp.factions.structure.faction.events.*;
 import repo.ruinspvp.factions.structure.rank.enums.Result;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class FPlayer extends DatabaseCall<FactionManager> {
@@ -163,7 +165,7 @@ public class FPlayer extends DatabaseCall<FactionManager> {
     public Result updatePlayerName(UUID uuid, String newName) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `eco` SET name=? WHERE uuid=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `fplayer` SET name=? WHERE uuid=?");
             ps.setString(1, newName);
             ps.setString(2, uuid.toString());
             ps.executeUpdate();
@@ -181,5 +183,60 @@ public class FPlayer extends DatabaseCall<FactionManager> {
             }
         }
         return null;
+    }
+
+    public Result leaveFaction(UUID uuid) {
+        plugin.checkConnection();
+        String name = getFaction(uuid);
+        if (checkExists(uuid) == Result.TRUE) {
+            PreparedStatement ps;
+            try {
+                ps = plugin.connection.prepareStatement("DELETE FROM fplayer WHERE uuid=?");
+                ps.setString(1, uuid.toString());
+                ps.executeUpdate();
+                Bukkit.getServer().getPluginManager().callEvent(new PlayerLeaveFactionEvent(Bukkit.getPlayer(uuid), name));
+                return Result.SUCCESS;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return Result.ERROR;
+            }
+        } else {
+            return Result.ERROR;
+        }
+    }
+
+    public Result kickAllPlayerFromFaction(String name) {
+        plugin.checkConnection();
+        PreparedStatement ps;
+        try {
+            ps = plugin.connection.prepareStatement("DELETE FROM fplayer WHERE faction=?");
+            ps.setString(1, name);
+            ps.executeUpdate();
+            return Result.SUCCESS;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Result.ERROR;
+        }
+    }
+
+    List<String> players;
+
+    public List<String> getPlayersInAFaction(String faction) {
+        players = new ArrayList<>();
+        players.clear();
+        plugin.checkConnection();
+        try {
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT * FROM fplayer WHERE faction=?");
+            ps.setString(1, faction);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String s = rs.getString("uuid");
+                players.add(s);
+            }
+            return players;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

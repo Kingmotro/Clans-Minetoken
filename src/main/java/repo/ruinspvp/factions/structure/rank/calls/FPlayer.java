@@ -77,7 +77,6 @@ public class FPlayer extends DatabaseCall<RankManager> {
                 ps.setString(2, name);
                 ps.setString(3, plugin.getCurrentDate());
                 ps.setString(4, Ranks.DEFAULT.getName());
-                ps.setString(5, "");
                 ps.executeUpdate();
                 return Result.SUCCESS;
             } catch (SQLException e) {

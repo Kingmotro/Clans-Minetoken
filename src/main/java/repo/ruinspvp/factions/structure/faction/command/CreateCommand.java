@@ -22,14 +22,15 @@ public class CreateCommand implements SubCommand {
                     if(name.length() <= 16) {
                         //TODO: Replace "" for ruin that they are in.
                         factionCommand.factionManager.fFaction.createFaction(name, "", player);
+                        player.sendMessage(Format.main("Factions", "You have successfully created the faction " + name + "."));
                     } else {
-                        player.sendMessage(Format.main("Error", "Sorry that faction name is too long."));
+                        player.sendMessage(Format.main("Factions", "Sorry that faction name is too long."));
                     }
                 } else {
-                    player.sendMessage(Format.main("Error", "Sorry that faction already exist."));
+                    player.sendMessage(Format.main("Factions", "Sorry that faction already exist."));
                 }
             } else {
-                player.sendMessage(Format.main("Error", "Sorry your already in a faction."));
+                player.sendMessage(Format.main("Factions", "Sorry your already in a faction."));
             }
         } else {
            player.sendMessage(help());

@@ -15,11 +15,18 @@ public class FactionCommand extends CommandManager {
         this.factionManager = factionManager;
 
         addCommand("create", new CreateCommand(this));
+        addCommand("invite", new InviteCommand(factionManager));
+        addCommand("accept", new AcceptCommand(factionManager));
+        addCommand("leave", new LeaveCommand(factionManager));
+        addCommand("delete", new PlayerDeleteCommand(factionManager));
+        addCommand("rank", new RankCommand(factionManager));
     }
 
     @Override
     public void help(Player player) {
-        player.sendMessage(Format.main("Faction", "Commands:"));
+        player.sendMessage(Format.main("Factions", "Commands:"));
         player.sendMessage(Format.help("/faction create {name}"));
+        player.sendMessage(Format.help("/faction invite {player}"));
+        player.sendMessage(Format.help("/faction accept"));
     }
 }

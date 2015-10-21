@@ -6,12 +6,15 @@ import repo.ruinspvp.factions.structure.database.DatabaseCall;
 import repo.ruinspvp.factions.structure.faction.FactionManager;
 import repo.ruinspvp.factions.structure.faction.enums.FactionRanks;
 import repo.ruinspvp.factions.structure.faction.events.FactionCreateEvent;
+import repo.ruinspvp.factions.structure.faction.events.FactionDeleteEvent;
 import repo.ruinspvp.factions.structure.faction.events.FactionRankChangeEvent;
 import repo.ruinspvp.factions.structure.rank.enums.Result;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class FFaction extends DatabaseCall<FactionManager> {
@@ -31,39 +34,6 @@ public class FFaction extends DatabaseCall<FactionManager> {
             } else {
                 return Result.FALSE;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return Result.ERROR;
-        }
-    }
-
-    public FactionRanks getFRank(UUID uuid) {
-        plugin.checkConnection();
-        try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT frank FROM factions WHERE uuid=?");
-            ps.setString(1, uuid.toString());
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                String rank = rs.getString("frank");
-                return getRankFromString(rank);
-            } else {
-                return FactionRanks.PLEB;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return FactionRanks.PLEB;
-        }
-    }
-
-    public Result setFRank(UUID uuid, FactionRanks rank) {
-        plugin.checkConnection();
-        try {
-            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `factions` SET frank=? WHERE uuid=?");
-            ps.setString(1, rank.getName());
-            ps.setString(2, uuid.toString());
-            ps.executeUpdate();
-            Bukkit.getPluginManager().callEvent(new FactionRankChangeEvent(Bukkit.getPlayer(uuid), rank));
-            return Result.SUCCESS;
         } catch (SQLException e) {
             e.printStackTrace();
             return Result.ERROR;
@@ -94,16 +64,21 @@ public class FFaction extends DatabaseCall<FactionManager> {
         }
     }
 
-    public Result updatePlayerName(UUID uuid, String newName) {
+    public Result deleteFaction(String name) {
         plugin.checkConnection();
-        try {
-            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `factions` SET name=? WHERE uuid=?");
-            ps.setString(1, newName);
-            ps.setString(2, uuid.toString());
-            ps.executeUpdate();
-            return Result.SUCCESS;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (checkExists(name) == Result.TRUE) {
+            PreparedStatement ps;
+            try {
+                ps = plugin.connection.prepareStatement("DELETE FROM factions WHERE name=?");
+                ps.setString(1, name);
+                ps.executeUpdate();
+                Bukkit.getServer().getPluginManager().callEvent(new FactionDeleteEvent(name));
+                return Result.SUCCESS;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return Result.ERROR;
+            }
+        } else {
             return Result.ERROR;
         }
     }

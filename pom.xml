@@ -6,7 +6,7 @@
 
     <groupId>repo.ruinspvp</groupId>
     <artifactId>RuinsPvPFactions</artifactId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.7-SNAPSHOT</version>
     <name>Factions</name>
 
     <repositories>

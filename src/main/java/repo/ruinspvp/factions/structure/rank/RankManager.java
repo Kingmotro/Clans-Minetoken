@@ -124,7 +124,17 @@ public class RankManager extends Database implements Listener {
                 e.printStackTrace();
             }
         }
+        if(factionManager.fPlayer.checkExists(player.getUniqueId()) == Result.TRUE) {
+            if (!factionManager.fPlayer.getName(player.getUniqueId()).equalsIgnoreCase(player.getName())) {
+                try {
+                    factionManager.fPlayer.updatePlayerName(player.getUniqueId(), player.getName());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         PermissionAttachment permissionAttachment = player.addAttachment(plugin);
+
 
         switch (rank) {
             case DEFAULT:
