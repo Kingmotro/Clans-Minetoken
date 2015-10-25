@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import repo.ruinspvp.factions.structure.shop.am.Armory;
 
 public class TestCommand implements CommandExecutor, Listener {
 
@@ -24,12 +25,6 @@ public class TestCommand implements CommandExecutor, Listener {
     @Override
     public boolean onCommand(final CommandSender commandSender, Command command, String s, String[] strings) {
         final Player player = (Player) commandSender;
-
-        if(player.hasPermission("ruinspvp.pioneer")) {
-            missle(player, 30);
-        } else {
-            player.sendMessage("You don't have permission for this.");
-        }
 
         return false;
     }

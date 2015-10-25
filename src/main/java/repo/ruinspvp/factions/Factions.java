@@ -1,5 +1,9 @@
 package repo.ruinspvp.factions;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import repo.ruinspvp.factions.structure.console.ConsoleManager;
 import repo.ruinspvp.factions.structure.economy.EconomyManager;
@@ -10,14 +14,13 @@ import repo.ruinspvp.factions.structure.inventory.MenuManager;
 import repo.ruinspvp.factions.structure.npc.NPCManager;
 import repo.ruinspvp.factions.structure.rank.RankManager;
 import repo.ruinspvp.factions.structure.shop.ShopManager;
+import repo.ruinspvp.factions.structure.shop.am.menus.ArmoryMenu;
 import repo.ruinspvp.factions.structure.voting.VoteManager;
 
 public class Factions extends JavaPlugin {
 
     public static JavaPlugin instance;
-
     private static MenuManager menuManager;
-
     public Ruin ruin;
 
     @Override
@@ -31,37 +34,31 @@ public class Factions extends JavaPlugin {
         FactionManager factionManager = new FactionManager(this, ruin);
         RankManager rankManager = new RankManager(this, factionManager, ruin);
         EconomyManager economyManager = new EconomyManager(this, ruin);
-        NPCManager npcManager = new NPCManager(this);
+        MenuManager menuManager = new MenuManager(this);
+        new ShopManager(this, economyManager, ruin, menuManager);
+        new NPCManager(this);
         new VoteManager(this, rankManager, economyManager);
         new EnchantManager(this);
         new ConsoleManager(this, rankManager, economyManager);
-        new ShopManager(this, economyManager, npcManager, ruin);
-        new FactionCenterManager(this, factionManager, ruin);
+        new FactionCenterManager(this, factionManager, ruin, menuManager);
 
-        setupMenus();
-
-        if(ruin == Ruin.HUB) {
+        if (ruin == Ruin.HUB) {
             new Hub(this);
-            System.out.println("HUB ENABLED!");
         }
     }
 
     @Override
     public void onDisable() {
-
+        for (World world : Bukkit.getServer().getWorlds()) {
+            for (Entity ent : world.getEntities()) {
+                if (!(ent instanceof Player)) {
+                    ent.remove();
+                }
+            }
+        }
     }
 
     public static JavaPlugin getInstance() {
         return instance;
-    }
-
-    public void setupMenus() {
-        menuManager = new MenuManager(this);
-
-        if(ruin == Ruin.AZTEC_MOUNTAIN) {
-
-        } else if(ruin == Ruin.TEMPLARS_CASCADE) {
-
-        }
     }
 }

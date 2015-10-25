@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import repo.ruinspvp.factions.utilities.EntityUtil;
 import repo.ruinspvp.factions.utilities.Format;
 
 import java.io.*;
@@ -89,11 +90,11 @@ public class NPCManager implements Listener {
             if (this.npcs.containsKey(entity.getUniqueId().toString())) {
                 ((NPC) this.npcs.get(entity.getUniqueId().toString())).name = ((LivingEntity) entity).getCustomName();
                 ((NPC) this.npcs.get(entity.getUniqueId().toString())).entity = entity;
-                NPC.silent(entity);
-                NPC.noAI(entity);
+                EntityUtil.silent(entity);
+                EntityUtil.noAI(entity);
 
                 if (((NPC) this.npcs.get(entity.getUniqueId().toString())).radius == 0) {
-                    NPC.noAI(entity);
+                    EntityUtil.noAI(entity);
                 }
             }
         }
@@ -166,8 +167,8 @@ public class NPCManager implements Listener {
         this.npcs.put(entity.getUniqueId().toString(), npc);
 
         if (npc.radius == 0) {
-            NPC.noAI(entity);
-            NPC.silent(entity);
+            EntityUtil.noAI(entity);
+            EntityUtil.silent(entity);
         }
 
         if (save) {
@@ -215,7 +216,7 @@ public class NPCManager implements Listener {
 
                 npc.entity.setTicksLived(1);
                 ((EntityInsentient) ((CraftLivingEntity) npc.entity).getHandle()).persistent = true;
-                NPC.silent(npc.entity);
+                EntityUtil.silent(npc.entity);
 
                 if ((IsNpcChunkLoaded(npc.entity)) && ((npc.entity instanceof org.bukkit.craftbukkit.v1_8_R3.entity.CraftCreature))) {
                     if ((!npc.entity.isDead()) && (npc.entity.isValid())) {

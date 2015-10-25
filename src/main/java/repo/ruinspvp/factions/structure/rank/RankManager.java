@@ -139,7 +139,7 @@ public class RankManager extends Database implements Listener {
             }
         }
         PermissionAttachment permissionAttachment = player.addAttachment(plugin);
-
+        playerPermission.put(player.getUniqueId(), permissionAttachment);
 
         switch (rank) {
             case DEFAULT:
@@ -198,7 +198,6 @@ public class RankManager extends Database implements Listener {
                 }
                 break;
         }
-        playerPermission.put(player.getUniqueId(), permissionAttachment);
     }
 
     @EventHandler
