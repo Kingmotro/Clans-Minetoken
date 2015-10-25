@@ -13,7 +13,11 @@ public class Format {
         return ChatColor.BLUE + string + ChatColor.GRAY;
     }
 
-    public static String help(String string) {
+    public static String info(String string) {
         return ChatColor.GOLD + "" + ChatColor.BOLD + ">> " + ChatColor.RESET + string;
+    }
+
+    public static String help(String string, String desc) {
+        return ChatColor.GOLD + "" + ChatColor.BOLD + ">> " + ChatColor.RESET + string + ChatColor.GRAY +", "+ desc;
     }
 }

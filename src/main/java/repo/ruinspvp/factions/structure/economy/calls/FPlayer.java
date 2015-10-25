@@ -20,8 +20,9 @@ public class FPlayer extends DatabaseCall<EconomyManager> {
     public String getName(UUID uuid) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT name FROM eco WHERE uuid=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT name FROM eco WHERE uuid=? AND ruin=?");
             ps.setString(1, uuid.toString());
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return rs.getString("name");
@@ -37,8 +38,9 @@ public class FPlayer extends DatabaseCall<EconomyManager> {
     public UUID getUUID(String name) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM eco WHERE name=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM eco WHERE name=? AND ruin=?");
             ps.setString(1, name);
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return UUID.fromString(rs.getString("uuid"));
@@ -54,8 +56,9 @@ public class FPlayer extends DatabaseCall<EconomyManager> {
     public Result checkExists(UUID uuid) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM eco WHERE UUID=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM eco WHERE uuid=? AND ruin=?");
             ps.setString(1, uuid.toString());
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return Result.TRUE;
@@ -73,11 +76,12 @@ public class FPlayer extends DatabaseCall<EconomyManager> {
         if (checkExists(uuid) == Result.FALSE) {
             PreparedStatement ps;
             try {
-                ps = plugin.connection.prepareStatement("INSERT INTO `eco` VALUES (?,?,?,?)");
+                ps = plugin.connection.prepareStatement("INSERT INTO `eco` VALUES (?,?,?,?,?)");
                 ps.setString(1, uuid.toString());
                 ps.setString(2, name);
                 ps.setString(3, plugin.getCurrentDate());
                 ps.setInt(4, 0);
+                ps.setString(5, plugin.ruin.getName());
                 ps.executeUpdate();
                 return Result.SUCCESS;
             } catch (SQLException e) {
@@ -92,9 +96,10 @@ public class FPlayer extends DatabaseCall<EconomyManager> {
     public Result updatePlayerName(UUID uuid, String newName) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `eco` SET name=? WHERE uuid=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `eco` SET name=? WHERE uuid=? AND ruin=?");
             ps.setString(1, newName);
             ps.setString(2, uuid.toString());
+            ps.setString(3, plugin.ruin.getName());
             ps.executeUpdate();
             return Result.SUCCESS;
         } catch (SQLException e) {

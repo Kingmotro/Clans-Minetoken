@@ -1,6 +1,7 @@
 package repo.ruinspvp.factions.structure.economy.calls;
 
 import org.bukkit.Bukkit;
+import repo.ruinspvp.factions.Ruin;
 import repo.ruinspvp.factions.structure.database.DatabaseCall;
 import repo.ruinspvp.factions.structure.economy.EconomyManager;
 import repo.ruinspvp.factions.structure.economy.events.MoneyChangeEvent;
@@ -20,8 +21,9 @@ public class FEco extends DatabaseCall<EconomyManager> {
     public int getMoney(UUID uuid) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT money FROM eco WHERE uuid = ?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT money FROM eco WHERE uuid=? AND ruin=?");
             ps.setString(1, uuid.toString());
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return rs.getInt("money");
@@ -34,33 +36,14 @@ public class FEco extends DatabaseCall<EconomyManager> {
         }
     }
 
-    public Result updateMoney(UUID uuid, int amount) {
-        int currentPoints = -1;
-        currentPoints = getMoney(uuid);
-        if (currentPoints == -1) {
-            return Result.ERROR;
-        }
-        PreparedStatement ps;
-        try {
-            ps = plugin.connection.prepareStatement("UPDATE `eco` SET money = ? WHERE uuid = ?");
-            ps.setInt(1, amount + currentPoints);
-            ps.setString(2, uuid.toString());
-            ps.executeUpdate();
-            Bukkit.getPluginManager().callEvent(new MoneyChangeEvent(Bukkit.getPlayer(uuid), amount + currentPoints));
-            return Result.SUCCESS;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return Result.ERROR;
-        }
-    }
-
     public Result setMoney(UUID uuid, int amount) {
         plugin.checkConnection();
         PreparedStatement ps;
         try {
-            ps = plugin.connection.prepareStatement("UPDATE `eco` SET money = ? WHERE uuid = ?");
+            ps = plugin.connection.prepareStatement("UPDATE `eco` SET money=? WHERE uuid=? AND ruin=?");
             ps.setInt(1, amount);
             ps.setString(2, uuid.toString());
+            ps.setString(3, plugin.ruin.getName());
             ps.executeUpdate();
             Bukkit.getPluginManager().callEvent(new MoneyChangeEvent(Bukkit.getPlayer(uuid), amount));
             return Result.SUCCESS;
@@ -74,9 +57,27 @@ public class FEco extends DatabaseCall<EconomyManager> {
         plugin.checkConnection();
         PreparedStatement ps;
         try {
-            ps = plugin.connection.prepareStatement("UPDATE `eco` SET money = ? WHERE uuid = ?");
+            ps = plugin.connection.prepareStatement("UPDATE `eco` SET money=? WHERE uuid=? AND ruin=?");
             ps.setInt(1, getMoney(uuid) + amount);
             ps.setString(2, uuid.toString());
+            ps.setString(3, plugin.ruin.getName());
+            ps.executeUpdate();
+            Bukkit.getPluginManager().callEvent(new MoneyChangeEvent(Bukkit.getPlayer(uuid), amount));
+            return Result.SUCCESS;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Result.ERROR;
+        }
+    }
+
+    public Result addMoney(UUID uuid, int amount, Ruin ruin) {
+        plugin.checkConnection();
+        PreparedStatement ps;
+        try {
+            ps = plugin.connection.prepareStatement("UPDATE `eco` SET money=? WHERE uuid=? AND ruin=?");
+            ps.setInt(1, getMoney(uuid) + amount);
+            ps.setString(2, uuid.toString());
+            ps.setString(3, ruin.getName());
             ps.executeUpdate();
             Bukkit.getPluginManager().callEvent(new MoneyChangeEvent(Bukkit.getPlayer(uuid), amount));
             return Result.SUCCESS;
@@ -90,9 +91,10 @@ public class FEco extends DatabaseCall<EconomyManager> {
         plugin.checkConnection();
         PreparedStatement ps;
         try {
-            ps = plugin.connection.prepareStatement("UPDATE `eco` SET money = ? WHERE uuid = ?");
+            ps = plugin.connection.prepareStatement("UPDATE `eco` SET money=? WHERE uuid=? AND ruin=?");
             ps.setInt(1, getMoney(uuid) - amount);
             ps.setString(2, uuid.toString());
+            ps.setString(3, plugin.ruin.getName());
             ps.executeUpdate();
             Bukkit.getPluginManager().callEvent(new MoneyChangeEvent(Bukkit.getPlayer(uuid), amount));
             return Result.SUCCESS;

@@ -20,6 +20,6 @@ public class RankCommand extends CommandManager {
     @Override
     public void help(Player player) {
         player.sendMessage(Format.main("Rank", "Commands:"));
-        player.sendMessage(Format.help("/rank apply {player} {rank}"));
+        player.sendMessage(Format.help("/rank apply {player} {rank}", "Set's player rank."));
     }
 }

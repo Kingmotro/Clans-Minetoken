@@ -36,6 +36,7 @@ public class InviteCommand implements SubCommand {
                             FactionInvite factionInvite = new FactionInvite(player, faction);
                             factionManager.invitedPlayer.put(uuid, factionInvite);
                             player.sendMessage(Format.main("Factions", name + " has 30 seconds to accept the invitation."));
+                            target.sendMessage(Format.main("Factions", "You have 30 seconds to type /faction accept, or to deny by typing /faction deny."));
                             factionManager.plugin.getServer().getScheduler().scheduleSyncDelayedTask(factionManager.plugin, new Runnable() {
                                 @Override
                                 public void run() {
@@ -63,7 +64,7 @@ public class InviteCommand implements SubCommand {
 
     @Override
     public String help() {
-        return Format.help("/faction invite {player}");
+        return Format.info("/faction invite {player}");
     }
 
     @Override

@@ -24,8 +24,9 @@ public class FPlayer extends DatabaseCall<FactionManager> {
     public String getName(UUID uuid) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT name FROM fplayer WHERE uuid=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT name FROM fplayer WHERE uuid=? AND ruin=?");
             ps.setString(1, uuid.toString());
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return rs.getString("name");
@@ -41,8 +42,9 @@ public class FPlayer extends DatabaseCall<FactionManager> {
     public UUID getUUID(String name) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM fplayer WHERE name=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM fplayer WHERE name=? AND ruin=?");
             ps.setString(1, name);
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return UUID.fromString(rs.getString("uuid"));
@@ -58,8 +60,9 @@ public class FPlayer extends DatabaseCall<FactionManager> {
     public Result checkExists(UUID uuid) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM fplayer WHERE uuid=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM fplayer WHERE uuid=? AND ruin=?");
             ps.setString(1, uuid.toString());
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return Result.TRUE;
@@ -75,8 +78,9 @@ public class FPlayer extends DatabaseCall<FactionManager> {
     public Result hasFaction(UUID uuid) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT faction FROM fplayer WHERE uuid=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT faction FROM fplayer WHERE uuid=? AND ruin=?");
             ps.setString(1, uuid.toString());
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return Result.TRUE;
@@ -92,8 +96,9 @@ public class FPlayer extends DatabaseCall<FactionManager> {
     public String getFaction(UUID uuid) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT faction FROM fplayer WHERE uuid=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT faction FROM fplayer WHERE uuid=? AND ruin=?");
             ps.setString(1, uuid.toString());
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return rs.getString("faction");
@@ -109,8 +114,9 @@ public class FPlayer extends DatabaseCall<FactionManager> {
     public FactionRanks getFRank(UUID uuid) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT frank FROM fplayer WHERE uuid=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT frank FROM fplayer WHERE uuid=? AND ruin=?");
             ps.setString(1, uuid.toString());
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 String rank = rs.getString("frank");
@@ -127,9 +133,10 @@ public class FPlayer extends DatabaseCall<FactionManager> {
     public Result setFRank(UUID uuid, FactionRanks rank) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `fplayer` SET frank=? WHERE uuid=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `fplayer` SET frank=? WHERE uuid=? AND ruin=?");
             ps.setString(1, rank.getName());
             ps.setString(2, uuid.toString());
+            ps.setString(3, plugin.ruin.getName());
             ps.executeUpdate();
             Bukkit.getPluginManager().callEvent(new FactionRankChangeEvent(Bukkit.getPlayer(uuid), rank));
             return Result.SUCCESS;
@@ -144,12 +151,13 @@ public class FPlayer extends DatabaseCall<FactionManager> {
         if (checkExists(uuid) == Result.FALSE) {
             PreparedStatement ps;
             try {
-                ps = plugin.connection.prepareStatement("INSERT INTO `fplayer` VALUES (?,?,?,?,?)");
+                ps = plugin.connection.prepareStatement("INSERT INTO `fplayer` VALUES (?,?,?,?,?,?)");
                 ps.setString(1, uuid.toString());
                 ps.setString(2, name);
                 ps.setString(3, plugin.getCurrentDate());
                 ps.setString(4, FactionRanks.PLEB.getName());
                 ps.setString(5, faction);
+                ps.setString(6, plugin.ruin.getName());
                 ps.executeUpdate();
                 Bukkit.getServer().getPluginManager().callEvent(new PlayerJoinFactionEvent(Bukkit.getPlayer(uuid), faction));
                 return Result.SUCCESS;
@@ -165,9 +173,10 @@ public class FPlayer extends DatabaseCall<FactionManager> {
     public Result updatePlayerName(UUID uuid, String newName) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `fplayer` SET name=? WHERE uuid=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `fplayer` SET name=? WHERE uuid=? AND ruin=?");
             ps.setString(1, newName);
             ps.setString(2, uuid.toString());
+            ps.setString(3, plugin.ruin.getName());
             ps.executeUpdate();
             return Result.SUCCESS;
         } catch (SQLException e) {
@@ -191,8 +200,9 @@ public class FPlayer extends DatabaseCall<FactionManager> {
         if (checkExists(uuid) == Result.TRUE) {
             PreparedStatement ps;
             try {
-                ps = plugin.connection.prepareStatement("DELETE FROM fplayer WHERE uuid=?");
+                ps = plugin.connection.prepareStatement("DELETE FROM fplayer WHERE uuid=? AND ruin=?");
                 ps.setString(1, uuid.toString());
+                ps.setString(2, plugin.ruin.getName());
                 ps.executeUpdate();
                 Bukkit.getServer().getPluginManager().callEvent(new PlayerLeaveFactionEvent(Bukkit.getPlayer(uuid), name));
                 return Result.SUCCESS;
@@ -209,8 +219,9 @@ public class FPlayer extends DatabaseCall<FactionManager> {
         plugin.checkConnection();
         PreparedStatement ps;
         try {
-            ps = plugin.connection.prepareStatement("DELETE FROM fplayer WHERE faction=?");
+            ps = plugin.connection.prepareStatement("DELETE FROM fplayer WHERE faction=? AND ruin=?");
             ps.setString(1, name);
+            ps.setString(2, plugin.ruin.getName());
             ps.executeUpdate();
             return Result.SUCCESS;
         } catch (SQLException e) {
@@ -226,8 +237,9 @@ public class FPlayer extends DatabaseCall<FactionManager> {
         players.clear();
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT * FROM fplayer WHERE faction=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT * FROM fplayer WHERE faction=? AND ruin=?");
             ps.setString(1, faction);
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String s = rs.getString("uuid");

@@ -21,9 +21,9 @@ public class EconomyCommand extends CommandManager {
     @Override
     public void help(Player player) {
         player.sendMessage(Format.main("Money", "Commands:"));
-        player.sendMessage(Format.help("/money pay {player} {amount}"));
+        player.sendMessage(Format.help("/money pay {player} {amount}", "Pay a specific player."));
         if(player.hasPermission("ruinspvp.mod")) {
-            player.sendMessage(Format.help("/money give {player} {amount}"));
+            player.sendMessage(Format.help("/money give {player} {amount}", "Give player money without taking from your balance"));
         }
     }
 }

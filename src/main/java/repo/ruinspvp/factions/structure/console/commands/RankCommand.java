@@ -42,6 +42,6 @@ public class RankCommand implements CommandExecutor {
 
     public void help(CommandSender commandSender) {
         commandSender.sendMessage(Format.main("Rank", "Commands:"));
-        commandSender.sendMessage(Format.help("/setrank {player} {rank}"));
+        commandSender.sendMessage(Format.info("/setrank {player} {rank}"));
     }
 }

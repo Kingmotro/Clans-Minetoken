@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import repo.ruinspvp.factions.Ruin;
 import repo.ruinspvp.factions.structure.database.Database;
 import repo.ruinspvp.factions.structure.economy.calls.FEco;
 import repo.ruinspvp.factions.structure.economy.calls.FPlayer;
@@ -25,11 +26,13 @@ public class EconomyManager extends Database implements Listener {
     public FEco fEco;
     public JavaPlugin plugin;
 
-    public EconomyManager(JavaPlugin plugin) {
+    public Ruin ruin;
+
+    public EconomyManager(JavaPlugin plugin, Ruin ruin) {
         super("root", "ThePyxel", "", "3306", "localhost");
         connection = openConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `eco` (`uuid` varchar(36) NOT NULL, `name` varchar(32) NOT NULL, `date` varchar(32) NOT NULL, `money` int(8) NOT NULL)");
+            PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `eco` (`uuid` varchar(36) NOT NULL, `name` varchar(32) NOT NULL, `date` varchar(32) NOT NULL, `money` int(8) NOT NULL, `ruin` varchar(32) NOT NULL)");
             ps.executeUpdate();
         } catch (SQLException e) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Could not check if table exists, restarting server.");
@@ -40,6 +43,8 @@ public class EconomyManager extends Database implements Listener {
         this.fPlayer = new FPlayer(this);
         this.fEco = new FEco(this);
         this.plugin = plugin;
+
+        this.ruin = ruin;
 
         plugin.getCommand("money").setExecutor(new EconomyCommand(plugin, this));
 

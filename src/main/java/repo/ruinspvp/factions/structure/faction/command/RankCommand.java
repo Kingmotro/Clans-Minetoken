@@ -67,7 +67,7 @@ public class RankCommand implements SubCommand {
 
     @Override
     public String help() {
-        return Format.help("/faction rank {player} {rank}");
+        return Format.info("/faction rank {player} {rank}");
     }
 
     @Override

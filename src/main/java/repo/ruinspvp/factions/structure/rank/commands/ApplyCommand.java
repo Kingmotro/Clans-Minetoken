@@ -54,7 +54,7 @@ public class ApplyCommand implements SubCommand {
 
     @Override
     public String help() {
-        return Format.help("/rank apply {player} {rank}");
+        return Format.info("/rank apply {player} {rank}");
     }
 
     @Override

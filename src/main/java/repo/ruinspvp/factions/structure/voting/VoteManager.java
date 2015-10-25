@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import repo.ruinspvp.factions.Ruin;
 import repo.ruinspvp.factions.structure.database.Database;
 import repo.ruinspvp.factions.structure.economy.EconomyManager;
 import repo.ruinspvp.factions.structure.rank.RankManager;
@@ -69,7 +70,9 @@ public class VoteManager extends Database implements Listener {
                 return;
             } else {
                 //TODO: Reward Player
-                economyManager.fEco.addMoney(player.getUniqueId(), 1000);
+                for(Ruin ruin : Ruin.values()) {
+                    economyManager.fEco.addMoney(player.getUniqueId(), 1000, ruin);
+                }
                 return;
             }
         } else {
@@ -81,8 +84,10 @@ public class VoteManager extends Database implements Listener {
                 Bukkit.getServer().broadcastMessage(Format.main("Vote", Format.highlight(player.getName()) + " just voted for RuinsPvP on " + Format.highlight(event.getVote().getServiceName())));
                 //TODO: Reward Player
                 vote.setVotes(uuid, vote.getVotes(uuid) + 1);
-                economyManager.fEco.addMoney(player.getUniqueId(), 1000);
-                player.sendMessage(Format.main("Vote", "You have received $1000 dollars, for voting be sure to vote once a day on all the sites."));
+                for(Ruin ruin : Ruin.values()) {
+                    economyManager.fEco.addMoney(player.getUniqueId(), 1000, ruin);
+                }
+                player.sendMessage(Format.main("Vote", "You have received $1000 dollars on all ruins, for voting be sure to vote once a day on all the sites."));
                 return;
             }
         }

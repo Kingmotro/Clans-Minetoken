@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import repo.ruinspvp.factions.Ruin;
 import repo.ruinspvp.factions.structure.database.Database;
 import repo.ruinspvp.factions.structure.faction.command.FactionCommand;
 import repo.ruinspvp.factions.structure.faction.events.FactionCreateEvent;
@@ -35,7 +36,9 @@ public class FactionManager extends Database implements Listener {
 
     public HashMap<UUID, FactionInvite> invitedPlayer;
 
-    public FactionManager(JavaPlugin plugin) {
+    public Ruin ruin;
+
+    public FactionManager(JavaPlugin plugin, Ruin ruin) {
         super("root", "ThePyxel", "", "3306", "localhost");
         this.plugin = plugin;
 
@@ -49,7 +52,7 @@ public class FactionManager extends Database implements Listener {
             Bukkit.getServer().shutdown();
         }
         try {
-            PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `fplayer` (`uuid` varchar(36) NOT NULL, `name` varchar(32) NOT NULL, `date` varchar(32) NOT NULL, `frank` varchar(16) NOT NULL, `faction` varchar(16) NOT NULL)");
+            PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `fplayer` (`uuid` varchar(36) NOT NULL, `name` varchar(32) NOT NULL, `date` varchar(32) NOT NULL, `frank` varchar(16) NOT NULL, `faction` varchar(16) NOT NULL, `ruin` varchar(32) NOT NULL)");
             ps.executeUpdate();
         } catch (SQLException e) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Could not check if table exists, restarting server.");
@@ -59,6 +62,8 @@ public class FactionManager extends Database implements Listener {
 
         this.fPlayer = new FPlayer(this);
         this.fFaction = new FFaction(this);
+
+        this.ruin = ruin;
 
         invitedPlayer = new HashMap<>();
 

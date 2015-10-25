@@ -51,7 +51,7 @@ public class GiveCommand implements SubCommand {
 
     @Override
     public String help() {
-        return Format.help("/money give {player} {amount}");
+        return Format.info("/money give {player} {amount}");
     }
 
     @Override

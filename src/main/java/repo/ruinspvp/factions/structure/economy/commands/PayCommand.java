@@ -56,7 +56,7 @@ public class PayCommand implements SubCommand {
 
     @Override
     public String help() {
-        return Format.help("/money pay {player} {amount}");
+        return Format.info("/money pay {player} {amount}");
     }
 
     @Override

@@ -23,11 +23,48 @@ public class FFaction extends DatabaseCall<FactionManager> {
         super(plugin);
     }
 
+    public String getDateCreated(String faction) {
+        plugin.checkConnection();
+        try {
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT date FROM factions WHERE name=? AND ruin=?");
+            ps.setString(1, faction);
+            ps.setString(2, plugin.ruin.getName());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("date");
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String getFounder(String faction) {
+        plugin.checkConnection();
+        try {
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT founder FROM factions WHERE name=? AND ruin=?");
+            ps.setString(1, faction);
+            ps.setString(2, plugin.ruin.getName());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("founder");
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public Result checkExists(String name) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT name FROM factions WHERE name=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT name FROM factions WHERE name=? AND ruin=?");
             ps.setString(1, name);
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return Result.TRUE;
@@ -40,14 +77,14 @@ public class FFaction extends DatabaseCall<FactionManager> {
         }
     }
 
-    public Result createFaction(String name, String ruin, Player player) {
+    public Result createFaction(String name, Player player) {
         plugin.checkConnection();
         if (checkExists(name) == Result.FALSE) {
             PreparedStatement ps;
             try {
                 ps = plugin.connection.prepareStatement("INSERT INTO `factions` VALUES (?,?,?,?)");
                 ps.setString(1, name);
-                ps.setString(2, ruin);
+                ps.setString(2, plugin.ruin.getName());
                 ps.setString(3, plugin.getCurrentDate());
                 ps.setString(4, player.getName());
                 ps.executeUpdate();
@@ -69,8 +106,9 @@ public class FFaction extends DatabaseCall<FactionManager> {
         if (checkExists(name) == Result.TRUE) {
             PreparedStatement ps;
             try {
-                ps = plugin.connection.prepareStatement("DELETE FROM factions WHERE name=?");
+                ps = plugin.connection.prepareStatement("DELETE FROM factions WHERE name=? AND ruin=?");
                 ps.setString(1, name);
+                ps.setString(2, plugin.ruin.getName());
                 ps.executeUpdate();
                 Bukkit.getServer().getPluginManager().callEvent(new FactionDeleteEvent(name));
                 return Result.SUCCESS;
@@ -83,7 +121,7 @@ public class FFaction extends DatabaseCall<FactionManager> {
         }
     }
 
-    public FactionRanks getRankFromString(String rank) {
+    public FactionRanks getFactionRanksFromString(String rank) {
         for (FactionRanks r : FactionRanks.values()) {
             if (rank.equalsIgnoreCase(r.getName())) {
                 return r;

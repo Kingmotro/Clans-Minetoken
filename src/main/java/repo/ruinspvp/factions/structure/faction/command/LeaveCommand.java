@@ -50,7 +50,7 @@ public class LeaveCommand implements SubCommand {
 
     @Override
     public String help() {
-        return Format.help("/faction leave");
+        return Format.info("/faction leave");
     }
 
     @Override

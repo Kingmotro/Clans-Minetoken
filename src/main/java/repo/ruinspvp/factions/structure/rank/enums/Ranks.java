@@ -17,8 +17,8 @@ public enum Ranks {
     YOUTUBE("Youtube", ChatColor.RED, 60),
     FORGOTTEN("Forgotten", ChatColor.DARK_GREEN, 60),
     LOST("Lost", ChatColor.GREEN, 50),
-    EXCAVATOR("Excavator", ChatColor.GOLD, 40),
-    HUNTER("Hunter", ChatColor.BLUE, 30),
+    EXCAVATOR("Excavator", ChatColor.DARK_AQUA, 40),
+    HUNTER("Hunter", ChatColor.DARK_BLUE, 30),
     PIONEER("Pioneer", ChatColor.GRAY, 20),
     DEFAULT("", ChatColor.WHITE, 10);
 

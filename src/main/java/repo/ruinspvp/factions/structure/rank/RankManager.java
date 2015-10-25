@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.java.JavaPlugin;
+import repo.ruinspvp.factions.Ruin;
 import repo.ruinspvp.factions.structure.database.Database;
 import repo.ruinspvp.factions.structure.faction.FactionManager;
 import repo.ruinspvp.factions.structure.rank.calls.FPlayer;
@@ -57,11 +58,13 @@ public class RankManager extends Database implements Listener {
     String[] Admin = {"ruinspvp.admin", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
     String[] Leader = {"ruinspvp.leader", "*.*"};
 
-    public RankManager(JavaPlugin plugin, FactionManager factionManager) {
+    public Ruin ruin;
+
+    public RankManager(JavaPlugin plugin, FactionManager factionManager, Ruin ruin) {
         super("root", "ThePyxel", "", "3306", "localhost");
         connection = openConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `ranks` (`uuid` varchar(36) NOT NULL, `name` varchar(32) NOT NULL, `date` varchar(32) NOT NULL, `rank` varchar(16) NOT NULL)");
+            PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `ranks` (`uuid` varchar(36) NOT NULL, `name` varchar(32) NOT NULL, `date` varchar(32) NOT NULL, `rank` varchar(16) NOT NULL, `ruin` varchar(32) NOT NULL)");
             ps.executeUpdate();
         } catch (SQLException e) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Could not check if table exists, restarting server.");
@@ -75,6 +78,8 @@ public class RankManager extends Database implements Listener {
         this.factionManager = factionManager;
 
         this.playerPermission = new HashMap<>();
+
+        this.ruin = ruin;
 
         plugin.getCommand("rank").setExecutor(new RankCommand(plugin, this));
 
@@ -294,7 +299,7 @@ public class RankManager extends Database implements Listener {
     @EventHandler
     public void onLogin(AsyncPlayerPreLoginEvent event) {
         if (Bukkit.getServer().hasWhitelist()) {
-            if (Bukkit.getPlayer(event.getUniqueId()).hasPermission("ruinspvp.mod")) {
+            if (fRank.getRank(event.getUniqueId()).getPermLevel() >= Ranks.MOD.getPermLevel()) {
                 event.allow();
             } else {
                 event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatColor.RED + "You don't have the sufficient permissions to join at this time.");

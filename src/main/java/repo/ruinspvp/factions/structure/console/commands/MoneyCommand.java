@@ -41,7 +41,7 @@ public class MoneyCommand implements CommandExecutor {
 
     public void help(CommandSender commandSender) {
         commandSender.sendMessage(Format.main("Money", "Commands:"));
-        commandSender.sendMessage(Format.help("/givemoney {player} {amount}"));
+        commandSender.sendMessage(Format.info("/givemoney {player} {amount}"));
     }
 
     public boolean isInt(String i) {

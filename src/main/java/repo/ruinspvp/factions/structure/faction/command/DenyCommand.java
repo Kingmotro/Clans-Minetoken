@@ -9,27 +9,23 @@ import repo.ruinspvp.factions.utilities.Format;
 
 import java.util.UUID;
 
-public class AcceptCommand implements SubCommand {
+public class DenyCommand implements SubCommand {
 
     FactionManager factionManager;
 
-    public AcceptCommand(FactionManager factionManager) {
+    public DenyCommand(FactionManager factionManager) {
         this.factionManager = factionManager;
     }
 
     @Override
     public boolean onCommand(Player player, String[] args) {
-        if(args.length == 0) {
-            if(factionManager.invitedPlayer.containsKey(player.getUniqueId())) {
-                if(factionManager.fPlayer.hasFaction(player.getUniqueId()) == Result.FALSE) {
-                    factionManager.fPlayer.joinFaction(player.getUniqueId(), player.getName(), factionManager.invitedPlayer.get(player.getUniqueId()).getFaction());
-                    player.sendMessage(Format.main("Factions", "You have successfully joined " + factionManager.invitedPlayer.get(player.getUniqueId()).getFaction()));
+        if (args.length == 0) {
+            if (factionManager.invitedPlayer.containsKey(player.getUniqueId())) {
+                if (factionManager.fPlayer.hasFaction(player.getUniqueId()) == Result.FALSE) {
+                    player.sendMessage(Format.main("Factions", "You have denied the faction " + factionManager.invitedPlayer.get(player.getUniqueId()).getFaction()));
                     try {
-                        for(String uuid : factionManager.fPlayer.getPlayersInAFaction(factionManager.invitedPlayer.get(player.getUniqueId()).getFaction())) {
-                            if(Bukkit.getPlayer(UUID.fromString(uuid)).isOnline()) {
-                                Player fPlayer = Bukkit.getPlayer(UUID.fromString(uuid));
-                                fPlayer.sendMessage(Format.main("Factions", player.getName() + " has joined the faction."));
-                            }
+                        if(factionManager.invitedPlayer.get(player.getUniqueId()).getPlayer().isOnline()) {
+                            factionManager.invitedPlayer.get(player.getUniqueId()).getPlayer().sendMessage(Format.main("Factions", player.getName() + " has denied to join the faction."));
                         }
                     } catch (Exception ignore) {}
                     factionManager.invitedPlayer.remove(player.getUniqueId());
@@ -47,7 +43,7 @@ public class AcceptCommand implements SubCommand {
 
     @Override
     public String help() {
-        return Format.info("/faction accept");
+        return Format.info("/faction deny");
     }
 
     @Override

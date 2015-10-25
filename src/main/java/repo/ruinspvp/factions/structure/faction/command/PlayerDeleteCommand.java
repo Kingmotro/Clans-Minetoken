@@ -37,7 +37,7 @@ public class PlayerDeleteCommand implements SubCommand {
 
     @Override
     public String help() {
-        return Format.help("/faction delete");
+        return Format.info("/faction delete");
     }
 
     @Override

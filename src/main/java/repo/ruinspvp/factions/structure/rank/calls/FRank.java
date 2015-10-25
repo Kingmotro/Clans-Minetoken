@@ -21,8 +21,9 @@ public class FRank extends DatabaseCall<RankManager> {
     public Ranks getRank(UUID uuid) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT rank FROM ranks WHERE uuid=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT rank FROM ranks WHERE uuid=? AND ruin=?");
             ps.setString(1, uuid.toString());
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 String rank = rs.getString("rank");
@@ -39,9 +40,10 @@ public class FRank extends DatabaseCall<RankManager> {
     public Result setRank(UUID uuid, Ranks rank) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `ranks` SET rank=? WHERE uuid=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `ranks` SET rank=? WHERE uuid=? AND ruin=?");
             ps.setString(1, rank.getName());
             ps.setString(2, uuid.toString());
+            ps.setString(3, plugin.ruin.getName());
             ps.executeUpdate();
             Bukkit.getPluginManager().callEvent(new RankChangeEvent(Bukkit.getPlayer(uuid), rank));
             return Result.SUCCESS;

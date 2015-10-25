@@ -19,8 +19,9 @@ public class FPlayer extends DatabaseCall<RankManager> {
     public String getName(UUID uuid) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT name FROM ranks WHERE uuid=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT name FROM ranks WHERE uuid=? AND ruin=?");
             ps.setString(1, uuid.toString());
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return rs.getString("name");
@@ -36,8 +37,9 @@ public class FPlayer extends DatabaseCall<RankManager> {
     public UUID getUUID(String name) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM ranks WHERE name=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM ranks WHERE name=? AND ruin=?");
             ps.setString(1, name);
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return UUID.fromString(rs.getString("uuid"));
@@ -53,8 +55,9 @@ public class FPlayer extends DatabaseCall<RankManager> {
     public Result checkExists(UUID uuid) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM ranks WHERE UUID=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM ranks WHERE uuid=? AND ruin=?");
             ps.setString(1, uuid.toString());
+            ps.setString(2, plugin.ruin.getName());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return Result.TRUE;
@@ -72,11 +75,12 @@ public class FPlayer extends DatabaseCall<RankManager> {
         if (checkExists(uuid) == Result.FALSE) {
             PreparedStatement ps;
             try {
-                ps = plugin.connection.prepareStatement("INSERT INTO `ranks` VALUES (?,?,?,?)");
+                ps = plugin.connection.prepareStatement("INSERT INTO `ranks` VALUES (?,?,?,?,?)");
                 ps.setString(1, uuid.toString());
                 ps.setString(2, name);
                 ps.setString(3, plugin.getCurrentDate());
                 ps.setString(4, Ranks.DEFAULT.getName());
+                ps.setString(5, plugin.ruin.getName());
                 ps.executeUpdate();
                 return Result.SUCCESS;
             } catch (SQLException e) {
@@ -91,9 +95,10 @@ public class FPlayer extends DatabaseCall<RankManager> {
     public Result updatePlayerName(UUID uuid, String newName) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `ranks` SET name=? WHERE uuid=?");
+            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `ranks` SET name=? WHERE uuid=? AND ruin=?");
             ps.setString(1, newName);
             ps.setString(2, uuid.toString());
+            ps.setString(3, plugin.ruin.getName());
             ps.executeUpdate();
             return Result.SUCCESS;
         } catch (SQLException e) {
