@@ -42,6 +42,7 @@ public class Factions extends JavaPlugin {
 
         if(ruin == Ruin.HUB) {
             new Hub(this);
+            System.out.println("HUB ENABLED!");
         }
     }
 
