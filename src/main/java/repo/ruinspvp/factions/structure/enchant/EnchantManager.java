@@ -69,12 +69,12 @@ public class EnchantManager implements Listener {
             newLore = new ArrayList<>();
         } else {
             newLore = im.getLore();
-            for (int i = 0; i < newLore.size(); i++) {
-                if (newLore.get(i).contains(ChatColor.GRAY + enchantment.getName())) {
-                    String[] lore = newLore.get(i).split(" ");
-                    if (enchantment.getLevel() > romanToNumber(lore[1])) {
-                        newLore.remove(i);
-                    }
+        }
+        for (int i = 0; i < newLore.size(); i++) {
+            if (newLore.get(i).contains(ChatColor.GRAY + enchantment.getName())) {
+                String[] lore = newLore.get(i).split(" ");
+                if (enchantment.getLevel() > romanToNumber(lore[1])) {
+                    newLore.remove(i);
                 }
             }
         }

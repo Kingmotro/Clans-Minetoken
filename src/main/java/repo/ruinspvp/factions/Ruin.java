@@ -3,7 +3,7 @@ package repo.ruinspvp.factions;
 public enum Ruin {
 
     HUB("Hub"),
-    AZTEC_MOUNTAIN("Azetec Mountain"),
+    AZTEC_MOUNTAIN("Aztec Mountain"),
     TEMPLARS_CASCADE("Templar's Cascade");
 
     public String name;

@@ -13,11 +13,5 @@ public class Armory extends Shop {
         super(shopManager, "Aztec Armory", new ArmoryMenu(shopManager), new Location(Bukkit.getWorld("world"), -1496.893, 44.0, 514.029, 86, 0));
         shopManager.menuManager.addMenu("Aztec Armory", new ArmoryMenu(shopManager));
         shopManager.createShopNPC(EntityType.VILLAGER, getLocation(), this);
-        shopManager.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(shopManager.plugin, new Runnable() {
-            @Override
-            public void run() {
-                getLocation().getChunk().load();
-            }
-        }, 0L, 0L);
     }
 }

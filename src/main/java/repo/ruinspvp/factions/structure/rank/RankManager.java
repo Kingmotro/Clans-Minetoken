@@ -44,11 +44,11 @@ public class RankManager extends Database implements Listener {
      * Player Ranks
      */
     String[] Default = {"ruinspvp.default"};
-    String[] Pioneer = {"ruinspvp.pioneer", "ruinspvp.repair2"};
-    String[] Hunter = {"ruinspvp.hunter", "ruinspvp.repair2", "ruinspvp.smelt2"};
-    String[] Excavator = {"ruinspvp.excavator", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
-    String[] Lost = {"ruinspvp.lost", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
-    String[] Forgotten = {"ruinspvp.forgotten", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
+    String[] D1 = {"ruinspvp.d1", "ruinspvp.repair2"};
+    String[] D2 = {"ruinspvp.d2", "ruinspvp.repair2", "ruinspvp.smelt2"};
+    String[] D3 = {"ruinspvp.d3", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
+    String[] D4 = {"ruinspvp.d4", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
+    String[] D5 = {"ruinspvp.d5", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
     String[] Youtube = {"ruinspvp.youtube", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
     /**
      * Staff Ranks
@@ -100,19 +100,19 @@ public class RankManager extends Database implements Listener {
         Ranks rank = fRank.getRank(player.getUniqueId());
         event.setJoinMessage(Format.main("Join", player.getName()));
         if (fRank.getRank(player.getUniqueId()) == Ranks.DEFAULT) {
-            if(factionManager.fPlayer.hasFaction(player.getUniqueId()) == Result.TRUE) {
+            if (factionManager.fPlayer.hasFaction(player.getUniqueId()) == Result.TRUE) {
                 player.setDisplayName(ChatColor.YELLOW + factionManager.fPlayer.getFaction(player.getUniqueId())
                         + ChatColor.RED + "[" + factionManager.fPlayer.getFRank(player.getUniqueId()).getAbv() + "]" + player.getName());
             } else {
                 player.setDisplayName(player.getName());
             }
         } else {
-            if(factionManager.fPlayer.hasFaction(player.getUniqueId()) == Result.TRUE) {
+            if (factionManager.fPlayer.hasFaction(player.getUniqueId()) == Result.TRUE) {
                 player.setDisplayName(ChatColor.YELLOW + factionManager.fPlayer.getFaction(player.getUniqueId())
                         + ChatColor.RED + "[" + factionManager.fPlayer.getFRank(player.getUniqueId()).getAbv() + "]"
-                        + rank.getTag(true, true) + ChatColor.RESET + " " + player.getName());
+                        + rank.getTag(getRankwithRuin(rank), true, true) + ChatColor.RESET + " " + player.getName());
             } else {
-                player.setDisplayName(rank.getTag(true, true) + ChatColor.RESET + " " + player.getName());
+                player.setDisplayName(rank.getTag(getRankwithRuin(rank), true, true) + ChatColor.RESET + " " + player.getName());
             }
         }
         if (fPlayer.checkExists(player.getUniqueId()) == Result.FALSE) {
@@ -129,7 +129,7 @@ public class RankManager extends Database implements Listener {
                 e.printStackTrace();
             }
         }
-        if(factionManager.fPlayer.checkExists(player.getUniqueId()) == Result.TRUE) {
+        if (factionManager.fPlayer.checkExists(player.getUniqueId()) == Result.TRUE) {
             if (!factionManager.fPlayer.getName(player.getUniqueId()).equalsIgnoreCase(player.getName())) {
                 try {
                     factionManager.fPlayer.updatePlayerName(player.getUniqueId(), player.getName());
@@ -143,57 +143,57 @@ public class RankManager extends Database implements Listener {
 
         switch (rank) {
             case DEFAULT:
-                for(String perms : getDefault()) {
+                for (String perms : getDefault()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
-            case PIONEER:
-                for(String perms : getPioneer()) {
+            case DONOR1:
+                for (String perms : getD1()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
-            case HUNTER:
-                for(String perms : getHunter()) {
+            case DONOR2:
+                for (String perms : getD2()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
-            case EXCAVATOR:
-                for(String perms : getExcavator()) {
+            case DONOR3:
+                for (String perms : getD3()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
-            case LOST:
-                for(String perms : getLost()) {
+            case DONOR4:
+                for (String perms : getD4()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
-            case FORGOTTEN:
-                for(String perms : getForgotten()) {
+            case DONOR5:
+                for (String perms : getD5()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case YOUTUBE:
-                for(String perms : getYoutube()) {
+                for (String perms : getYoutube()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case ASSISTANT:
-                for(String perms : getAssistant()) {
+                for (String perms : getAssistant()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case MOD:
-                for(String perms : getMOD()) {
+                for (String perms : getMOD()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case ADMIN:
-                for(String perms : getAdmin()) {
+                for (String perms : getAdmin()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
             case LEADER:
-                for(String perms : getLeader()) {
+                for (String perms : getLeader()) {
                     permissionAttachment.setPermission(perms, true);
                 }
                 break;
@@ -208,7 +208,7 @@ public class RankManager extends Database implements Listener {
                 String name = event.getPlayer().getName();
                 String prefix;
                 if (rank.getPermLevel() > Ranks.DEFAULT.getPermLevel()) {
-                    prefix = rank.getTag(true, false) + " " + ChatColor.YELLOW + name;
+                    prefix = rank.getTag(getRankwithRuin(rank), true, false) + " " + ChatColor.YELLOW + name;
                 } else {
                     prefix = ChatColor.YELLOW + name;
                 }
@@ -217,63 +217,64 @@ public class RankManager extends Database implements Listener {
 
                 switch (rank) {
                     case DEFAULT:
-                        for(String perms : getDefault()) {
+                        for (String perms : getDefault()) {
                             permissionAttachment.setPermission(perms, true);
                         }
                         break;
-                    case PIONEER:
-                        for(String perms : getPioneer()) {
+                    case DONOR1:
+                        for (String perms : getD1()) {
                             permissionAttachment.setPermission(perms, true);
                         }
                         break;
-                    case HUNTER:
-                        for(String perms : getHunter()) {
+                    case DONOR2:
+                        for (String perms : getD2()) {
                             permissionAttachment.setPermission(perms, true);
                         }
                         break;
-                    case EXCAVATOR:
-                        for(String perms : getExcavator()) {
+                    case DONOR3:
+                        for (String perms : getD3()) {
                             permissionAttachment.setPermission(perms, true);
                         }
                         break;
-                    case LOST:
-                        for(String perms : getLost()) {
+                    case DONOR4:
+                        for (String perms : getD4()) {
                             permissionAttachment.setPermission(perms, true);
                         }
                         break;
-                    case FORGOTTEN:
-                        for(String perms : getForgotten()) {
+                    case DONOR5:
+                        for (String perms : getD5()) {
                             permissionAttachment.setPermission(perms, true);
                         }
                         break;
                     case YOUTUBE:
-                        for(String perms : getYoutube()) {
+                        for (String perms : getYoutube()) {
                             permissionAttachment.setPermission(perms, true);
                         }
                         break;
                     case ASSISTANT:
-                        for(String perms : getAssistant()) {
+                        for (String perms : getAssistant()) {
                             permissionAttachment.setPermission(perms, true);
                         }
                         break;
                     case MOD:
-                        for(String perms : getMOD()) {
+                        for (String perms : getMOD()) {
                             permissionAttachment.setPermission(perms, true);
                         }
                         break;
                     case ADMIN:
-                        for(String perms : getAdmin()) {
+                        for (String perms : getAdmin()) {
                             permissionAttachment.setPermission(perms, true);
                         }
                         break;
                     case LEADER:
-                        for(String perms : getLeader()) {
+                        for (String perms : getLeader()) {
                             permissionAttachment.setPermission(perms, true);
                         }
                         break;
                 }
             }
-        } catch (Exception ignore) {}
+        } catch (Exception ignore) {
+        }
     }
 
     @EventHandler
@@ -285,9 +286,9 @@ public class RankManager extends Database implements Listener {
             rank = ChatColor.DARK_AQUA + player.getName();
         } else {
             Ranks ranks = fRank.getRank(player.getUniqueId());
-            rank = ranks.getTag(true, true) + " " + ChatColor.DARK_AQUA + player.getName();
+            rank = ranks.getTag(getRankwithRuin(ranks), true, true) + " " + ChatColor.DARK_AQUA + player.getName();
         }
-        if(factionManager.fPlayer.hasFaction(player.getUniqueId()) == Result.TRUE) {
+        if (factionManager.fPlayer.hasFaction(player.getUniqueId()) == Result.TRUE) {
             faction = ChatColor.RED + "[" + factionManager.fPlayer.getFRank(player.getUniqueId()).getAbv() + "] " + ChatColor.YELLOW + factionManager.fPlayer.getFaction(player.getUniqueId()) + " ";
         } else {
             faction = "";
@@ -308,6 +309,76 @@ public class RankManager extends Database implements Listener {
         }
     }
 
+    public String getRankwithRuin(Ranks rank) {
+        String name = null;
+        switch (rank) {
+            case LEADER:
+                name = rank.LEADER.getName();
+                break;
+            case ADMIN:
+                name = rank.ADMIN.getName();
+                break;
+            case MOD:
+                name = rank.MOD.getName();
+                break;
+            case ASSISTANT:
+                name = rank.ASSISTANT.getName();
+                break;
+            case YOUTUBE:
+                name = rank.YOUTUBE.getName();
+                break;
+            case DONOR1:
+                if (ruin.getName().equalsIgnoreCase(Ruin.HUB.getName())) {
+                    name = "Donor";
+                } else if (ruin.getName().equalsIgnoreCase(Ruin.AZTEC_MOUNTAIN.getName())) {
+                    name = "Native";
+                } else if (ruin.getName().equalsIgnoreCase(Ruin.TEMPLARS_CASCADE.getName())) {
+                    name = "Squire";
+                }
+                break;
+            case DONOR2:
+                if (ruin.getName().equalsIgnoreCase(Ruin.HUB.getName())) {
+                    name = "Donor";
+                } else if (ruin.getName().equalsIgnoreCase(Ruin.AZTEC_MOUNTAIN.getName())) {
+                    name = "Warrior";
+                } else if (ruin.getName().equalsIgnoreCase(Ruin.TEMPLARS_CASCADE.getName())) {
+                    name = "Sergeant";
+                }
+                break;
+            case DONOR3:
+                if (ruin.getName().equalsIgnoreCase(Ruin.HUB.getName())) {
+                    name = "Donor";
+                } else if (ruin.getName().equalsIgnoreCase(Ruin.AZTEC_MOUNTAIN.getName())) {
+                    name = "Grand";
+                } else if (ruin.getName().equalsIgnoreCase(Ruin.TEMPLARS_CASCADE.getName())) {
+                    name = "Knight";
+                }
+                break;
+            case DONOR4:
+                if (ruin.getName().equalsIgnoreCase(Ruin.HUB.getName())) {
+                    name = "Donor";
+                } else if (ruin.getName().equalsIgnoreCase(Ruin.AZTEC_MOUNTAIN.getName())) {
+                    name = "Elder";
+                } else if (ruin.getName().equalsIgnoreCase(Ruin.TEMPLARS_CASCADE.getName())) {
+                    name = "Lieutenant";
+                }
+                break;
+            case DONOR5:
+                if (ruin.getName().equalsIgnoreCase(Ruin.HUB.getName())) {
+                    name = "Donor";
+                } else if (ruin.getName().equalsIgnoreCase(Ruin.AZTEC_MOUNTAIN.getName())) {
+                    name = "Aztec";
+                } else if (ruin.getName().equalsIgnoreCase(Ruin.TEMPLARS_CASCADE.getName())) {
+                    name = "Crusader";
+                }
+                break;
+            case DEFAULT:
+                name = rank.DEFAULT.getName();
+                break;
+        }
+        return name;
+    }
+
     public static String[] combine(String[] arg1, String[] arg2) {
         String[] result = new String[arg1.length + arg2.length];
         System.arraycopy(arg1, 0, result, 0, arg1.length);
@@ -319,28 +390,28 @@ public class RankManager extends Database implements Listener {
         return Default;
     }
 
-    public String[] getPioneer() {
-        return combine(getDefault(), Pioneer);
+    public String[] getD1() {
+        return combine(getDefault(), D1);
     }
 
-    public String[] getHunter() {
-        return combine(getPioneer(), Hunter);
+    public String[] getD2() {
+        return combine(getD1(), D2);
     }
 
-    public String[] getExcavator() {
-        return combine(getHunter(), Excavator);
+    public String[] getD3() {
+        return combine(getD2(), D3);
     }
 
-    public String[] getLost() {
-        return combine(getExcavator(), Lost);
+    public String[] getD4() {
+        return combine(getD3(), D4);
     }
 
-    public String[] getForgotten() {
-        return combine(getLost(), Forgotten);
+    public String[] getD5() {
+        return combine(getD4(), D5);
     }
 
     public String[] getYoutube() {
-        return combine(getForgotten(), Youtube);
+        return combine(getD5(), Youtube);
     }
 
     public String[] getAssistant() {

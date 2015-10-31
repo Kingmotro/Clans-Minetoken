@@ -7,27 +7,29 @@ public enum Ranks {
     /**
      * Staff Ranks
      */
-    LEADER("Leader", ChatColor.DARK_RED, 100),
-    ADMIN("Admin", ChatColor.RED, 90),
-    MOD("MOD", ChatColor.YELLOW, 80),
-    ASSISTANT("Assistant", ChatColor.AQUA, 70),
+    LEADER("Leader", "Leader", ChatColor.DARK_RED, 100),
+    ADMIN("Admin", "Admin", ChatColor.RED, 90),
+    MOD("MOD", "Mod", ChatColor.YELLOW, 80),
+    ASSISTANT("Assistant", "Assistant", ChatColor.AQUA, 70),
     /**
      * Player Ranks
      */
-    YOUTUBE("Youtube", ChatColor.RED, 60),
-    FORGOTTEN("Forgotten", ChatColor.DARK_GREEN, 60),
-    LOST("Lost", ChatColor.GREEN, 50),
-    EXCAVATOR("Excavator", ChatColor.DARK_AQUA, 40),
-    HUNTER("Hunter", ChatColor.DARK_BLUE, 30),
-    PIONEER("Pioneer", ChatColor.GRAY, 20),
-    DEFAULT("", ChatColor.WHITE, 10);
+    YOUTUBE("Youtube", "Youtube", ChatColor.RED, 60),
+    DONOR5("D5", "Donor5", ChatColor.DARK_GREEN, 60),
+    DONOR4("D4", "Donor4", ChatColor.GREEN, 50),
+    DONOR3("D3", "Donor3", ChatColor.DARK_AQUA, 40),
+    DONOR2("D2", "Donor2", ChatColor.DARK_BLUE, 30),
+    DONOR1("D1", "Donor1", ChatColor.GRAY, 20),
+    DEFAULT("", "", ChatColor.WHITE, 10);
 
     public String name;
+    public String commandName;
     private ChatColor color;
     private int permLevel;
 
-    Ranks(String name, ChatColor color, int permLevel) {
+    Ranks(String name, String commandName, ChatColor color, int permLevel) {
         this.name = name;
+        this.commandName = commandName;
         this.color = color;
         this.permLevel = permLevel;
     }
@@ -36,12 +38,19 @@ public enum Ranks {
         return this.name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCommandName() {
+        return commandName;
+    }
+
     public int getPermLevel() {
         return this.permLevel;
     }
 
-    public String getTag(boolean bold, boolean uppercase) {
-        String name = this.name;
+    public String getTag(String name, boolean bold, boolean uppercase) {
         if (uppercase) {
             name = this.name.toUpperCase();
         }

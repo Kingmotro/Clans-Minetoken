@@ -8,6 +8,7 @@ import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -157,6 +158,16 @@ public class ShopManager implements Listener {
     public void onDamage(EntityDamageEvent event) {
         if(shopEntityMap.containsKey(event.getEntity())) {
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onUnloadChunk(ChunkUnloadEvent event) {
+        for(Entity entity : event.getChunk().getEntities()) {
+            if(shopEntityMap.containsKey(entity)) {
+                event.setCancelled(true);
+                System.out.println(Format.info("Stopped the unloading " + event.getChunk() + ", cause there is a shop entity in that chunk."));
+            }
         }
     }
 }

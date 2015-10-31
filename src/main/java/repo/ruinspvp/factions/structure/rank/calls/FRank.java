@@ -55,7 +55,7 @@ public class FRank extends DatabaseCall<RankManager> {
 
     public Ranks getRankFromString(String rank) {
         for (Ranks r : Ranks.values()) {
-            if (rank.equalsIgnoreCase(r.getName())) {
+            if (rank.equalsIgnoreCase(r.getCommandName())) {
                 return r;
             }
         }
