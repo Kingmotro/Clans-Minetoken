@@ -98,6 +98,11 @@ public class Scoreboard {
     }
 
     public void send(Player player) {
-        player.setScoreboard(scoreboard);
+        if(player.getScoreboard() != null) {
+            player.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+            player.setScoreboard(scoreboard);
+        } else {
+            player.setScoreboard(scoreboard);
+        }
     }
 }

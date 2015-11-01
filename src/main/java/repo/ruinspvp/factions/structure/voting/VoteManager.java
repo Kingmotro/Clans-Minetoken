@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,13 +28,12 @@ import java.util.UUID;
 public class VoteManager extends Database implements Listener {
 
     public Connection connection;
-    public FVote vote;
+    public FVote fVote;
     public RankManager rankManager;
     public EconomyManager economyManager;
 
     public VoteManager(JavaPlugin plugin, RankManager rankManager, EconomyManager economyManager) {
         super("root", "ThePyxel", "", "3306", "localhost");
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
         connection = openConnection();
         try {
             PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `votes` (`uuid` varchar(36) NOT NULL, `name` varchar(32) NOT NULL, `date` varchar(32) NOT NULL, `votes` int(8) NOT NULL)");
@@ -47,7 +47,9 @@ public class VoteManager extends Database implements Listener {
         this.rankManager = rankManager;
         this.economyManager = economyManager;
 
-        vote = new FVote(this);
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+
+        fVote = new FVote(this);
     }
 
 
@@ -63,48 +65,52 @@ public class VoteManager extends Database implements Listener {
         Player player = Bukkit.getPlayer(event.getVote().getUsername());
         UUID uuid = player.getUniqueId();
 
-        if(vote.checkExists(uuid) == Result.FALSE) {
-            if(rankManager.fPlayer.checkExists(uuid) == Result.FALSE) {
+        if (fVote.checkExists(uuid) == Result.FALSE) {
+            if (rankManager.fPlayer.checkExists(uuid) == Result.FALSE) {
                 Bukkit.getServer().broadcastMessage(Format.main("Vote", Format.highlight(player.getName()) + " just voted but isn't registered on our client system."));
                 Bukkit.getServer().broadcastMessage(Format.main("Vote", "If you see this message contact a Leader/Admin or post a forum thread."));
                 return;
             } else {
                 //TODO: Reward Player
-                for(Ruin ruin : Ruin.values()) {
+                for (Ruin ruin : Ruin.values()) {
                     economyManager.fEco.addMoney(player.getUniqueId(), 1000, ruin);
                 }
                 return;
             }
         } else {
-            if(rankManager.fPlayer.checkExists(uuid) == Result.FALSE) {
+            if (rankManager.fPlayer.checkExists(uuid) == Result.FALSE) {
                 Bukkit.getServer().broadcastMessage(Format.main("Vote", Format.highlight(player.getName()) + " just voted but isn't registered on our client system."));
                 Bukkit.getServer().broadcastMessage(Format.main("Vote", "If you see this message contact a Leader/Admin or post a forum thread."));
                 return;
             } else {
                 Bukkit.getServer().broadcastMessage(Format.main("Vote", Format.highlight(player.getName()) + " just voted for RuinsPvP on " + Format.highlight(event.getVote().getServiceName())));
-                //TODO: Reward Player
-                vote.setVotes(uuid, vote.getVotes(uuid) + 1);
-                for(Ruin ruin : Ruin.values()) {
+                fVote.setVotes(uuid, fVote.getVotes(uuid) + 1);
+                for (Ruin ruin : Ruin.values()) {
                     economyManager.fEco.addMoney(player.getUniqueId(), 1000, ruin);
                 }
-                player.sendMessage(Format.main("Vote", "You have received $1000 dollars on all ruins, for voting be sure to vote once a day on all the sites."));
+                try {
+                    if (player.isOnline()) {
+                        player.sendMessage(Format.main("Vote", "You have received $1000 dollars on all ruins, for voting be sure to vote once a day on all the sites."));
+                    }
+                } catch (Exception ignore) {}
                 return;
             }
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if(vote.checkExists(player.getUniqueId()) == Result.FALSE) {
+        if (fVote.checkExists(player.getUniqueId()) == Result.FALSE) {
             try {
-                vote.addPlayer(player.getUniqueId(), player.getName());
+                fVote.addPlayer(player.getUniqueId(), player.getName());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
+        }
+        if (!fVote.getName(player.getUniqueId()).equalsIgnoreCase(player.getName())) {
             try {
-                vote.updatePlayerName(player.getUniqueId(), player.getName());
+                fVote.updatePlayerName(player.getUniqueId(), player.getName());
             } catch (Exception e) {
                 e.printStackTrace();
             }

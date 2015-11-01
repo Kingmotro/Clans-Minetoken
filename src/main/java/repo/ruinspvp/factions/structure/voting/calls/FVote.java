@@ -1,8 +1,10 @@
 package repo.ruinspvp.factions.structure.voting.calls;
 
+import org.bukkit.Bukkit;
 import repo.ruinspvp.factions.structure.database.DatabaseCall;
 import repo.ruinspvp.factions.structure.rank.enums.Result;
 import repo.ruinspvp.factions.structure.voting.VoteManager;
+import repo.ruinspvp.factions.structure.voting.events.VoteEvent;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -103,15 +105,20 @@ public class FVote extends DatabaseCall<VoteManager> {
         }
     }
 
-    public int getVotes(UUID uuid) throws SQLException {
+    public int getVotes(UUID uuid) {
         plugin.checkConnection();
-        PreparedStatement ps = plugin.connection.prepareStatement("SELECT votes FROM votes WHERE uuid = ?");
-        ps.setString(1, uuid.toString());
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return rs.getInt("votes");
-        } else {
-            return -1;
+        try {
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT votes FROM votes WHERE uuid = ?");
+            ps.setString(1, uuid.toString());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("votes");
+            } else {
+                return -1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 
@@ -123,6 +130,7 @@ public class FVote extends DatabaseCall<VoteManager> {
             ps.setInt(1, amount);
             ps.setString(2, uuid.toString());
             ps.executeUpdate();
+            Bukkit.getPluginManager().callEvent(new VoteEvent(Bukkit.getPlayer(uuid), amount));
             return Result.SUCCESS;
         } catch (SQLException e) {
             e.printStackTrace();

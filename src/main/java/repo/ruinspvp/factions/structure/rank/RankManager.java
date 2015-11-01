@@ -208,7 +208,7 @@ public class RankManager extends Database implements Listener {
                 String name = event.getPlayer().getName();
                 String prefix;
                 if (rank.getPermLevel() > Ranks.DEFAULT.getPermLevel()) {
-                    prefix = rank.getTag(getRankwithRuin(rank), true, false) + " " + ChatColor.YELLOW + name;
+                    prefix = rank.getTag(getRankwithRuin( rank), true, false) + " " + ChatColor.YELLOW + name;
                 } else {
                     prefix = ChatColor.YELLOW + name;
                 }

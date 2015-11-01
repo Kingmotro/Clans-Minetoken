@@ -13,6 +13,7 @@ import repo.ruinspvp.factions.structure.factioncenter.FactionCenterManager;
 import repo.ruinspvp.factions.structure.inventory.MenuManager;
 import repo.ruinspvp.factions.structure.npc.NPCManager;
 import repo.ruinspvp.factions.structure.rank.RankManager;
+import repo.ruinspvp.factions.structure.scoreboard.ScoreboardManager;
 import repo.ruinspvp.factions.structure.shop.ShopManager;
 import repo.ruinspvp.factions.structure.shop.am.menus.ArmoryMenu;
 import repo.ruinspvp.factions.structure.voting.VoteManager;
@@ -35,12 +36,13 @@ public class Factions extends JavaPlugin {
         RankManager rankManager = new RankManager(this, factionManager, ruin);
         EconomyManager economyManager = new EconomyManager(this, ruin);
         MenuManager menuManager = new MenuManager(this);
+        VoteManager voteManager = new VoteManager(this, rankManager, economyManager);
         new ShopManager(this, economyManager, ruin, menuManager);
         new NPCManager(this);
-        new VoteManager(this, rankManager, economyManager);
         new EnchantManager(this);
         new ConsoleManager(this, rankManager, economyManager);
         new FactionCenterManager(this, factionManager, ruin, menuManager);
+        new ScoreboardManager(this, factionManager, rankManager, economyManager, voteManager, menuManager);
 
         if (ruin == Ruin.HUB) {
             new Hub(this);

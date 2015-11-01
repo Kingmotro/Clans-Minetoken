@@ -24,12 +24,15 @@ public class FactionScoreboard extends Scoreboard {
             try {
                 if(Bukkit.getPlayer(uuid).isOnline()) {
                     Player member = Bukkit.getPlayer(uuid);
-                    if(i != 0) {
-                        i--;
-                        add(member.getName(), i);
+                    if (member != player) {
+                        if (i != 0) {
+                            i--;
+                            add(member.getName(), i);
+                        }
                     }
                 }
             } catch (Exception ignore) {}
         }
+        build();
     }
 }
