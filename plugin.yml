@@ -1,4 +1,4 @@
-name: ${project.name}
+name: Clans
 version: ${project.version}
 main: repo.ruinspvp.factions.Factions
 commands:
