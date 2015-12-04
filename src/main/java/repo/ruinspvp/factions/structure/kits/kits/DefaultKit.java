@@ -3,11 +3,13 @@ package repo.ruinspvp.factions.structure.kits.kits;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import repo.ruinspvp.factions.structure.kits.Kit;
+import repo.ruinspvp.factions.utilities.ItemStackBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ public class DefaultKit implements Kit {
 
     @Override
     public ItemStack displayItem() {
-        ItemStack itemStack = new ItemStack(Material.BOW);
+        ItemStack itemStack = new ItemStack(Material.IRON_SWORD);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.GREEN + getName() + " Kit");
         List<String> lore = new ArrayList<>();

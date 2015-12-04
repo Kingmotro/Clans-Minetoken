@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -43,20 +44,20 @@ public class RankManager extends Database implements Listener {
     /**
      * Player Ranks
      */
-    String[] Default = {"ruinspvp.default"};
-    String[] D1 = {"ruinspvp.d1", "ruinspvp.repair2"};
-    String[] D2 = {"ruinspvp.d2", "ruinspvp.repair2", "ruinspvp.smelt2"};
-    String[] D3 = {"ruinspvp.d3", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
-    String[] D4 = {"ruinspvp.d4", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
-    String[] D5 = {"ruinspvp.d5", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
-    String[] Youtube = {"ruinspvp.youtube", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
+    String[] Default = {"minetoken.default"};
+    String[] D1 = {"minetoken.d1", "minetoken.repair2"};
+    String[] D2 = {"minetoken.d2", "minetoken.repair2", "minetoken.smelt2"};
+    String[] D3 = {"minetoken.d3", "minetoken.repair2", "minetoken.smelt2", "ruinspvp.smelt3"};
+    String[] D4 = {"minetoken.d4", "minetoken.repair2", "minetoken.smelt2", "minetoken.smelt3"};
+    String[] D5 = {"minetoken.d5", "minetoken.repair2", "minetoken.smelt2", "minetoken.smelt3"};
+    String[] Youtube = {"minetoken.youtube", "minetoken.repair2", "minetoken.smelt2", "minetoken.smelt3"};
     /**
      * Staff Ranks
      */
-    String[] Assistant = {"ruinspvp.assistant", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
-    String[] MOD = {"ruinspvp.mod", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
-    String[] Admin = {"ruinspvp.admin", "ruinspvp.repair2", "ruinspvp.smelt2", "ruinspvp.smelt3"};
-    String[] Leader = {"ruinspvp.leader", "*.*"};
+    String[] Assistant = {"minetoken.assistant", "minetoken.repair2", "minetoken.smelt2", "minetoken.smelt3"};
+    String[] MOD = {"minetoken.mod", "minetoken.repair2", "minetoken.smelt2", "minetoken.smelt3"};
+    String[] Admin = {"minetoken.admin", "minetoken.repair2", "minetoken.smelt2", "minetoken.smelt3"};
+    String[] Leader = {"minetoken.leader", "*.*"};
 
     public Ruin ruin;
 
@@ -99,22 +100,6 @@ public class RankManager extends Database implements Listener {
         Player player = event.getPlayer();
         Ranks rank = fRank.getRank(player.getUniqueId());
         event.setJoinMessage(Format.main("Join", player.getName()));
-        if (fRank.getRank(player.getUniqueId()) == Ranks.DEFAULT) {
-            if (factionManager.fPlayer.hasFaction(player.getUniqueId()) == Result.TRUE) {
-                player.setDisplayName(ChatColor.YELLOW + factionManager.fPlayer.getFaction(player.getUniqueId())
-                        + ChatColor.RED + "[" + factionManager.fPlayer.getFRank(player.getUniqueId()).getAbv() + "]" + player.getName());
-            } else {
-                player.setDisplayName(player.getName());
-            }
-        } else {
-            if (factionManager.fPlayer.hasFaction(player.getUniqueId()) == Result.TRUE) {
-                player.setDisplayName(ChatColor.YELLOW + factionManager.fPlayer.getFaction(player.getUniqueId())
-                        + ChatColor.RED + "[" + factionManager.fPlayer.getFRank(player.getUniqueId()).getAbv() + "]"
-                        + rank.getTag(getRankwithRuin(rank), true, true) + ChatColor.RESET + " " + player.getName());
-            } else {
-                player.setDisplayName(rank.getTag(getRankwithRuin(rank), true, true) + ChatColor.RESET + " " + player.getName());
-            }
-        }
         if (fPlayer.checkExists(player.getUniqueId()) == Result.FALSE) {
             try {
                 fPlayer.addPlayer(player.getUniqueId(), player.getName());
@@ -204,18 +189,18 @@ public class RankManager extends Database implements Listener {
     public void onRankChange(RankChangeEvent event) {
         try {
             if (event.getPlayer().isOnline() == true) {
-                Ranks rank = event.getRank();
+                Ranks ranks = event.getRank();
                 String name = event.getPlayer().getName();
                 String prefix;
-                if (rank.getPermLevel() > Ranks.DEFAULT.getPermLevel()) {
-                    prefix = rank.getTag(getRankwithRuin( rank), true, false) + " " + ChatColor.YELLOW + name;
+                if (ranks.getPermLevel() > Ranks.DEFAULT.getPermLevel()) {
+                    prefix = ranks.getTag(getRankwithRuin(ranks), true, false) + " " + ChatColor.YELLOW + name;
                 } else {
                     prefix = ChatColor.YELLOW + name;
                 }
                 event.getPlayer().setDisplayName(prefix);
                 PermissionAttachment permissionAttachment = playerPermission.get(event.getPlayer().getUniqueId());
 
-                switch (rank) {
+                switch (ranks) {
                     case DEFAULT:
                         for (String perms : getDefault()) {
                             permissionAttachment.setPermission(perms, true);
@@ -277,8 +262,8 @@ public class RankManager extends Database implements Listener {
         }
     }
 
-    @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent e) throws SQLException {
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerChat(AsyncPlayerChatEvent e) {
         Player player = e.getPlayer();
         String rank;
         String faction;
@@ -293,7 +278,7 @@ public class RankManager extends Database implements Listener {
         } else {
             faction = "";
         }
-        e.setFormat(faction + rank + ChatColor.GRAY + ": " + ChatColor.WHITE + e.getMessage());
+        e.setFormat(faction + rank + ChatColor.GRAY + ": " + ChatColor.WHITE + "%2$s");
     }
 
     @EventHandler
@@ -314,67 +299,79 @@ public class RankManager extends Database implements Listener {
         switch (rank) {
             case LEADER:
                 name = rank.LEADER.getName();
-                break;
+                return name;
             case ADMIN:
                 name = rank.ADMIN.getName();
-                break;
+                return name;
             case MOD:
                 name = rank.MOD.getName();
-                break;
+                return name;
             case ASSISTANT:
                 name = rank.ASSISTANT.getName();
-                break;
+                return name;
             case YOUTUBE:
                 name = rank.YOUTUBE.getName();
-                break;
+                return name;
             case DONOR1:
                 if (ruin.getName().equalsIgnoreCase(Ruin.HUB.getName())) {
                     name = "Donor";
+                    return name;
                 } else if (ruin.getName().equalsIgnoreCase(Ruin.AZTEC_MOUNTAIN.getName())) {
                     name = "Native";
+                    return name;
                 } else if (ruin.getName().equalsIgnoreCase(Ruin.TEMPLARS_CASCADE.getName())) {
                     name = "Squire";
+                    return name;
                 }
                 break;
             case DONOR2:
                 if (ruin.getName().equalsIgnoreCase(Ruin.HUB.getName())) {
                     name = "Donor";
+                    return name;
                 } else if (ruin.getName().equalsIgnoreCase(Ruin.AZTEC_MOUNTAIN.getName())) {
                     name = "Warrior";
+                    return name;
                 } else if (ruin.getName().equalsIgnoreCase(Ruin.TEMPLARS_CASCADE.getName())) {
                     name = "Sergeant";
+                    return name;
                 }
                 break;
             case DONOR3:
                 if (ruin.getName().equalsIgnoreCase(Ruin.HUB.getName())) {
                     name = "Donor";
+                    return name;
                 } else if (ruin.getName().equalsIgnoreCase(Ruin.AZTEC_MOUNTAIN.getName())) {
                     name = "Grand";
+                    return name;
                 } else if (ruin.getName().equalsIgnoreCase(Ruin.TEMPLARS_CASCADE.getName())) {
                     name = "Knight";
+                    return name;
                 }
-                break;
             case DONOR4:
                 if (ruin.getName().equalsIgnoreCase(Ruin.HUB.getName())) {
                     name = "Donor";
+                    return name;
                 } else if (ruin.getName().equalsIgnoreCase(Ruin.AZTEC_MOUNTAIN.getName())) {
                     name = "Elder";
+                    return name;
                 } else if (ruin.getName().equalsIgnoreCase(Ruin.TEMPLARS_CASCADE.getName())) {
                     name = "Lieutenant";
+                    return name;
                 }
-                break;
             case DONOR5:
                 if (ruin.getName().equalsIgnoreCase(Ruin.HUB.getName())) {
                     name = "Donor";
+                    return name;
                 } else if (ruin.getName().equalsIgnoreCase(Ruin.AZTEC_MOUNTAIN.getName())) {
                     name = "Aztec";
+                    return name;
                 } else if (ruin.getName().equalsIgnoreCase(Ruin.TEMPLARS_CASCADE.getName())) {
                     name = "Crusader";
+                    return name;
                 }
-                break;
             case DEFAULT:
                 name = rank.DEFAULT.getName();
-                break;
+                return name;
         }
         return name;
     }

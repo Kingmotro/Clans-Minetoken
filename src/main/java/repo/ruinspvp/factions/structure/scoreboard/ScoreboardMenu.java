@@ -33,13 +33,12 @@ public class ScoreboardMenu extends Menu {
                 player.closeInventory();
                 FactionScoreboard factionScoreboard = new FactionScoreboard(player, scoreboardManager.factionManager);
                 factionScoreboard.send(player);
-                scoreboardManager.addPlayerScoreboard(player, factionScoreboard);
+                scoreboardManager.addFactionScoreboard(player, factionScoreboard);
                 break;
             case "Player Scoreboard":
                 player.closeInventory();
                 PlayerScoreboard playerScoreboard = new PlayerScoreboard(player, scoreboardManager);
                 playerScoreboard.send(player);
-                scoreboardManager.plugin.getServer().getPluginManager().registerEvents(playerScoreboard, scoreboardManager.plugin);
                 scoreboardManager.addPlayerScoreboard(player, playerScoreboard);
                 break;
         }

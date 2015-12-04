@@ -15,12 +15,12 @@ public enum Ranks {
      * Player Ranks
      */
     YOUTUBE("Youtube", "Youtube", ChatColor.RED, 60),
-    DONOR5("D5", "Donor5", ChatColor.DARK_GREEN, 60),
-    DONOR4("D4", "Donor4", ChatColor.GREEN, 50),
-    DONOR3("D3", "Donor3", ChatColor.DARK_AQUA, 40),
-    DONOR2("D2", "Donor2", ChatColor.DARK_BLUE, 30),
-    DONOR1("D1", "Donor1", ChatColor.GRAY, 20),
-    DEFAULT("", "", ChatColor.WHITE, 10);
+    DONOR5("Donor5", "D5", ChatColor.DARK_GREEN, 60),
+    DONOR4("Donor4", "D4", ChatColor.GREEN, 50),
+    DONOR3("Donor3", "D3", ChatColor.DARK_AQUA, 40),
+    DONOR2("Donor2", "D2", ChatColor.DARK_BLUE, 30),
+    DONOR1("Donor1", "D1", ChatColor.GRAY, 20),
+    DEFAULT("", "None", ChatColor.WHITE, 10);
 
     public String name;
     public String commandName;
@@ -52,7 +52,7 @@ public enum Ranks {
 
     public String getTag(String name, boolean bold, boolean uppercase) {
         if (uppercase) {
-            name = this.name.toUpperCase();
+            name = name.toUpperCase();
         }
         if (bold) {
             return this.color +""+ ChatColor.BOLD + name;

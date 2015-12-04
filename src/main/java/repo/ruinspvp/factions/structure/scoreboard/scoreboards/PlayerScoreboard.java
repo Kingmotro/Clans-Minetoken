@@ -4,7 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
 import repo.ruinspvp.factions.structure.economy.EconomyManager;
 import repo.ruinspvp.factions.structure.economy.events.MoneyChangeEvent;
 import repo.ruinspvp.factions.structure.faction.FactionManager;
@@ -20,7 +19,7 @@ import repo.ruinspvp.factions.structure.scoreboard.ScoreboardManager;
 import repo.ruinspvp.factions.structure.voting.VoteManager;
 import repo.ruinspvp.factions.structure.voting.events.VoteEvent;
 
-public class PlayerScoreboard extends Scoreboard implements Listener {
+public class PlayerScoreboard extends Scoreboard {
 
     public Player player;
     public ScoreboardManager scoreboardManager;
@@ -29,8 +28,8 @@ public class PlayerScoreboard extends Scoreboard implements Listener {
     public VoteManager voteManager;
     public FactionManager factionManager;
 
-    public int eco;
     public Ranks ranks;
+    public int eco;
     public String faction;
     public FactionRanks factionRanks;
     public int votes;
@@ -44,69 +43,58 @@ public class PlayerScoreboard extends Scoreboard implements Listener {
         this.voteManager = scoreboardManager.voteManager;
         this.factionManager = scoreboardManager.factionManager;
 
-        this.eco = economyManager.fEco.getMoney(player.getUniqueId());
         this.ranks = rankManager.fRank.getRank(player.getUniqueId());
+        this.eco = economyManager.fEco.getMoney(player.getUniqueId());
         this.faction = factionManager.fPlayer.getFaction(player.getUniqueId());
         this.factionRanks = factionManager.fPlayer.getFRank(player.getUniqueId());
         this.votes = voteManager.fVote.getVotes(player.getUniqueId());
 
         add(ChatColor.GREEN + "" + ChatColor.BOLD + "Server Rank", 14);
-        add(ranks.getName(), 13);
-        add("งr  ", 12);
+        add(rankManager.getRankwithRuin(ranks), 13);
+        add("ยงr  ", 12);
         add(ChatColor.AQUA + "" + ChatColor.BOLD + "Economy", 11);
         add(Integer.toString(eco), 10);
-        add("ง4  ", 9);
+        add("ยง4  ", 9);
         add(ChatColor.GOLD + "" + ChatColor.BOLD + "Faction", 8);
         add(faction, 7);
-        add("ง2  ", 6);
+        add("ยง2  ", 6);
         add(ChatColor.RED + "" + ChatColor.BOLD + "Faction Rank", 5);
         add(factionRanks.getName(), 4);
-        add("งc  ", 3);
+        add("ยงc  ", 3);
         add(ChatColor.GOLD + "" + ChatColor.BOLD + "Votes", 2);
         add(Integer.toString(votes), 1);
 
         build();
     }
 
-    @EventHandler
-    public void onFactionJoin(PlayerJoinFactionEvent event) {
-        if (scoreboardManager.playerScoreboard.get(event.getPlayer().getUniqueId()) == this) {
-            this.faction = event.getFaction();
-        }
+    public void setRanks(Ranks ranks) {
+        getScoreboard().resetScores(rankManager.getRankwithRuin(this.ranks));
+        this.ranks = ranks;
+        getObjective().getScore(rankManager.getRankwithRuin(ranks)).setScore(13);
     }
 
-    @EventHandler
-    public void onFactionLeave(PlayerLeaveFactionEvent event) {
-        if (scoreboardManager.playerScoreboard.get(event.getPlayer().getUniqueId()) == this) {
-            this.faction = "None";
-        }
+    public void setEco(int eco) {
+        getScoreboard().resetScores(Integer.toString(this.eco));
+        this.eco = eco;
+        getObjective().getScore(Integer.toString(eco)).setScore(10);
     }
 
-    @EventHandler
-    public void onMoneyChange(MoneyChangeEvent event) {
-        if (scoreboardManager.playerScoreboard.get(event.getPlayer().getUniqueId()) == this) {
-            this.eco = economyManager.fEco.getMoney(event.getPlayer().getUniqueId()) + event.getAmount();
-        }
+    public void setFaction(String faction) {
+        getScoreboard().resetScores(this.faction);
+        this.faction = faction;
+        add(faction, 7);
+        getObjective().getScore(faction).setScore(7);
     }
 
-    @EventHandler
-    public void onRankChange(RankChangeEvent event) {
-        if (scoreboardManager.playerScoreboard.get(event.getPlayer().getUniqueId()) == this) {
-            this.ranks = event.getRank();
-        }
+    public void setFactionRanks(FactionRanks factionRanks) {
+        getScoreboard().resetScores(this.factionRanks.getName());
+        this.factionRanks = factionRanks;
+        getObjective().getScore(factionRanks.getName()).setScore(3);
     }
 
-    @EventHandler
-    public void onFactionsRankChange(FactionRankChangeEvent event) {
-        if (scoreboardManager.playerScoreboard.get(event.getPlayer().getUniqueId()) == this) {
-            this.factionRanks = event.getRank();
-        }
-    }
-
-    @EventHandler
-    public void onVote(VoteEvent event) {
-        if (scoreboardManager.playerScoreboard.get(event.getPlayer().getUniqueId()) == this) {
-            this.votes = event.getAmount();
-        }
+    public void setVotes(int votes) {
+        getScoreboard().resetScores(Integer.toString(this.votes));
+        this.votes = votes;
+        getObjective().getScore(Integer.toString(votes)).setScore(1);
     }
 }

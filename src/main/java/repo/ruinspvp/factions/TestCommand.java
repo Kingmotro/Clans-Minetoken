@@ -3,6 +3,7 @@ package repo.ruinspvp.factions;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,8 +11,10 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import repo.ruinspvp.factions.structure.factioncenter.FactionCenterMenu;
 import repo.ruinspvp.factions.structure.shop.am.Armory;
 
 public class TestCommand implements CommandExecutor, Listener {
@@ -25,7 +28,8 @@ public class TestCommand implements CommandExecutor, Listener {
     @Override
     public boolean onCommand(final CommandSender commandSender, Command command, String s, String[] strings) {
         final Player player = (Player) commandSender;
-
+        Block block = null;
+        block.setMetadata("STATION", new FixedMetadataValue(factions, ""));
         return false;
     }
 

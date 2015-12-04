@@ -8,6 +8,8 @@ import repo.ruinspvp.factions.structure.faction.enums.FactionRanks;
 import repo.ruinspvp.factions.structure.faction.events.FactionCreateEvent;
 import repo.ruinspvp.factions.structure.faction.events.FactionDeleteEvent;
 import repo.ruinspvp.factions.structure.faction.events.FactionRankChangeEvent;
+import repo.ruinspvp.factions.structure.factioncenter.events.FactionEnlistEvent;
+import repo.ruinspvp.factions.structure.factioncenter.events.FactionUnenlistEvent;
 import repo.ruinspvp.factions.structure.rank.enums.Result;
 
 import java.sql.PreparedStatement;
@@ -101,6 +103,64 @@ public class FFaction extends DatabaseCall<FactionManager> {
         }
     }
 
+    public Result isEnlisted(String name) {
+        plugin.checkConnection();
+        try {
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT name FROM factioncenter WHERE name=?");
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return Result.TRUE;
+            } else {
+                return Result.FALSE;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Result.ERROR;
+        }
+    }
+
+    public Result enlistFaction(String name) {
+        plugin.checkConnection();
+        if (checkExists(name) == Result.FALSE) {
+            PreparedStatement ps;
+            try {
+                ps = plugin.connection.prepareStatement("INSERT INTO `factioncenter` VALUES (?,?,?)");
+                ps.setString(1, name);
+                ps.setString(2, plugin.getCurrentDate());
+                ps.setString(3, plugin.ruin.getName());
+                ps.executeUpdate();
+                Bukkit.getServer().getPluginManager().callEvent(new FactionEnlistEvent(name));
+                return Result.SUCCESS;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return Result.ERROR;
+            }
+        } else {
+            return Result.ERROR;
+        }
+    }
+
+    public Result unenlistFaction(String name) {
+        plugin.checkConnection();
+        if (checkExists(name) == Result.TRUE) {
+            PreparedStatement ps;
+            try {
+                ps = plugin.connection.prepareStatement("DELETE FROM factioncenter WHERE name=? AND ruin=?");
+                ps.setString(1, name);
+                ps.setString(2, plugin.ruin.getName());
+                ps.executeUpdate();
+                Bukkit.getServer().getPluginManager().callEvent(new FactionUnenlistEvent(name));
+                return Result.SUCCESS;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return Result.ERROR;
+            }
+        } else {
+            return Result.ERROR;
+        }
+    }
+
     public Result deleteFaction(String name) {
         plugin.checkConnection();
         if (checkExists(name) == Result.TRUE) {
@@ -111,6 +171,9 @@ public class FFaction extends DatabaseCall<FactionManager> {
                 ps.setString(2, plugin.ruin.getName());
                 ps.executeUpdate();
                 Bukkit.getServer().getPluginManager().callEvent(new FactionDeleteEvent(name));
+                if(isEnlisted(name) == Result.TRUE) {
+                    unenlistFaction(name);
+                }
                 return Result.SUCCESS;
             } catch (SQLException e) {
                 e.printStackTrace();

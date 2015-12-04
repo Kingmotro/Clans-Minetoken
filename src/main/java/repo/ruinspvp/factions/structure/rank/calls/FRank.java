@@ -41,7 +41,7 @@ public class FRank extends DatabaseCall<RankManager> {
         plugin.checkConnection();
         try {
             PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `ranks` SET rank=? WHERE uuid=? AND ruin=?");
-            ps.setString(1, rank.getName());
+            ps.setString(1, rank.getCommandName());
             ps.setString(2, uuid.toString());
             ps.setString(3, plugin.ruin.getName());
             ps.executeUpdate();

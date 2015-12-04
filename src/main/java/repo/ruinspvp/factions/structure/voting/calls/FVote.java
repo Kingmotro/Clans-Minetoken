@@ -20,7 +20,7 @@ public class FVote extends DatabaseCall<VoteManager> {
     public String getName(UUID uuid) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT name FROM VOTIFIERDATABASE WHERE uuid = ?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT name FROM votes WHERE uuid=?");
             ps.setString(1, uuid.toString());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -38,7 +38,7 @@ public class FVote extends DatabaseCall<VoteManager> {
     public UUID getUUID(String name) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM votes WHERE name = ?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM votes WHERE name=?");
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -55,7 +55,7 @@ public class FVote extends DatabaseCall<VoteManager> {
     public Result checkExists(UUID uuid) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM votes WHERE uuid = ?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT uuid FROM votes WHERE uuid=?");
             ps.setString(1, uuid.toString());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -93,7 +93,7 @@ public class FVote extends DatabaseCall<VoteManager> {
     public Result updatePlayerName(UUID p, String newName) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `votes` SET name=?,date=? WHERE uuid = ?");
+            PreparedStatement ps = plugin.connection.prepareStatement("UPDATE `votes` SET name=?,date=? WHERE uuid=?");
             ps.setString(1, newName);
             ps.setString(2, plugin.getCurrentDate());
             ps.setString(3, p.toString());
@@ -108,7 +108,7 @@ public class FVote extends DatabaseCall<VoteManager> {
     public int getVotes(UUID uuid) {
         plugin.checkConnection();
         try {
-            PreparedStatement ps = plugin.connection.prepareStatement("SELECT votes FROM votes WHERE uuid = ?");
+            PreparedStatement ps = plugin.connection.prepareStatement("SELECT votes FROM votes WHERE uuid=?");
             ps.setString(1, uuid.toString());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -126,7 +126,7 @@ public class FVote extends DatabaseCall<VoteManager> {
         plugin.checkConnection();
         PreparedStatement ps;
         try {
-            ps = plugin.connection.prepareStatement("UPDATE `votes` SET votes = ? WHERE uuid = ?");
+            ps = plugin.connection.prepareStatement("UPDATE `votes` SET votes = ? WHERE uuid=?");
             ps.setInt(1, amount);
             ps.setString(2, uuid.toString());
             ps.executeUpdate();

@@ -4,7 +4,6 @@ import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -18,9 +17,7 @@ import repo.ruinspvp.factions.structure.inventory.MenuManager;
 import repo.ruinspvp.factions.structure.shop.am.Armory;
 import repo.ruinspvp.factions.utilities.EntityUtil;
 import repo.ruinspvp.factions.utilities.Format;
-import repo.ruinspvp.factions.utilities.HologramUtil;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 
 public class ShopManager implements Listener {
@@ -90,8 +87,6 @@ public class ShopManager implements Listener {
 
     public void sell(Player player, int price, ItemStack itemStack) {
         for (ItemStack stacks : player.getInventory().getContents()) {
-            if (stacks == null || stacks.getType() == Material.AIR || !stacks.hasItemMeta()) continue;
-
             if (stacks.getType() != itemStack.getType()) {
                 player.sendMessage(Format.main("Shop", "Seems like you don't you have this item."));
                 return;
@@ -102,15 +97,14 @@ public class ShopManager implements Listener {
                 return;
             }
 
-            if (stacks.getAmount() != itemStack.getAmount()) {
-                player.sendMessage(Format.main("Shop", "You don't have the same amount of items required to sell this."));
+            if (stacks.getAmount() == itemStack.getAmount()) {
+                player.sendMessage(Format.main("Shop", "You have sold " + itemStack.getType().name() + " for " + price + "."));
+                economyManager.fEco.addMoney(player.getUniqueId(), price);
                 return;
+            } else {
+                player.sendMessage(Format.main("Shop", "You don't have the same amount of items required to sell this."));
             }
-            player.getInventory().remove(stacks);
         }
-
-        player.sendMessage(Format.main("Shop", "You have sold " + itemStack.getType().name() + " for " + price + "."));
-        economyManager.fEco.addMoney(player.getUniqueId(), price);
     }
 
 
@@ -156,15 +150,15 @@ public class ShopManager implements Listener {
 
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
-        if(shopEntityMap.containsKey(event.getEntity())) {
+        if (shopEntityMap.containsKey(event.getEntity())) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onUnloadChunk(ChunkUnloadEvent event) {
-        for(Entity entity : event.getChunk().getEntities()) {
-            if(shopEntityMap.containsKey(entity)) {
+        for (Entity entity : event.getChunk().getEntities()) {
+            if (shopEntityMap.containsKey(entity)) {
                 event.setCancelled(true);
                 System.out.println(Format.info("Stopped the unloading " + event.getChunk() + ", cause there is a shop entity in that chunk."));
             }

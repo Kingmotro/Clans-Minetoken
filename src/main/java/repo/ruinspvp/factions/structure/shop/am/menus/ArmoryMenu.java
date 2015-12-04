@@ -13,7 +13,7 @@ public class ArmoryMenu extends Menu {
     public ShopManager shopManager;
 
     public ArmoryMenu(ShopManager shopManager) {
-        super("AZTEC ARMORY", 54);
+        super("AZTEC ARMORY", 9);
         this.shopManager = shopManager;
         getInventory().addItem(new ItemStackBuilder(Material.IRON_SWORD).withName(ChatColor.GREEN + "Iron Sword").withLore("Forged by the aztecs with the finest materials.").build());
     }
@@ -22,14 +22,14 @@ public class ArmoryMenu extends Menu {
     public void leftClick(Player player, ItemStack itemStack) {
         String itemName = getFriendlyName(itemStack);
 
-        if(itemName == null) {
+        if (itemName == null) {
             return;
         }
 
         switch (itemName) {
             case "Iron Sword":
-                shopManager.buy(player, 0, new ItemStack(Material.IRON_SWORD));
-            case "":
+                shopManager.buy(player, 0, new ItemStack(Material.IRON_SWORD, 1));
+                break;
         }
     }
 
@@ -37,14 +37,14 @@ public class ArmoryMenu extends Menu {
     public void rightClick(Player player, ItemStack itemStack) {
         String itemName = getFriendlyName(itemStack);
 
-        if(itemName == null) {
+        if (itemName == null) {
             return;
         }
 
         switch (itemName) {
             case "Iron Sword":
-                shopManager.sell(player, 10, new ItemStack(Material.IRON_SWORD));
-            case "":
+                shopManager.sell(player, 10, new ItemStack(Material.IRON_SWORD, 1));
+                break;
         }
     }
 

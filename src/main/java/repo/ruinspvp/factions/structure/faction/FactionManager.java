@@ -14,6 +14,7 @@ import repo.ruinspvp.factions.structure.faction.events.FactionCreateEvent;
 import repo.ruinspvp.factions.structure.faction.events.FactionDeleteEvent;
 import repo.ruinspvp.factions.structure.faction.factionCalls.FFaction;
 import repo.ruinspvp.factions.structure.faction.playerCalls.FPlayer;
+import repo.ruinspvp.factions.structure.factioncenter.FactionCenterManager;
 import repo.ruinspvp.factions.structure.rank.RankManager;
 import repo.ruinspvp.factions.structure.rank.enums.Ranks;
 import repo.ruinspvp.factions.structure.rank.enums.Result;
@@ -37,6 +38,8 @@ public class FactionManager extends Database implements Listener {
     public HashMap<UUID, FactionInvite> invitedPlayer;
 
     public Ruin ruin;
+
+    public FactionCenterManager factionCenterManager;
 
     public FactionManager(JavaPlugin plugin, Ruin ruin) {
         super("root", "ThePyxel", "", "3306", "localhost");

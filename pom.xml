@@ -6,8 +6,12 @@
 
     <groupId>repo.ruinspvp</groupId>
     <artifactId>RuinsPvPFactions</artifactId>
-    <version>1.7-SNAPSHOT</version>
+    <version>1.9-SNAPSHOT</version>
     <name>Factions</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <repositories>
         <repository>

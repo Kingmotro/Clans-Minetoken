@@ -1,7 +1,6 @@
 package repo.ruinspvp.factions.structure.faction.playerCalls;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import repo.ruinspvp.factions.structure.database.DatabaseCall;
 import repo.ruinspvp.factions.structure.faction.FactionManager;
 import repo.ruinspvp.factions.structure.faction.enums.FactionRanks;

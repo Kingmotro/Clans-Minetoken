@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Scoreboard {
-    private org.bukkit.scoreboard.Scoreboard scoreboard;
 
+    private org.bukkit.scoreboard.Scoreboard scoreboard;
+    private Objective objective;
 
     private String title;
     private Map<String, Integer> scores;
@@ -47,7 +48,7 @@ public class Scoreboard {
 
     private String fixDuplicates(String text) {
         while (scores.containsKey(text))
-            text += "§r";
+            text += "Â§r";
         if (text.length() > 48)
             text = text.substring(0, 47);
         return text;
@@ -68,9 +69,9 @@ public class Scoreboard {
     }
 
     public void build() {
-        Objective obj = scoreboard.registerNewObjective((title.length() > 16 ? title.substring(0, 15) : title), "dummy");
-        obj.setDisplayName(title);
-        obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+        objective = scoreboard.registerNewObjective((title.length() > 16 ? title.substring(0, 15) : title), "dummy");
+        objective.setDisplayName(title);
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         int index = scores.size();
 
@@ -80,7 +81,7 @@ public class Scoreboard {
             OfflinePlayer player = Bukkit.getOfflinePlayer(team.getValue());
             if (team.getKey() != null)
                 team.getKey().addPlayer(player);
-            obj.getScore(player).setScore(score);
+            objective.getScore(player).setScore(score);
             index -= 1;
         }
     }
@@ -95,6 +96,10 @@ public class Scoreboard {
 
     public org.bukkit.scoreboard.Scoreboard getScoreboard() {
         return scoreboard;
+    }
+
+    public Objective getObjective() {
+        return objective;
     }
 
     public void send(Player player) {
