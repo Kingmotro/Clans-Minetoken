@@ -20,10 +20,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 
+import net.md_5.bungee.api.ChatColor;
 import repo.minetoken.clans.Clans;
 import repo.minetoken.clans.cooldowns.Cooldown;
 import repo.minetoken.clans.structure.character.SkillType;
 import repo.minetoken.clans.structure.character.Skills;
+import repo.minetoken.clans.utilities.Format;
 import repo.minetoken.clans.utilities.UtilSound;
 import repo.minetoken.clans.utilities.UtilSound.Pitch;
 
@@ -45,6 +47,12 @@ public class Rush extends Skills {
 					Cooldown.coolDurMessage(player, "Rush");
 					return;
 				}
+				Material m = player.getLocation().getBlock().getType();
+			    if (m == Material.STATIONARY_WATER || m == Material.WATER) {
+			    	player.sendMessage(Format.main("C", "You cannot use " + ChatColor.LIGHT_PURPLE + "Rush" + ChatColor.YELLOW + " in water!"));
+			    	UtilSound.play(player, Sound.VILLAGER_HIT, Pitch.HIGH);
+			    	return;
+			    }
 				Vector v = player.getLocation().getDirection().multiply(3.5).setY(1);
 				player.setVelocity(v);
 				Bukkit.getWorld(player.getWorld().getName()).playEffect(player.getLocation(), Effect.STEP_SOUND, 57);
