@@ -25,7 +25,7 @@ public class TestCommand implements CommandExecutor, Listener {
     @Override
     public boolean onCommand(final CommandSender commandSender, Command command, String s, String[] strings) {
         final Player player = (Player) commandSender;
-        new ClansCenterMenu(clans.getClansCenterManager()).show(player);
+        clans.disguiseManager.disguisePlayer(player);
         return false;
     }
 

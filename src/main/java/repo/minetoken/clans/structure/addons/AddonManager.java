@@ -11,7 +11,7 @@ public class AddonManager{
 	Addon[] addons;
 
 	public AddonManager() {
-		addons = new Addon[] {new Soup()};
+		addons = new Addon[] {new Soup(this)};
 		register();
 	}
 	
@@ -20,5 +20,7 @@ public class AddonManager{
 			plugin.getServer().getPluginManager().registerEvents(addon, plugin);
 		}
 	}
+
+
 
 }

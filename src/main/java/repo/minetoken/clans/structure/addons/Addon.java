@@ -12,8 +12,14 @@ import org.bukkit.event.Listener;
 public class Addon implements Listener {
 
     public String name;
+    public AddonManager manager;
 
-    public Addon(String name) {
+    public Addon(AddonManager manager, String name) {
+        this.manager = manager;
         this.name = name;
+    }
+
+    public AddonManager getManager() {
+        return manager;
     }
 }
