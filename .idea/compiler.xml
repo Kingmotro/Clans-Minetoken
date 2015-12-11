@@ -19,13 +19,21 @@
       </profile>
       <profile default="false" name="Annotation profile for Factions" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="Factions" />
       </profile>
+      <profile default="false" name="Annotation profile for Clans" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="Clans" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Clans" target="1.7" />
       <module name="Factions" target="1.7" />
     </bytecodeTargetLevel>
   </component>

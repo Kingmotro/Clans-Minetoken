@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>repo.ruinspvp</groupId>
-    <artifactId>RuinsPvPFactions</artifactId>
+    <artifactId>Clans</artifactId>
     <version>1.9-SNAPSHOT</version>
-    <name>Factions</name>
+    <name>Clans</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -1,11 +1,14 @@
 name: Clans
 version: ${project.version}
-main: repo.ruinspvp.factions.Factions
+main: repo.ruinspvp.clans.Clans
 commands:
     test:
-    money:
+    points:
+    credits:
     rank:
     setrank:
-    givemoney:
-    faction:
+    givepoints:
+    givecredits:
+    clan:
     scoreboard:
+    punish:
