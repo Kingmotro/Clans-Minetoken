@@ -25,7 +25,7 @@ public class AcceptCommand implements SubCommand {
                     clanManager.cPlayer.joinFaction(player.getUniqueId(), player.getName(), clanManager.invitedPlayer.get(player.getUniqueId()).getFaction());
                     player.sendMessage(Format.main("Clans", "You have successfully joined " + clanManager.invitedPlayer.get(player.getUniqueId()).getFaction()));
                     try {
-                        for(String uuid : clanManager.cPlayer.getPlayersInAFaction(clanManager.invitedPlayer.get(player.getUniqueId()).getFaction())) {
+                        for(String uuid : clanManager.cPlayer.getPlayersInAClan(clanManager.invitedPlayer.get(player.getUniqueId()).getFaction())) {
                             if(Bukkit.getPlayer(UUID.fromString(uuid)).isOnline()) {
                                 Player fPlayer = Bukkit.getPlayer(UUID.fromString(uuid));
                                 fPlayer.sendMessage(Format.main("Clans", player.getName() + " has joined the clan."));

@@ -19,7 +19,7 @@ public class InfoCommand implements SubCommand {
             String faction = clanManager.cPlayer.getClan(player.getUniqueId());
             player.sendMessage(Format.main("Clans", faction + "'s Info"));
             player.sendMessage(Format.info("Created: " + clanManager.CClans.getDateCreated(faction)));
-            player.sendMessage(Format.info("Members: " + clanManager.cPlayer.getPlayersInAFaction(faction).size()));
+            player.sendMessage(Format.info("Members: " + clanManager.cPlayer.getPlayersInAClan(faction).size()));
             player.sendMessage(Format.info("Founder: " + clanManager.CClans.getFounder(faction)));
         } else {
             player.sendMessage(help());

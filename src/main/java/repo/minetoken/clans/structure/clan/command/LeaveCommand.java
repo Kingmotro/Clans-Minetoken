@@ -27,7 +27,7 @@ public class LeaveCommand implements SubCommand {
                     clanManager.CClans.deleteClan(clanManager.cPlayer.getClan(player.getUniqueId()));
                 } else {
                     try {
-                        for(String uuid : clanManager.cPlayer.getPlayersInAFaction(clanManager.cPlayer.getClan(player.getUniqueId()))) {
+                        for(String uuid : clanManager.cPlayer.getPlayersInAClan(clanManager.cPlayer.getClan(player.getUniqueId()))) {
                             if(Bukkit.getPlayer(UUID.fromString(uuid)).isOnline()) {
                                 Player fPlayer = Bukkit.getPlayer(UUID.fromString(uuid));
                                 if(fPlayer != player) {

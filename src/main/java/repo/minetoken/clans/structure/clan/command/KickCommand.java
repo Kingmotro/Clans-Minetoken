@@ -27,7 +27,7 @@ public class KickCommand implements SubCommand {
                     if (clanManager.cPlayer.getCRank(player.getUniqueId()).getPermLevel() > clanManager.cPlayer.getCRank(uuid).getPermLevel()) {
                         if (clanManager.cPlayer.getClan(player.getUniqueId()).equalsIgnoreCase(clanManager.cPlayer.getClan(uuid))) {
                             try {
-                                for (String uuids : clanManager.cPlayer.getPlayersInAFaction(clanManager.cPlayer.getClan(player.getUniqueId()))) {
+                                for (String uuids : clanManager.cPlayer.getPlayersInAClan(clanManager.cPlayer.getClan(player.getUniqueId()))) {
                                     if (Bukkit.getPlayer(UUID.fromString(uuids)).isOnline()) {
                                         Player fPlayer = Bukkit.getPlayer(UUID.fromString(uuids));
                                         if (fPlayer != player) {

@@ -66,7 +66,7 @@ public class ClanManager extends Database implements Listener {
     @EventHandler
     public void onClanDelete(ClanDeleteEvent event) {
         String faction = event.getFaction();
-        for (String uuid : cPlayer.getPlayersInAFaction(faction)) {
+        for (String uuid : cPlayer.getPlayersInAClan(faction)) {
             try {
                 Player player = Bukkit.getPlayer(UUID.fromString(uuid));
                 Bukkit.broadcastMessage(Format.main("Clans", player.getName() + " has left the clan " + faction));
