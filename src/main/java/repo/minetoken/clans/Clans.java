@@ -65,7 +65,7 @@ public class Clans extends JavaPlugin {
         characterManager = new CharacterManager(this);
         explosionsManager = new ExplosionsManager(this);
         
-        addonManager = new AddonManager(this);
+      //  addonManager = new AddonManager(this);
     }
 
     @Override

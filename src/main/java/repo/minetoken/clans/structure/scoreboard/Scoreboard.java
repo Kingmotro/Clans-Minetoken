@@ -4,6 +4,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
+import net.md_5.bungee.api.ChatColor;
+
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -69,8 +72,8 @@ public class Scoreboard {
     }
 
     public void build() {
-        objective = scoreboard.registerNewObjective((title.length() > 16 ? title.substring(0, 15) : title), "dummy");
-        objective.setDisplayName(title);
+        objective = scoreboard.registerNewObjective(( title.length() > 16 ? title.substring(0, 15) : title), "dummy");
+        objective.setDisplayName(ChatColor.RED + title);
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         int index = scores.size();

@@ -84,6 +84,7 @@ public class Rush extends Skills {
 		Player player = event.getPlayer();
 		if(effect.contains(player)){
 			Bukkit.getWorld(player.getWorld().getName()).playEffect(player.getLocation(), Effect.STEP_SOUND, 57);
+			Bukkit.getWorld(player.getWorld().getName()).playEffect(player.getLocation(), Effect.LARGE_SMOKE, 50);
 		}else{
 			return;
 		}

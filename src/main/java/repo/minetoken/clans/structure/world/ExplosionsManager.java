@@ -15,7 +15,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import repo.minetoken.clans.Clans;
-import repo.minetoken.clans.cooldowns.Cooldown;
+import repo.minetoken.clans.structure.cooldowns.Cooldown;
 
 
 public class ExplosionsManager implements Listener{
@@ -36,38 +36,7 @@ public class ExplosionsManager implements Listener{
 	
 	//TODO - Fix 
 
-	@EventHandler
-	public void explode(EntityExplodeEvent e) {
-		e.setCancelled(true);
-		if (!e.blockList().isEmpty()) {
-			final List<BlockState> blocks = new ArrayList<BlockState>();
-			for (final Block b : e.blockList()) {
-			
-					if (b.getType() == Material.SMOOTH_BRICK && b.getData() != 5) {
-						blocks.add(b.getState());
-						b.setTypeIdAndData(98, (byte) 2, true);
-						Cooldown.add("block", "PROTECTED", 10, 10); 
-					}
-					if (b.getType() != Material.AIR || b.getType() != Material.SMOOTH_BRICK || b.getData() == 2){
-				
-						Clans.instance.getServer().getScheduler().scheduleSyncDelayedTask(Clans.instance, new Runnable() {
-							public void run() {
-								if (!blocks.contains(b.getState())) {  
-									if(Cooldown.isCooling("block", "PROTECTED")) { 
-										b.setTypeIdAndData(98, (byte) 2, true);
-									}
-									blocks.add(b.getState());
-									b.setType(Material.AIR);
-								}
-							}
-						}, 20);
-						//b.setType(Material.AIR);
-					}
-				}
-			
-			
-		}
-	}
+
 }
 
 
