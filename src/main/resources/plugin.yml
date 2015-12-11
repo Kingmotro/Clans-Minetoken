@@ -1,0 +1,14 @@
+name: Clans
+version: ${project.version}
+main: repo.minetoken.clans.Clans
+commands:
+    test:
+    points:
+    credits:
+    rank:
+    setrank:
+    givepoints:
+    givecredits:
+    clan:
+    scoreboard:
+    punish:
