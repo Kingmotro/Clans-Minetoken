@@ -1,7 +1,5 @@
 package repo.minetoken.clans.structure.character.skills;
 
-import java.util.ArrayList;
-
 import org.bukkit.Sound;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
@@ -19,8 +17,6 @@ import repo.minetoken.clans.utilities.UtilSound.Pitch;
 
 public class FireBall extends Skills{
 
-	ArrayList<Player> effect = new ArrayList<Player>();
-
 	public FireBall() {
 		super("Fireball", new String[] {""}, SkillType.SWORD);
 	}
@@ -36,8 +32,7 @@ public class FireBall extends Skills{
 					return;
 				}
 				Vector direction = player.getEyeLocation().getDirection().multiply(2);
-				Fireball fireball = (Fireball)player.getWorld().spawn(player.getEyeLocation().add(direction.getX(), direction.getY(), 
-						direction.getZ()), Fireball.class);
+				Fireball fireball = player.getWorld().spawn(player.getEyeLocation().add(direction.getX(), direction.getY(), direction.getZ()), Fireball.class);
 				fireball.setShooter(player);
 				fireball.setYield(5.0F);
 				fireball.setMetadata("fireball", new FixedMetadataValue(Clans.instance, Boolean.valueOf(true)));

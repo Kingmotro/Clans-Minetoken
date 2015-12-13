@@ -10,6 +10,7 @@ import repo.minetoken.clans.structure.addons.AddonManager;
 import repo.minetoken.clans.donor.DonorManager;
 import repo.minetoken.clans.structure.clan.ClanManager;
 import repo.minetoken.clans.structure.console.ConsoleManager;
+import repo.minetoken.clans.structure.disguise.DisguiseManager;
 import repo.minetoken.clans.structure.economy.EconomyManager;
 import repo.minetoken.clans.structure.enchant.EnchantManager;
 import repo.minetoken.clans.structure.inventory.MenuManager;
@@ -43,6 +44,8 @@ public class Clans extends JavaPlugin {
     CharacterManager characterManager;
     ExplosionsManager explosionsManager;
 	AddonManager addonManager;
+    DisguiseManager disguiseManager;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -64,8 +67,8 @@ public class Clans extends JavaPlugin {
         punish = new Punish(this, rankManager);
         characterManager = new CharacterManager(this);
         explosionsManager = new ExplosionsManager(this);
-        
-        addonManager = new AddonManager(this);
+
+        disguiseManager = new DisguiseManager(this);
     }
 
     @Override

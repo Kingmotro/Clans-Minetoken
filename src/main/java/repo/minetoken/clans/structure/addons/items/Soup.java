@@ -16,12 +16,12 @@ import repo.minetoken.clans.structure.cooldowns.Cooldown;
 
 public class Soup extends Addon {
 
-	public Soup() {
-		super("Soup");
+	public Soup(AddonManager manager) {
+		super(manager, "Soup");
 	}
 
 	@EventHandler
-	public void EatSoup(PlayerInteractEvent event)
+	public void onSoup(PlayerInteractEvent event)
 	{
 
 		Player player = event.getPlayer();
@@ -35,9 +35,7 @@ public class Soup extends Addon {
 		player.getWorld().playEffect(player.getLocation(), Effect.STEP_SOUND, 39);
 		player.getWorld().playEffect(player.getLocation(), Effect.STEP_SOUND, 40);
 
-		//this.Manager.GetCondition().Factory().Custom("Mushroom Soup", player, player, Condition.ConditionType.REGENERATION, 4.0D, 1, false, Material.MUSHROOM_SOUP, (byte)0, true);
 		player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 0));
-		//UtilPlayer.hunger(player, 3);
 		player.setFoodLevel(player.getFoodLevel() + 6);
 		event.setCancelled(true);
 		player.setItemInHand(null); 
