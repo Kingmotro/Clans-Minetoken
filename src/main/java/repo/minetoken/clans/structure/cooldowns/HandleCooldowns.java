@@ -1,4 +1,4 @@
-package repo.minetoken.clans.cooldowns;
+package repo.minetoken.clans.structure.cooldowns;
 
 import org.bukkit.Bukkit;
 

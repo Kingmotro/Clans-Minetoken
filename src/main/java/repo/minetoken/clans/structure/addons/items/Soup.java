@@ -1,4 +1,4 @@
-package repo.minetoken.clans.addons.items;
+package repo.minetoken.clans.structure.addons.items;
 
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -7,20 +7,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import repo.minetoken.clans.addons.AddonManager;
-import repo.minetoken.clans.cooldowns.Cooldown;
+import repo.minetoken.clans.structure.addons.Addon;
+import repo.minetoken.clans.structure.addons.AddonManager;
+import repo.minetoken.clans.structure.cooldowns.Cooldown;
 
-public class Soup implements Listener{
+public class Soup extends Addon {
 
-	
-
-
-	public Soup(AddonManager addonManager) {
-		// TODO Auto-generated constructor stub
+	public Soup() {
+		super("Soup");
 	}
 
 	@EventHandler

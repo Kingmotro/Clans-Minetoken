@@ -6,7 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import repo.minetoken.clans.addons.AddonManager;
+import repo.minetoken.clans.structure.addons.AddonManager;
 import repo.minetoken.clans.donor.DonorManager;
 import repo.minetoken.clans.structure.clan.ClanManager;
 import repo.minetoken.clans.structure.console.ConsoleManager;
@@ -18,7 +18,7 @@ import repo.minetoken.clans.structure.punish.Punish;
 import repo.minetoken.clans.structure.rank.RankManager;
 import repo.minetoken.clans.structure.scoreboard.ScoreboardManager;
 import repo.minetoken.clans.structure.voting.VoteManager;
-import repo.minetoken.clans.world.ExplosionsManager;
+import repo.minetoken.clans.structure.world.ExplosionsManager;
 import repo.minetoken.clans.structure.character.CharacterManager;
 import repo.minetoken.clans.structure.clancenter.ClansCenterManager;
 import repo.minetoken.clans.structure.shop.ShopManager;

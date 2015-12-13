@@ -2,7 +2,7 @@ package repo.minetoken.clans.structure.character;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import repo.minetoken.clans.cooldowns.HandleCooldowns;
+import repo.minetoken.clans.structure.cooldowns.HandleCooldowns;
 import repo.minetoken.clans.structure.character.characters.Warrior;
 
 public class CharacterManager {

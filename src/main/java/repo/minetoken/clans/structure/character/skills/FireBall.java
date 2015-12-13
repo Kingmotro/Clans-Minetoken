@@ -2,8 +2,6 @@ package repo.minetoken.clans.structure.character.skills;
 
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
@@ -13,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 import repo.minetoken.clans.Clans;
-import repo.minetoken.clans.cooldowns.Cooldown;
+import repo.minetoken.clans.structure.cooldowns.Cooldown;
 import repo.minetoken.clans.structure.character.SkillType;
 import repo.minetoken.clans.structure.character.Skills;
 import repo.minetoken.clans.utilities.UtilSound;

@@ -4,25 +4,20 @@ import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
-import org.bukkit.entity.Damageable;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 
 import net.md_5.bungee.api.ChatColor;
 import repo.minetoken.clans.Clans;
-import repo.minetoken.clans.cooldowns.Cooldown;
+import repo.minetoken.clans.structure.cooldowns.Cooldown;
 import repo.minetoken.clans.structure.character.SkillType;
 import repo.minetoken.clans.structure.character.Skills;
 import repo.minetoken.clans.utilities.Format;

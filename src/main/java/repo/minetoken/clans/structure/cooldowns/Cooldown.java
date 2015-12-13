@@ -1,10 +1,9 @@
-package repo.minetoken.clans.cooldowns;
+package repo.minetoken.clans.structure.cooldowns;
 
 import java.util.HashMap;
 import java.util.Iterator;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
