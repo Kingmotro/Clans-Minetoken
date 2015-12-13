@@ -14,6 +14,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import repo.minetoken.clans.Clans;
+import repo.minetoken.clans.cooldowns.Cooldown;
+
 
 public class ExplosionsManager implements Listener{
 
@@ -35,24 +38,34 @@ public class ExplosionsManager implements Listener{
 
 	@EventHandler
 	public void explode(EntityExplodeEvent e) {
+		e.setCancelled(true);
 		if (!e.blockList().isEmpty()) {
 			final List<BlockState> blocks = new ArrayList<BlockState>();
-			for (Block b : e.blockList()) {
-				if (b.getType() != Material.AIR) {
+			for (final Block b : e.blockList()) {
 			
-					if (b.getType() == Material.SMOOTH_BRICK) {
-						b.setTypeIdAndData(98, (byte) 2, true);
-					
-					}
-					if (!blocks.contains(b.getState())) {
+					if (b.getType() == Material.SMOOTH_BRICK && b.getData() != 5) {
 						blocks.add(b.getState());
-						FallingBlock fb = b.getWorld().spawnFallingBlock(b.getLocation(), b.getType(), b.getData());
-						fb.setDropItem(true);
-						b.setType(Material.AIR);
+						b.setTypeIdAndData(98, (byte) 2, true);
+						Cooldown.add("block", "PROTECTED", 10, 10); 
+					}
+					if (b.getType() != Material.AIR || b.getType() != Material.SMOOTH_BRICK || b.getData() == 2){
+				
+						Clans.instance.getServer().getScheduler().scheduleSyncDelayedTask(Clans.instance, new Runnable() {
+							public void run() {
+								if (!blocks.contains(b.getState())) {  
+									if(Cooldown.isCooling("block", "PROTECTED")) { 
+										b.setTypeIdAndData(98, (byte) 2, true);
+									}
+									blocks.add(b.getState());
+									b.setType(Material.AIR);
+								}
+							}
+						}, 20);
+						//b.setType(Material.AIR);
 					}
 				}
 			
-			}
+			
 		}
 	}
 }
