@@ -3,6 +3,7 @@ package repo.minetoken.clans.structure.scoreboard;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import repo.minetoken.clans.structure.clan.events.ClanRankChangeEvent;
@@ -32,7 +33,8 @@ public class ScoreboardManager implements Listener {
     public EconomyManager economyManager;
     public VoteManager voteManager;
     public MenuManager menuManager;
-
+    public ScoreboardManager scoreboardManager;
+    
     public HashMap<UUID, PlayerScoreboard> playerScoreboard;
     public HashMap<UUID, ClanScoreboard> clanScoreboard;
 
@@ -91,7 +93,17 @@ public class ScoreboardManager implements Listener {
             }
         }
     }
-
+    
+ //
+    
+    @EventHandler
+    public void scoreboardForAll(PlayerJoinEvent e){
+    	Player player = e.getPlayer();
+    	 ClanScoreboard clanScoreboard = new ClanScoreboard(player, clanManager, scoreboardManager);
+         clanScoreboard.send(player);
+         addClanScoreboard(player, clanScoreboard);
+    }
+    
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
         if(playerScoreboard.containsKey(event.getPlayer().getUniqueId())) {

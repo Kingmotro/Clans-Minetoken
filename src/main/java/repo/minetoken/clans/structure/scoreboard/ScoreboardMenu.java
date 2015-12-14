@@ -3,6 +3,8 @@ package repo.minetoken.clans.structure.scoreboard;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import repo.minetoken.clans.structure.inventory.Menu;
 import repo.minetoken.clans.structure.rank.enums.Result;
@@ -35,7 +37,7 @@ public class ScoreboardMenu extends Menu {
                 player.closeInventory();
                 if(scoreboardManager.clanManager.cPlayer.hasClan(player.getUniqueId()) == Result.TRUE) {
                     player.sendMessage(Format.main("Scoreboard", "Loading the clan scoreboard..."));
-                    ClanScoreboard clanScoreboard = new ClanScoreboard(player, scoreboardManager.clanManager);
+                    ClanScoreboard clanScoreboard = new ClanScoreboard(player, scoreboardManager.clanManager, scoreboardManager);
                     clanScoreboard.send(player);
                     scoreboardManager.addClanScoreboard(player, clanScoreboard);
                 } else {
@@ -51,6 +53,7 @@ public class ScoreboardMenu extends Menu {
                 break;
         }
     }
+    
 
     @Override
     public void rightClick(Player player, ItemStack itemStack) {

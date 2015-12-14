@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import net.md_5.bungee.api.ChatColor;
+import repo.minetoken.clans.utilities.C;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -28,9 +29,9 @@ public class Scoreboard {
     private Map<String, Integer> scores;
     private List<Team> teams;
 
-    public Scoreboard(String title) {
+    public Scoreboard(String string) {
         this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        this.title = title;
+        this.title = C.bold + "MineToken Survival";
         this.scores = Maps.newLinkedHashMap();
         this.teams = Lists.newArrayList();
     }
@@ -73,7 +74,7 @@ public class Scoreboard {
 
     public void build() {
         objective = scoreboard.registerNewObjective(( title.length() > 16 ? title.substring(0, 15) : title), "dummy");
-        objective.setDisplayName(ChatColor.RED + title);
+        objective.setDisplayName(title);
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         int index = scores.size();
