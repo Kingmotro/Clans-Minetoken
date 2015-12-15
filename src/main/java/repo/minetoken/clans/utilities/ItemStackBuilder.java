@@ -10,6 +10,8 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.material.MaterialData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class ItemStackBuilder {
@@ -29,26 +31,26 @@ public class ItemStackBuilder {
         return this;
     }
 
-    public ItemStackBuilder withName(String name) {
+    public ItemStackBuilder withName(String display) {
         final ItemMeta meta = itemStack.getItemMeta();
-        meta.setDisplayName(color(name));
+        meta.setDisplayName(colorDisplay(display));
         itemStack.setItemMeta(meta);
         return this;
     }
 
-    public ItemStackBuilder withLore(String name) {
+    public ItemStackBuilder withLore(String[] name) {
         final ItemMeta meta = itemStack.getItemMeta();
         List<String> lore = meta.getLore();
         if (lore == null) {
             lore = new ArrayList<>();
         }
-        lore.add(color(name));
+        lore.addAll(Arrays.asList(name));
         meta.setLore(lore);
         itemStack.setItemMeta(meta);
         return this;
     }
 
-    public ItemStackBuilder withDurability(int durability) {
+	public ItemStackBuilder withDurability(int durability) {
         itemStack.setDurability((short) durability);
         return this;
     }
@@ -102,8 +104,9 @@ public class ItemStackBuilder {
     public ItemStack build() {
         return itemStack;
     }
+    
 
-    public static String color(String msg) {
-        return ChatColor.translateAlternateColorCodes('&', msg);
+    public static String colorDisplay(String name) {
+        return name;
     }
 }

@@ -29,6 +29,7 @@ public class Soup extends Addon {
 		if(player.getItemInHand().getType() == Material.MUSHROOM_SOUP) { 
 			if(Cooldown.isCooling(player.getName(), "Soup")) {
 				Cooldown.coolDurMessage(player, "Soup");
+				event.setCancelled(true);
 				return;
 			}
 		player.getWorld().playSound(player.getLocation(), Sound.EAT, 2.0F, 1.0F);

@@ -65,7 +65,7 @@ public class Clans extends JavaPlugin {
         scoreboardManager = new ScoreboardManager(this, clanManager, rankManager, economyManager, voteManager, menuManager);
         donorManager = new DonorManager(this);
         punish = new Punish(this, rankManager);
-        characterManager = new CharacterManager(this);
+        characterManager = new CharacterManager(this, menuManager);
         explosionsManager = new ExplosionsManager(this);
         
         addonManager = new AddonManager(this);
