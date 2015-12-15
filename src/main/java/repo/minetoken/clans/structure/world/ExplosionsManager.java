@@ -36,7 +36,11 @@ public class ExplosionsManager implements Listener{
 	
 	//TODO - Fix 
 
-
+	@EventHandler
+	public void explode(EntityExplodeEvent e) {
+	
+		
+	}
 }
 
 

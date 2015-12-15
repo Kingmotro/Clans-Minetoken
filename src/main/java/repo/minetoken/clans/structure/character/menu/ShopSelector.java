@@ -22,8 +22,8 @@ public class ShopSelector extends Menu{
 		getInventory().setItem(10, new ItemStackBuilder(Material.MUSHROOM_SOUP).withName(C.green + "" + C.bold + "Soup").withLore(
 				new String[] {"" , C.white + "Description: " , "" ,
 						C.white + "- Regeneration " + C.lpurple + "6 Seconds...",
-						C.white + "- Hunger " + C.lpurple +"+6",
-						C.white + "- Cooldown " + C.lpurple + "10 Seconds...",
+						C.white + "- Hunger " + C.lpurple +"+3",
+						C.white + "- Cooldown " + C.lpurple + "4 Seconds...",
 						C.white + "",
 						C.gray + "From a land of soups, where" , C.gray + " all soup is life saving...",
 						"",
@@ -144,8 +144,7 @@ public class ShopSelector extends Menu{
 
 		switch (itemName) {
 		case "Soup":
-			player.closeInventory();
-
+			player.getInventory().addItem(new ItemStack(Material.MUSHROOM_SOUP));
 			break;
 		}
 	}

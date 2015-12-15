@@ -5,10 +5,10 @@ import repo.minetoken.clans.structure.character.Skills;
 import repo.minetoken.clans.structure.character.skills.FireBall;
 import repo.minetoken.clans.structure.character.skills.Rush;
 
-public class Warrior extends Characters {
+public class Gatherer extends Characters {
 
-    public Warrior() {
-        super("Warrior", new Skills[] {new Rush(), new FireBall()}, new String[] {});
+    public Gatherer() {
+        super("Gatherer", new Skills[] {new Rush(), new FireBall()}, new String[] {});
     }
-    
+
 }

@@ -1,5 +1,6 @@
 package repo.minetoken.clans.structure.character.menu;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -31,8 +32,24 @@ public class SkillSelector extends Menu{
         switch (itemName) {
             case "Warrior":
             	player.closeInventory();
-         
+            	player.setPlayerListName(C.white + "[" + C.gold + "Warrior" + C.white + "] " + C.yellow + player.getName());
                 break;
+            case "Wizard":
+            	player.closeInventory();
+            	player.setPlayerListName(C.white + "[" + C.gold + "Wizard" + C.white + "] " + C.yellow + player.getName());
+                break;
+            case "Guardian":
+            	player.closeInventory();
+            	player.setPlayerListName(C.white + "[" + C.gold + "Guardian" + C.white + "] " + C.yellow + player.getName());
+                break;
+            case "Gatherer":
+            	player.closeInventory();
+            	player.setPlayerListName(C.white + "[" + C.gold + "Gatherer" + C.white + "] " + C.yellow + player.getName());
+                break;
+            case "Theif":
+            	player.closeInventory();
+            	player.setPlayerListName(C.white + "[" + C.gold + "Theif" + C.white + "] " + C.yellow + player.getName());
+                break;        
         }
 	}
 

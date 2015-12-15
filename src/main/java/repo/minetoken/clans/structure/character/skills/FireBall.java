@@ -10,6 +10,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 import repo.minetoken.clans.Clans;
 import repo.minetoken.clans.structure.cooldowns.Cooldown;
+import repo.minetoken.clans.structure.character.Characters;
 import repo.minetoken.clans.structure.character.SkillType;
 import repo.minetoken.clans.structure.character.Skills;
 import repo.minetoken.clans.utilities.UtilSound;
@@ -23,10 +24,13 @@ public class FireBall extends Skills{
 
 	@EventHandler
 	public void onRightClick(PlayerInteractEvent event) {
-
+		Skills[] skill = Characters.getSkills();
 		final Player player = event.getPlayer();
 		if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
 			if(player.getItemInHand().getType().toString().toLowerCase().contains("sword")) {
+				if(!Characters.warrior.containsKey(player.getName())) {
+					return;
+				}
 				if(Cooldown.isCooling(player.getName(), "Fireball")) {
 					Cooldown.coolDurMessage(player, "Fireball");
 					return;
@@ -34,13 +38,14 @@ public class FireBall extends Skills{
 				Vector direction = player.getEyeLocation().getDirection().multiply(2);
 				Fireball fireball = player.getWorld().spawn(player.getEyeLocation().add(direction.getX(), direction.getY(), direction.getZ()), Fireball.class);
 				fireball.setShooter(player);
-				fireball.setYield(5.0F);
+				fireball.setYield(0F);
+				fireball.setIsIncendiary(false);
 				fireball.setMetadata("fireball", new FixedMetadataValue(Clans.instance, Boolean.valueOf(true)));
 				UtilSound.play(player, Sound.GHAST_FIREBALL, Pitch.VERY_LOW); 
 				Cooldown.add(player.getName(), "Fireball", 10, 10); 
-				
+
 			}
-		
+
 	}
 
 }

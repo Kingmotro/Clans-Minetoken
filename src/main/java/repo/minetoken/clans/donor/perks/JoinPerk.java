@@ -21,14 +21,11 @@ public class JoinPerk extends DonorPerk {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-
+        
         if (!player.hasPermission(getPermssion())) {
             return;
         }
-
         event.setJoinMessage("");
-        Bukkit.broadcastMessage(Format.main("Join", ChatColor.BOLD + player.getName() + " has joined the server."));
-
         final Location location = player.getLocation();
 
         new BukkitRunnable() {

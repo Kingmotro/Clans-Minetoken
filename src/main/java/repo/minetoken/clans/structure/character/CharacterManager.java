@@ -13,14 +13,14 @@ import repo.minetoken.clans.structure.character.menu.SkillSelectorManager;
 public class CharacterManager {
 
 	public JavaPlugin plugin;
-	public Character[] characters;
+	public Characters[] characters;
 	public SkillSelectorManager selector;
 	public ShopSelectorManager shopselector;
 	public MenuManager menuManager;
 	
 	public CharacterManager(JavaPlugin plugin, MenuManager menuManager) {
 		this.plugin = plugin;
-		characters = new Character[] {new Warrior()};
+		characters = new Characters[] {new Warrior()};
 		selector = new SkillSelectorManager(this);
 		shopselector = new ShopSelectorManager(this);
 		
@@ -31,7 +31,7 @@ public class CharacterManager {
 	}
 
 	public void registerCharacters() {
-		for(Character character : characters) {
+		for(Characters character : characters) {
 			plugin.getServer().getPluginManager().registerEvents(character, plugin);
 			for(Skills skills : character.getSkills()) {
 				plugin.getServer().getPluginManager().registerEvents(skills, plugin);

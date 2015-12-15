@@ -37,7 +37,8 @@ public class Rush extends Skills {
 
 		final Player player = event.getPlayer();
 		if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
-			if(player.getItemInHand().getType().toString().toLowerCase().contains("axe")) {
+			if(player.getItemInHand().getType().toString().toLowerCase().contains("axe")) { 
+				
 				if(Cooldown.isCooling(player.getName(), "Rush")) {
 					Cooldown.coolDurMessage(player, "Rush");
 					return;
@@ -59,7 +60,7 @@ public class Rush extends Skills {
 					public void run() {
 						effect.add(player);
 					}
-				}, 5);
+				}, 1);
 			}
 
 	}
