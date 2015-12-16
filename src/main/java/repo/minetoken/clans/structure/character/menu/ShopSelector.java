@@ -16,7 +16,7 @@ public class ShopSelector extends Menu{
 	String buy = C.yellow + "Left-Click to " + C.bold + C.underline +"BUY";
 
 	public ShopSelector(String title, int size) {
-		super("Shop", 45);
+		super("Shop", 54);
 		getInventory().setItem(4, new ItemStackBuilder(Material.EMERALD).withName(C.green + "" + C.bold + "Points " + C.yellow + "0").build());
 		//Soup
 		getInventory().setItem(10, new ItemStackBuilder(Material.MUSHROOM_SOUP).withName(C.green + "" + C.bold + "Soup").withLore(

@@ -2,12 +2,16 @@ package repo.minetoken.clans.structure.character.menu;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import repo.minetoken.clans.structure.character.menu.Skills.WarriorSkills;
 import repo.minetoken.clans.structure.inventory.Menu;
 import repo.minetoken.clans.utilities.C;
 import repo.minetoken.clans.utilities.ItemStackBuilder;
+import repo.minetoken.clans.utilities.UtilSound;
+import repo.minetoken.clans.utilities.UtilSound.Pitch;
 
 public class SkillSelector extends Menu{
 
@@ -32,8 +36,9 @@ public class SkillSelector extends Menu{
         switch (itemName) {
             case "Warrior":
             	player.closeInventory();
-            	player.setPlayerListName(C.white + "[" + C.gold + "Warrior" + C.white + "] " + C.yellow + player.getName());
-                break;
+            	new WarriorSkills(null, 0).show(player);
+            	UtilSound.play(player, Sound.NOTE_PLING, Pitch.VERY_HIGH);
+            	break;
             case "Wizard":
             	player.closeInventory();
             	player.setPlayerListName(C.white + "[" + C.gold + "Wizard" + C.white + "] " + C.yellow + player.getName());
@@ -61,11 +66,6 @@ public class SkillSelector extends Menu{
 	            return;
 	        }
 
-	        switch (itemName) {
-	            case "Faction Scoreboard":
-	            case "Player Scoreboard":
-	        }
-		
 	}
 
 	@Override
