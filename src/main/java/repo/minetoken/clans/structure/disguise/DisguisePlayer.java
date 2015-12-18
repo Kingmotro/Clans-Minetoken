@@ -2,6 +2,7 @@ package repo.minetoken.clans.structure.disguise;
 
 import org.bukkit.entity.Player;
 import repo.minetoken.clans.structure.disguise.packet.PacketEntity;
+import repo.minetoken.clans.utilities.UtilHologram;
 
 public class DisguisePlayer {
 

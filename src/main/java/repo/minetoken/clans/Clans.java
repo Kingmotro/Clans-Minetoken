@@ -28,23 +28,23 @@ public class Clans extends JavaPlugin {
 
     public static JavaPlugin instance;
 
-    ClanManager clanManager;
-    RankManager rankManager;
-    EconomyManager economyManager;
-    MenuManager menuManager;
-    VoteManager voteManager;
-    ShopManager shopManager;
-    NPCManager npcManager;
-    EnchantManager enchantManager;
-    ConsoleManager consoleManager;
-    ClansCenterManager clansCenterManager;
-    ScoreboardManager scoreboardManager;
-    DonorManager donorManager;
-    Punish punish;
-    CharacterManager characterManager;
-    ExplosionsManager explosionsManager;
-	AddonManager addonManager;
-    DisguiseManager disguiseManager;
+    public ClanManager clanManager;
+    public RankManager rankManager;
+    public EconomyManager economyManager;
+    public MenuManager menuManager;
+    public VoteManager voteManager;
+    public ShopManager shopManager;
+    public NPCManager npcManager;
+    public EnchantManager enchantManager;
+    public ConsoleManager consoleManager;
+    public ClansCenterManager clansCenterManager;
+    public ScoreboardManager scoreboardManager;
+    public DonorManager donorManager;
+    public Punish punish;
+    public CharacterManager characterManager;
+    public ExplosionsManager explosionsManager;
+    public AddonManager addonManager;
+    public DisguiseManager disguiseManager;
 
     @Override
     public void onEnable() {
@@ -68,7 +68,7 @@ public class Clans extends JavaPlugin {
         characterManager = new CharacterManager(this, menuManager);
         explosionsManager = new ExplosionsManager(this);
         
-        addonManager = new AddonManager(this);
+        addonManager = new AddonManager(clanManager);
 
         disguiseManager = new DisguiseManager(this);
     }

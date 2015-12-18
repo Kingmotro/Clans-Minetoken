@@ -8,9 +8,9 @@ import repo.minetoken.clans.structure.inventory.Menu;
 import repo.minetoken.clans.utilities.C;
 import repo.minetoken.clans.utilities.ItemStackBuilder;
 
-public class WarriorSkills extends Menu{
+public class WarriorSkills extends Menu {
 	
-	public WarriorSkills (String title, int size) {
+	public WarriorSkills () {
 		super("Warrior", 45);
 		getInventory().setItem(0, new ItemStackBuilder(Material.IRON_SWORD).withName(C.green + "" + C.bold + "Sword Skills:").build());
         getInventory().setItem(9, new ItemStackBuilder(Material.IRON_AXE).withName(C.green + "" + C.bold + "Axe Skills:").build()); 

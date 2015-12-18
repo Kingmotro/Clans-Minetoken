@@ -15,8 +15,6 @@ public class Cooldown {
 	
 	public static HashMap<String, AbilityCooldown> cooldownPlayers = new HashMap<String, AbilityCooldown>();
 	
-
-	
 	@SuppressWarnings({ "deprecation", "unused" })
 	public static void add(String player, String ability, long seconds, long systime) {
         if(!cooldownPlayers.containsKey(player)) cooldownPlayers.put(player, new AbilityCooldown(player));

@@ -24,7 +24,7 @@ public class SkillSelectorManager implements Listener{
 		if (action == Action.RIGHT_CLICK_BLOCK) {
 			if(event.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE){
 				event.setCancelled(true);
-				new SkillSelector(null, 0).show(event.getPlayer());
+				new SkillSelector().show(event.getPlayer());
 				UtilSound.play(event.getPlayer(), Sound.NOTE_PLING, Pitch.VERY_HIGH);
 			}
 		}

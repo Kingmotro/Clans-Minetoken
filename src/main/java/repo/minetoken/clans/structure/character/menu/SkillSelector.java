@@ -1,6 +1,5 @@
 package repo.minetoken.clans.structure.character.menu;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -15,7 +14,7 @@ import repo.minetoken.clans.utilities.UtilSound.Pitch;
 
 public class SkillSelector extends Menu{
 
-	public SkillSelector(String title, int size) {
+	public SkillSelector() {
 		super("Select a Character", 45);
 		getInventory().setItem(18, new ItemStackBuilder(Material.BOOK_AND_QUILL).withName(C.green + "" + C.bold + "Warrior").build());
         getInventory().setItem(20, new ItemStackBuilder(Material.BOOK_AND_QUILL).withName(C.green + "" + C.bold + "Wizard").build()); 
@@ -36,7 +35,7 @@ public class SkillSelector extends Menu{
         switch (itemName) {
             case "Warrior":
             	player.closeInventory();
-            	new WarriorSkills(null, 0).show(player);
+            	new WarriorSkills().show(player);
             	UtilSound.play(player, Sound.NOTE_PLING, Pitch.VERY_HIGH);
             	break;
             case "Wizard":

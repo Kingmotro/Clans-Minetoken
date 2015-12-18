@@ -11,20 +11,21 @@ import repo.minetoken.clans.structure.character.CharacterManager;
 import repo.minetoken.clans.utilities.UtilSound;
 import repo.minetoken.clans.utilities.UtilSound.Pitch;
 
-public class ShopSelectorManager implements Listener{
-	
-	
-	public ShopSelectorManager(CharacterManager characterManager) {
-		//todo
-	}
-	@EventHandler
-	public void onPlayerInteract(PlayerInteractEvent event){
+public class ShopSelectorManager implements Listener {
+
+
+    public ShopSelectorManager(CharacterManager characterManager) {
+        //todo
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
         Action action = event.getAction();
-    if (action == Action.RIGHT_CLICK_BLOCK) {
-            if(event.getClickedBlock().getType() == Material.ENDER_CHEST){
-            	event.setCancelled(true);
-            	new ShopSelector(null, 0).show(event.getPlayer());
-            	UtilSound.play(event.getPlayer(), Sound.NOTE_PLING, Pitch.VERY_HIGH);
+        if (action == Action.RIGHT_CLICK_BLOCK) {
+            if (event.getClickedBlock().getType() == Material.ENDER_CHEST) {
+                event.setCancelled(true);
+                new ShopSelector().show(event.getPlayer());
+                UtilSound.play(event.getPlayer(), Sound.NOTE_PLING, Pitch.VERY_HIGH);
             }
         }
     }
