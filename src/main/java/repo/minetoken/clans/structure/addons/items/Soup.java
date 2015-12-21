@@ -40,7 +40,7 @@ public class Soup extends Addon {
 		player.setFoodLevel(player.getFoodLevel() + 6);
 		event.setCancelled(true);
 		player.setItemInHand(null); 
-		Cooldown.add(player.getName(), "Soup", 5, 5); 
+		Cooldown.add(player.getName(), "Soup", "Item", 5, 5); 
 		}
 	}
 

@@ -6,7 +6,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import repo.minetoken.clans.structure.character.menu.Skills.WarriorSkills;
+import repo.minetoken.clans.structure.character.menu.Skills.DisplaySkills;
 import repo.minetoken.clans.structure.inventory.Menu;
 import repo.minetoken.clans.utilities.C;
 import repo.minetoken.clans.utilities.ItemStackBuilder;
@@ -21,7 +21,7 @@ public class SkillSelector extends Menu{
         getInventory().setItem(20, new ItemStackBuilder(Material.BOOK_AND_QUILL).withName(C.green + "" + C.bold + "Wizard").build()); 
         getInventory().setItem(22, new ItemStackBuilder(Material.BOOK_AND_QUILL).withName(C.green + "" + C.bold + "Guardian").build());
         getInventory().setItem(24, new ItemStackBuilder(Material.BOOK_AND_QUILL).withName(C.green + "" + C.bold + "Gatherer").build());
-        getInventory().setItem(26, new ItemStackBuilder(Material.BOOK_AND_QUILL).withName(C.green + "" + C.bold + "Theif").build());
+        getInventory().setItem(26, new ItemStackBuilder(Material.BOOK_AND_QUILL).withName(C.green + "" + C.bold + "Thief").build());
 	
 	}
 
@@ -36,24 +36,34 @@ public class SkillSelector extends Menu{
         switch (itemName) {
             case "Warrior":
             	player.closeInventory();
-            	new WarriorSkills(null, 0).show(player);
+            	new DisplaySkills(null, 0, "Warrior").show(player);
             	UtilSound.play(player, Sound.NOTE_PLING, Pitch.VERY_HIGH);
+            	UtilSound.play(player, Sound.SILVERFISH_KILL, Pitch.VERY_LOW);
             	break;
             case "Wizard":
             	player.closeInventory();
-            	player.setPlayerListName(C.white + "[" + C.gold + "Wizard" + C.white + "] " + C.yellow + player.getName());
+            	new DisplaySkills(null, 0, "Wizard").show(player);
+            	UtilSound.play(player, Sound.NOTE_PLING, Pitch.VERY_HIGH);
+            	UtilSound.play(player, Sound.SILVERFISH_KILL, Pitch.VERY_LOW);
                 break;
             case "Guardian":
             	player.closeInventory();
-            	player.setPlayerListName(C.white + "[" + C.gold + "Guardian" + C.white + "] " + C.yellow + player.getName());
+            	new DisplaySkills(null, 0, "Guardian").show(player);
+            	UtilSound.play(player, Sound.NOTE_PLING, Pitch.VERY_HIGH);
+            	UtilSound.play(player, Sound.SILVERFISH_KILL, Pitch.VERY_LOW);
                 break;
             case "Gatherer":
             	player.closeInventory();
-            	player.setPlayerListName(C.white + "[" + C.gold + "Gatherer" + C.white + "] " + C.yellow + player.getName());
+            	new DisplaySkills(null, 0, "Gatherer").show(player);
+            	UtilSound.play(player, Sound.NOTE_PLING, Pitch.VERY_HIGH);
+            	UtilSound.play(player, Sound.SILVERFISH_KILL, Pitch.VERY_LOW);
                 break;
-            case "Theif":
+            case "Thief":
             	player.closeInventory();
-            	player.setPlayerListName(C.white + "[" + C.gold + "Theif" + C.white + "] " + C.yellow + player.getName());
+            	new DisplaySkills(null, 0, "Thief").show(player);
+            	UtilSound.play(player, Sound.NOTE_PLING, Pitch.VERY_HIGH);
+            	UtilSound.play(player, Sound.SILVERFISH_KILL, Pitch.VERY_LOW);
+            
                 break;        
         }
 	}

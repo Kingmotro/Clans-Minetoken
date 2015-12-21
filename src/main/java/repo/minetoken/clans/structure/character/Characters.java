@@ -15,15 +15,17 @@ public class Characters implements Listener {
     public static String name;
     public static Skills[] skills;
     public String[] desc;
+    
     public static HashMap<String, Warrior> warrior = new HashMap<String, Warrior>();
     public static HashMap<String, Wizard> wizard = new HashMap<String, Wizard>();
     public static HashMap<String, Guardian> guardian = new HashMap<String, Guardian>();
     public static HashMap<String, Gatherer> gatherer = new HashMap<String, Gatherer>();
     public static HashMap<String, Thief> thief = new HashMap<String, Thief>();
+    public static HashMap<String, Characters> none = new HashMap<String, Characters>();
     
     public Characters(String name, Skills[] skills, String[] desc) {
-        this.name = name;
-        this.skills = skills;
+        Characters.name = name;
+        Characters.skills = skills;
         this.desc = desc;
     }
 

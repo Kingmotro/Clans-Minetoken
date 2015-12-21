@@ -18,14 +18,14 @@ public class Cooldown {
 
 	
 	@SuppressWarnings({ "deprecation", "unused" })
-	public static void add(String player, String ability, long seconds, long systime) {
+	public static void add(String player, String ability, String character, long seconds, long systime) {
         if(!cooldownPlayers.containsKey(player)) cooldownPlayers.put(player, new AbilityCooldown(player));
         Player cPlayer = Bukkit.getPlayer(player);
       
         if(isCooling(player, ability)) return;
         
         cooldownPlayers.get(player).cooldownMap.put(ability, new AbilityCooldown(player, seconds * 1000, System.currentTimeMillis()));
-        cPlayer.sendMessage(Format.cooldownUsed(ability));
+        cPlayer.sendMessage(Format.cooldownUsed(character, ability));
 	}
 	
 	public static boolean isCooling(String player, String ability) {
@@ -48,6 +48,7 @@ public class Cooldown {
 	            return;
 	        }
 	        player.sendMessage(Format.cooldown(ability, getRemaining(player.getName(), ability)));
+	        return;
 	    }
 	   
 	   @SuppressWarnings("deprecation")

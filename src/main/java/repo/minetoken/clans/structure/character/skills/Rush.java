@@ -13,15 +13,18 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import net.md_5.bungee.api.ChatColor;
 import repo.minetoken.clans.Clans;
 import repo.minetoken.clans.structure.cooldowns.Cooldown;
+import repo.minetoken.clans.structure.character.Characters;
 import repo.minetoken.clans.structure.character.SkillType;
 import repo.minetoken.clans.structure.character.Skills;
 import repo.minetoken.clans.utilities.Format;
 import repo.minetoken.clans.utilities.UtilSound;
+import repo.minetoken.clans.utilities.utilWeapon;
 import repo.minetoken.clans.utilities.UtilSound.Pitch;
 
 public class Rush extends Skills {
@@ -36,16 +39,18 @@ public class Rush extends Skills {
 	public void onRightClick(PlayerInteractEvent event) {
 
 		final Player player = event.getPlayer();
-		if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
-			if(player.getItemInHand().getType().toString().toLowerCase().contains("axe")) { 
-				
+		if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
+			if(utilWeapon.hasSword(player)){
+				if(!Characters.thief.containsKey(player.getName())) {
+					return;
+				}
 				if(Cooldown.isCooling(player.getName(), "Rush")) {
 					Cooldown.coolDurMessage(player, "Rush");
 					return;
 				}
 				Material m = player.getLocation().getBlock().getType();
 			    if (m == Material.STATIONARY_WATER || m == Material.WATER) {
-			    	player.sendMessage(Format.main("C", "You cannot use " + ChatColor.LIGHT_PURPLE + "Rush" + ChatColor.YELLOW + " in water!"));
+			    	player.sendMessage(Format.main("Wizard", "You cannot use " + ChatColor.LIGHT_PURPLE + "Rush" + ChatColor.YELLOW + " in water!"));
 			    	UtilSound.play(player, Sound.VILLAGER_HIT, Pitch.HIGH);
 			    	return;
 			    }
@@ -54,7 +59,7 @@ public class Rush extends Skills {
 				Bukkit.getWorld(player.getWorld().getName()).playEffect(player.getLocation(), Effect.STEP_SOUND, 57);
 				Bukkit.getWorld(player.getWorld().getName()).playEffect(player.getLocation(), Effect.STEP_SOUND, 41);
 				UtilSound.play(player, Sound.BAT_TAKEOFF, Pitch.HIGH);
-				Cooldown.add(player.getName(), "Rush", 8, 8); 
+				Cooldown.add(player.getName(), "Rush", "Wizard", 8, 8); 
 				//Bukkit.getWorld(player.getWorld().getName()).playEffect(player.getLocation(), Effect.STEP_SOUND, 57);
 				Clans.instance.getServer().getScheduler().scheduleSyncDelayedTask(Clans.instance, new Runnable() {
 					public void run() {
@@ -62,6 +67,7 @@ public class Rush extends Skills {
 					}
 				}, 1);
 			}
+		}
 
 	}
 	@EventHandler

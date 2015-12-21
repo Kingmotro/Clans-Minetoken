@@ -1,12 +1,16 @@
 package repo.minetoken.clans;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import repo.minetoken.clans.structure.addons.AddonManager;
+import repo.minetoken.clans.blockFix.blockFix;
+import repo.minetoken.clans.combat.CombatManager;
+import repo.minetoken.clans.damage.DamageManager;
 import repo.minetoken.clans.donor.DonorManager;
 import repo.minetoken.clans.structure.clan.ClanManager;
 import repo.minetoken.clans.structure.console.ConsoleManager;
@@ -20,7 +24,9 @@ import repo.minetoken.clans.structure.rank.RankManager;
 import repo.minetoken.clans.structure.scoreboard.ScoreboardManager;
 import repo.minetoken.clans.structure.voting.VoteManager;
 import repo.minetoken.clans.structure.world.ExplosionsManager;
+import repo.minetoken.clans.utilities.Updater;
 import repo.minetoken.clans.structure.character.CharacterManager;
+import repo.minetoken.clans.structure.character.Skills;
 import repo.minetoken.clans.structure.clancenter.ClansCenterManager;
 import repo.minetoken.clans.structure.shop.ShopManager;
 
@@ -45,7 +51,10 @@ public class Clans extends JavaPlugin {
     ExplosionsManager explosionsManager;
 	AddonManager addonManager;
     DisguiseManager disguiseManager;
-
+    DamageManager damageManager;
+    CombatManager combatManager;
+    blockFix blockfix;
+    Updater updater;
     @Override
     public void onEnable() {
         instance = this;
@@ -71,6 +80,11 @@ public class Clans extends JavaPlugin {
         addonManager = new AddonManager(this);
 
         disguiseManager = new DisguiseManager(this);
+        
+        damageManager = new DamageManager(this, combatManager);
+        combatManager = new CombatManager(this);
+        blockfix = new blockFix(this);
+        updater = new Updater(this);
     }
 
     @Override
@@ -135,4 +149,5 @@ public class Clans extends JavaPlugin {
     public DonorManager getDonorManager() {
         return donorManager;
     }
+   
 }
