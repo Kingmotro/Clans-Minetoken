@@ -1,6 +1,7 @@
 package repo.minetoken.clans.structure.addons;
 
 import org.bukkit.event.Listener;
+import repo.minetoken.clans.structure.clan.ClanManager;
 
 /**
  * All rights reserved, any plugins made with this plugin
@@ -13,13 +14,18 @@ public class Addon implements Listener {
 
     public String name;
     public AddonManager manager;
+    public ClanManager clanManager;
 
-    public Addon(AddonManager manager, String name) {
+    public Addon(AddonManager manager, String name, ClanManager clanManager) {
         this.manager = manager;
         this.name = name;
     }
 
     public AddonManager getManager() {
         return manager;
+    }
+
+    public ClanManager getClanManager() {
+        return clanManager;
     }
 }

@@ -55,6 +55,9 @@ public class Clans extends JavaPlugin {
     CombatManager combatManager;
     blockFix blockfix;
     Updater updater;
+    
+  
+
     @Override
     public void onEnable() {
         instance = this;
@@ -77,7 +80,7 @@ public class Clans extends JavaPlugin {
         characterManager = new CharacterManager(this, menuManager);
         explosionsManager = new ExplosionsManager(this);
         
-        addonManager = new AddonManager(this);
+        addonManager = new AddonManager(clanManager);
 
         disguiseManager = new DisguiseManager(this);
         

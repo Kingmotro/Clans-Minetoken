@@ -17,10 +17,14 @@ import repo.minetoken.clans.structure.character.menu.ShopSelector;
 import repo.minetoken.clans.structure.character.menu.ShopSelectorManager;
 import repo.minetoken.clans.structure.character.menu.SkillSelector;
 import repo.minetoken.clans.structure.character.menu.SkillSelectorManager;
+<<<<<<< HEAD
 import repo.minetoken.clans.structure.character.menu.Skills.DisplaySkills;
 import repo.minetoken.clans.structure.character.menu.Skills.WarriorSkillsManager;
 import repo.minetoken.clans.structure.character.menu.Skills.WarriorSwordSkills;
 import repo.minetoken.clans.structure.character.playermenus.enableJoinMenu;
+=======
+import repo.minetoken.clans.structure.character.menu.Skills.WarriorSkills;
+>>>>>>> origin/master
 
 public class CharacterManager {
 
@@ -28,6 +32,7 @@ public class CharacterManager {
 	public Characters[] characters;
 	public SkillSelectorManager selector;
 	public ShopSelectorManager shopselector;
+
 	public MenuManager menuManager;
 	public WarriorSkillsManager warriorskills;
 	public CheckCharacter checkC;
@@ -45,14 +50,20 @@ public class CharacterManager {
 		joinM = new enableJoinMenu(this);
 		registerCharacters();
 		HandleCooldowns.handlecooldowns(); 
-		menuManager.addMenu("Select a Character", new SkillSelector(null, 0));
-		menuManager.addMenu("Shop", new ShopSelector(null, 0));
+		menuManager.addMenu("Select a Character", new SkillSelector());
+		menuManager.addMenu("Shop", new ShopSelector());
 		menuManager.addMenu("Edit Guardian Skills", new DisplaySkills(null, 0, "Guardian"));
 		menuManager.addMenu("Edit Wizard Skills", new DisplaySkills(null, 0, "Wizard"));
 		menuManager.addMenu("Edit Warrior Skills", new DisplaySkills(null, 0, "Warrior"));
 		menuManager.addMenu("Edit Thief Skills", new DisplaySkills(null, 0, "Thief"));
 		menuManager.addMenu("Edit Gatherer Skills", new DisplaySkills(null, 0, "Gatherer"));
 		
+		
+		registerCharacters();
+		HandleCooldowns.handlecooldowns();
+		menuManager.addMenu("Select a Character", new SkillSelector());
+		menuManager.addMenu("Shop", new ShopSelector());
+		menuManager.addMenu("Warrior", new WarriorSkills());
 	}
 
 	public void registerCharacters() {
@@ -66,6 +77,7 @@ public class CharacterManager {
 				plugin.getServer().getPluginManager().registerEvents(checkC, plugin);
 				plugin.getServer().getPluginManager().registerEvents(playerInfo, plugin);
 				plugin.getServer().getPluginManager().registerEvents(joinM, plugin);
+
 			}
 		}
 	}

@@ -12,12 +12,13 @@ import org.bukkit.potion.PotionEffectType;
 
 import repo.minetoken.clans.structure.addons.Addon;
 import repo.minetoken.clans.structure.addons.AddonManager;
+import repo.minetoken.clans.structure.clan.ClanManager;
 import repo.minetoken.clans.structure.cooldowns.Cooldown;
 
 public class Soup extends Addon {
 
-	public Soup(AddonManager manager) {
-		super(manager, "Soup");
+	public Soup(AddonManager manager, ClanManager clanManager) {
+		super(manager, "Soup", clanManager);
 	}
 
 	@EventHandler
