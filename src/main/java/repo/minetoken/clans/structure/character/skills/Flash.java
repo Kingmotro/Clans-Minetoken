@@ -80,8 +80,7 @@ public class Flash extends Skills{
 	  
 	  public void Skill(Player player, int level)
 	  {
-	    //Recharge.Instance.use(player, "Flash Recharge", 8000L, false);
-	    
+	 
 	    flash.put(player, Integer.valueOf(((Integer)flash.get(player)).intValue() - 1));
 	    
 	    Block lastSmoke = player.getLocation().getBlock();
@@ -107,7 +106,6 @@ public class Flash extends Skills{
 	    }
 	    Location loc = player.getLocation().add(player.getLocation().getDirection().multiply(curRange).add(new Vector(0.0D, 0.4D, 0.0D)));
 	    if (curRange > 0.0D) {
-	     // this.Factory.Teleport().TP(player, loc);
 	    	player.teleport(loc);
 	    }
 	    player.setFallDistance(0.0F);
