@@ -1,30 +1,20 @@
 package repo.minetoken.clans.structure.character;
 
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import repo.minetoken.clans.structure.cooldowns.HandleCooldowns;
 import repo.minetoken.clans.structure.inventory.MenuManager;
 import repo.minetoken.clans.structure.playerInfo.playerInfoItem;
-import repo.minetoken.clans.structure.playerInfo.playerInfoMenu;
 import repo.minetoken.clans.structure.character.characters.Warrior;
-import repo.minetoken.clans.structure.character.characters.Wizard;
 import repo.minetoken.clans.structure.character.characters.check.CheckCharacter;
 import repo.minetoken.clans.structure.character.menu.ShopSelector;
 import repo.minetoken.clans.structure.character.menu.ShopSelectorManager;
 import repo.minetoken.clans.structure.character.menu.SkillSelector;
 import repo.minetoken.clans.structure.character.menu.SkillSelectorManager;
-<<<<<<< HEAD
 import repo.minetoken.clans.structure.character.menu.Skills.DisplaySkills;
 import repo.minetoken.clans.structure.character.menu.Skills.WarriorSkillsManager;
-import repo.minetoken.clans.structure.character.menu.Skills.WarriorSwordSkills;
 import repo.minetoken.clans.structure.character.playermenus.enableJoinMenu;
-=======
 import repo.minetoken.clans.structure.character.menu.Skills.WarriorSkills;
->>>>>>> origin/master
 
 public class CharacterManager {
 
