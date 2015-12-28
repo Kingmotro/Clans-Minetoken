@@ -1,11 +1,11 @@
 package repo.minetoken.clans.structure.clan.command;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import repo.minetoken.clans.structure.clan.ClanManager;
 import repo.minetoken.clans.structure.command.SubCommand;
 import repo.minetoken.clans.structure.rank.enums.Result;
-import repo.minetoken.clans.utilities.C;
 import repo.minetoken.clans.utilities.Format;
 import repo.minetoken.clans.utilities.UtilSound;
 import repo.minetoken.clans.utilities.UtilSound.Pitch;
@@ -23,11 +23,11 @@ public class DenyCommand implements SubCommand {
         if (args.length == 0) {
             if (clanManager.invitedPlayer.containsKey(player.getUniqueId())) {
                 if (clanManager.cPlayer.hasClan(player.getUniqueId()) == Result.FALSE) {
-                    player.sendMessage(Format.main("Clans", "You have denied the Clan " + C.red + clanManager.invitedPlayer.get(player.getUniqueId()).getFaction()) + C.yellow +"!");
+                    player.sendMessage(Format.main("Clans", "You have denied the Clan " + ChatColor.RED + clanManager.invitedPlayer.get(player.getUniqueId()).getFaction()) + ChatColor.GREEN +"!");
                     UtilSound.play(player, Sound.IRONGOLEM_DEATH, Pitch.LOW);
                     try {
                         if(clanManager.invitedPlayer.get(player.getUniqueId()).getPlayer().isOnline()) {
-                            clanManager.invitedPlayer.get(player.getUniqueId()).getPlayer().sendMessage(Format.main("Clans", player.getName() + " has "+ C.yellow + "DENIED "+ C.yellow + "to join the Clan."));
+                            clanManager.invitedPlayer.get(player.getUniqueId()).getPlayer().sendMessage(Format.main("Clans", player.getName() + " has "+ ChatColor.YELLOW + "DENIED "+ ChatColor.YELLOW + "to join the Clan."));
                             UtilSound.play(clanManager.invitedPlayer.get(player.getUniqueId()).getPlayer(), Sound.WITHER_DEATH, Pitch.LOW);
                         }
                     } catch (Exception ignore) {}

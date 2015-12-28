@@ -8,8 +8,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import repo.minetoken.clans.utilities.Format;
-import repo.minetoken.clans.utilities.utilTime;
-import repo.minetoken.clans.utilities.utilTime.TimeUnit;
+import repo.minetoken.clans.utilities.UtilTime;
+import repo.minetoken.clans.utilities.UtilTime.TimeUnit;
 
 public class Cooldown {
 	
@@ -35,7 +35,7 @@ public class Cooldown {
 	 public static double getRemaining(String player, String ability) {
 	        if(!cooldownPlayers.containsKey(player)) return 0.0;
 	        if(!cooldownPlayers.get(player).cooldownMap.containsKey(ability)) return 0.0;
-	        return utilTime.convert((cooldownPlayers.get(player).cooldownMap.get(ability).seconds + cooldownPlayers.get(player).cooldownMap.get(ability).systime) - System.currentTimeMillis(), TimeUnit.SECONDS, 1);
+	        return UtilTime.convert((cooldownPlayers.get(player).cooldownMap.get(ability).seconds + cooldownPlayers.get(player).cooldownMap.get(ability).systime) - System.currentTimeMillis(), TimeUnit.SECONDS, 1);
 	    }
 	 
 	   public static void coolDurMessage(Player player, String ability) {

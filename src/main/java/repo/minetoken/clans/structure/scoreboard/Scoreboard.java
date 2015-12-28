@@ -5,10 +5,8 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import net.md_5.bungee.api.ChatColor;
-import repo.minetoken.clans.utilities.C;
-
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -31,7 +29,7 @@ public class Scoreboard {
 
     public Scoreboard(String string) {
         this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        this.title = C.bold + "MineToken Survival";
+        this.title = string;
         this.scores = Maps.newLinkedHashMap();
         this.teams = Lists.newArrayList();
     }

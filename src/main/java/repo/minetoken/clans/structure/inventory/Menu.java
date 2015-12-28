@@ -11,16 +11,21 @@ import org.bukkit.inventory.meta.ItemMeta;
 public abstract class Menu implements InventoryHolder {
 
     private int size;
+    private String title;
     private Inventory inventory;
 
     public Menu(String title, int size) {
-        inventory = Bukkit.createInventory(null, size, ChatColor.translateAlternateColorCodes('&', title));
+        this.title = title;
         this.size = size;
     }
 
     public void show(Player player) {
+        inventory = Bukkit.createInventory(player, size, ChatColor.translateAlternateColorCodes('&', title));
+        playerInventory(player);
         player.openInventory(inventory);
     }
+
+    public abstract void playerInventory(Player player);
 
     public abstract void leftClick(Player player, ItemStack itemStack);
 
@@ -47,5 +52,13 @@ public abstract class Menu implements InventoryHolder {
     @Override
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

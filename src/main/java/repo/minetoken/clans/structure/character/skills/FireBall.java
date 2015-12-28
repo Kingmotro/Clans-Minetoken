@@ -1,13 +1,11 @@
 package repo.minetoken.clans.structure.character.skills;
 
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 import repo.minetoken.clans.Clans;
@@ -16,39 +14,36 @@ import repo.minetoken.clans.structure.character.Characters;
 import repo.minetoken.clans.structure.character.SkillType;
 import repo.minetoken.clans.structure.character.Skills;
 import repo.minetoken.clans.utilities.UtilSound;
-import repo.minetoken.clans.utilities.utilWeapon;
+import repo.minetoken.clans.utilities.UtilWeapon;
 import repo.minetoken.clans.utilities.UtilSound.Pitch;
 
-public class FireBall extends Skills{
+public class FireBall extends Skills {
 
-	public FireBall() {
-		super("Fireball", new String[] {""}, SkillType.SWORD);
-	}
+    public FireBall() {
+        super("Fireball", new String[]{""}, SkillType.SWORD);
+    }
 
-	@EventHandler
-	public void onRightClick(PlayerInteractEvent event) {
-		Skills[] skill = Characters.getSkills();
-		final Player player = event.getPlayer();
-		if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
-			if(utilWeapon.hasSword(player)){
-				if(!Characters.wizard.containsKey(player.getName())) {
-					return;
-				}
-				if(Cooldown.isCooling(player.getName(), "Fireball")) {
-					Cooldown.coolDurMessage(player, "Fireball");
-					return;
-				}
-				Vector direction = player.getEyeLocation().getDirection().multiply(2);
-				Fireball fireball = player.getWorld().spawn(player.getEyeLocation().add(direction.getX(), direction.getY(), direction.getZ()), Fireball.class);
-				fireball.setShooter(player);
-				fireball.setYield(0F);
-				fireball.setIsIncendiary(false);
-				fireball.setMetadata("fireball", new FixedMetadataValue(Clans.instance, Boolean.valueOf(true)));
-				UtilSound.play(player, Sound.GHAST_FIREBALL, Pitch.VERY_LOW); 
-				Cooldown.add(player.getName(), "Fireball", "Wizard", 10, 10); 
-
-			}
-	}
-	
-
+    @EventHandler
+    public void onRightClick(PlayerInteractEvent event) {
+        final Player player = event.getPlayer();
+        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (UtilWeapon.hasSword(player)) {
+                if (!Characters.wizard.containsKey(player.getName())) {
+                    return;
+                }
+                if (Cooldown.isCooling(player.getName(), "Fireball")) {
+                    Cooldown.coolDurMessage(player, "Fireball");
+                    return;
+                }
+                Vector direction = player.getEyeLocation().getDirection().multiply(2);
+                Fireball fireball = player.getWorld().spawn(player.getEyeLocation().add(direction.getX(), direction.getY(), direction.getZ()), Fireball.class);
+                fireball.setShooter(player);
+                fireball.setYield(0F);
+                fireball.setIsIncendiary(false);
+                fireball.setMetadata("fireball", new FixedMetadataValue(Clans.instance, Boolean.valueOf(true)));
+                UtilSound.play(player, Sound.GHAST_FIREBALL, Pitch.VERY_LOW);
+                Cooldown.add(player.getName(), "Fireball", "Wizard", 10, 10);
+            }
+        }
+    }
 }

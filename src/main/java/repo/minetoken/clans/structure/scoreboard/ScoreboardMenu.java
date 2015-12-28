@@ -19,7 +19,10 @@ public class ScoreboardMenu extends Menu {
 
     public ScoreboardMenu(ScoreboardManager scoreboardManager) {
         super("Scoreboards", 9);
-        this.scoreboardManager = scoreboardManager;
+        this.scoreboardManager = scoreboardManager; }
+
+    @Override
+    public void playerInventory(Player player) {
         getInventory().setItem(2, new ItemStackBuilder(Material.DIAMOND_SWORD).withName(ChatColor.BLUE + "Clan Scoreboard").build());
         getInventory().setItem(5, new ItemStackBuilder(Material.NETHER_STAR).withName(ChatColor.GREEN + "Player Scoreboard").build());
     }
@@ -37,7 +40,7 @@ public class ScoreboardMenu extends Menu {
                 player.closeInventory();
                 if(scoreboardManager.clanManager.cPlayer.hasClan(player.getUniqueId()) == Result.TRUE) {
                     player.sendMessage(Format.main("Scoreboard", "Loading the clan scoreboard..."));
-                    ClanScoreboard clanScoreboard = new ClanScoreboard(player, scoreboardManager.clanManager, scoreboardManager);
+                    ClanScoreboard clanScoreboard = new ClanScoreboard(player, scoreboardManager.clanManager);
                     clanScoreboard.send(player);
                     scoreboardManager.addClanScoreboard(player, clanScoreboard);
                 } else {

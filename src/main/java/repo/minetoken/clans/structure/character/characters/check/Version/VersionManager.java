@@ -1,4 +1,4 @@
-package repo.minetoken.clans.structure.character.characters.check.Version;
+package repo.minetoken.clans.structure.character.characters.check.version;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -141,7 +141,7 @@ public class VersionManager
             {
                 version += Integer.parseInt(pieces[2]);
             }
-            Bukkit.getLogger().info("Version: " + version);
+            Bukkit.getLogger().info("version: " + version);
         }
 
         // Some error occurred, assume an up to date server with all features
@@ -159,7 +159,7 @@ public class VersionManager
                 {
                     version = V1_7_2;
                 }
-                Bukkit.getLogger().info("Version: " + version);
+                Bukkit.getLogger().info("version: " + version);
             }
         }
     }

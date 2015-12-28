@@ -1,7 +1,6 @@
-package repo.minetoken.clans.utilities;
+package repo.minetoken.clans.structure.update;
 
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import repo.minetoken.clans.Clans;
 

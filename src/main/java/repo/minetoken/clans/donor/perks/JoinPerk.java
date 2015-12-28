@@ -5,23 +5,12 @@ import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import repo.minetoken.clans.structure.character.CharacterManager;
-import repo.minetoken.clans.structure.character.Characters;
-import repo.minetoken.clans.structure.character.Skills;
-import repo.minetoken.clans.structure.character.menu.Skills.WarriorSkillsManager;
-import repo.minetoken.clans.structure.character.menu.Skills.WarriorSwordSkills;
-import repo.minetoken.clans.structure.inventory.MenuManager;
 import repo.minetoken.clans.structure.rank.enums.Ranks;
 import repo.minetoken.clans.donor.DonorPerk;
-import repo.minetoken.clans.utilities.C;
-import repo.minetoken.clans.utilities.Format;
-import repo.minetoken.clans.utilities.UtilSound;
-import repo.minetoken.clans.utilities.UtilSound.Pitch;
 
 public class JoinPerk extends DonorPerk {
     public JoinPerk(JavaPlugin plugin) {

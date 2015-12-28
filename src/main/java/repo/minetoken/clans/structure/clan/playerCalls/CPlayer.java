@@ -222,13 +222,13 @@ public class CPlayer extends DatabaseCall<ClanManager> {
 
     List<String> players;
 
-    public List<String> getPlayersInAClan(String faction) {
+    public List<String> getPlayersInAClan(String clan) {
         players = new ArrayList<>();
         players.clear();
         plugin.checkConnection();
         try {
             PreparedStatement ps = plugin.connection.prepareStatement("SELECT * FROM cplayer WHERE clan=?");
-            ps.setString(1, faction);
+            ps.setString(1, clan);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String s = rs.getString("uuid");

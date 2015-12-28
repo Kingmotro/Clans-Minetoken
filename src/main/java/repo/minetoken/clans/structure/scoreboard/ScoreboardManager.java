@@ -76,7 +76,7 @@ public class ScoreboardManager implements Listener {
     }
 
     public void addClanScoreboard(Player player, ClanScoreboard scoreboard) {
-        if(!playerScoreboard.containsKey(player.getUniqueId())) {
+        if (!playerScoreboard.containsKey(player.getUniqueId())) {
             if (clanScoreboard.containsKey(player.getUniqueId())) {
                 clanScoreboard.remove(player.getUniqueId());
                 clanScoreboard.put(player.getUniqueId(), scoreboard);
@@ -94,16 +94,6 @@ public class ScoreboardManager implements Listener {
         }
     }
     
- //
-    
-    @EventHandler
-    public void scoreboardForAll(PlayerJoinEvent e){
-    	Player player = e.getPlayer();
-    	 ClanScoreboard clanScoreboard = new ClanScoreboard(player, clanManager, scoreboardManager);
-         clanScoreboard.send(player);
-         addClanScoreboard(player, clanScoreboard);
-    }
-    
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
         if(playerScoreboard.containsKey(event.getPlayer().getUniqueId())) {
@@ -113,10 +103,6 @@ public class ScoreboardManager implements Listener {
             clanScoreboard.remove(event.getPlayer().getUniqueId());
         }
     }
-
-    /*
-    PLAYER SCOREBOARD UPDATE EVENTS
-     */
 
     @EventHandler
     public void onClanJoin(PlayerJoinFactionEvent event) {
@@ -165,9 +151,4 @@ public class ScoreboardManager implements Listener {
             pScoreboard.setClanRanks(event.getRank());
         }
     }
-
-    /*
-    CLAN SCOREBOARD UPDATE EVENT
-     */
-
 }

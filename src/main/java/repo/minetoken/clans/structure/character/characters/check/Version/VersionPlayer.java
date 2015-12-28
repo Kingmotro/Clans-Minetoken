@@ -1,4 +1,4 @@
-package repo.minetoken.clans.structure.character.characters.check.Version;
+package repo.minetoken.clans.structure.character.characters.check.version;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

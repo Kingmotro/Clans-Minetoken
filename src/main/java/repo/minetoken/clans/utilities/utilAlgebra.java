@@ -9,7 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-public class utilAlgebra
+public class UtilAlgebra
 {
   public static TreeSet<String> sortKey(Set<String> toSort)
   {
@@ -61,10 +61,10 @@ public class utilAlgebra
     
     double rate = 0.1D;
     Vector vec = getTrajectory(from, to).multiply(0.1D);
-    while (utilMath.offset(cur, to) > rate)
+    while (UtilMath.offset(cur, to) > rate)
     {
       cur.add(vec);
-      if (!utilBlock.airFoliage(cur.getBlock())) {
+      if (!UtilBlock.airFoliage(cur.getBlock())) {
         return false;
       }
     }
@@ -114,6 +114,6 @@ public class utilAlgebra
   
   public static <T> T Random(List<T> list)
   {
-    return (T)list.get(utilMath.r(list.size()));
+    return (T)list.get(UtilMath.r(list.size()));
   }
 }

@@ -32,25 +32,8 @@ public class Format {
     public static String help(String string, String desc) {
         return ChatColor.RED + ">> " + ChatColor.YELLOW + string + ChatColor.GRAY +", "+ desc;
     }
-   
-    public static String elem(String elem) {
-      return C.red + elem + ChatColor.RESET + C.yellow;
-    }
-    
-    public static String name(String elem) {
-      return C.red + elem + C.red;
-    }
-    
-    public static String time(String elem){
-      return C.green + elem + C.yellow;
-    }
-    
+
     public static String desc(String head, String body) {
-      return C.dgreen + head + ": " + C.gray + body;
-    }
-    
-    public static String item(String elem)
-    {
-      return C.lpurple + elem + C.dgray;
+      return ChatColor.RED + head + ": " + ChatColor.YELLOW + body;
     }
 }

@@ -1,4 +1,4 @@
-package repo.minetoken.clans.structure.character.characters.check.Version;
+package repo.minetoken.clans.structure.character.characters.check.version;
 
 
 import org.bukkit.Bukkit;
@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import repo.minetoken.clans.Clans;
 import repo.minetoken.clans.utilities.Config;

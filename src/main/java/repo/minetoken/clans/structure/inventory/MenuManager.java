@@ -9,8 +9,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 
-import repo.minetoken.clans.structure.character.menu.Skills.WarriorSwordSkills;
-import repo.minetoken.clans.structure.playerInfo.playerInfoMenu;
+import repo.minetoken.clans.structure.playerInfo.PlayerInfoMenu;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -48,8 +47,7 @@ public class MenuManager implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
-        addMenu("User Profile", new playerInfoMenu(null, 0, player));
-        addMenu("Warrior", new WarriorSwordSkills(null, 0, player));
+        addMenu("User Profile", new PlayerInfoMenu(player));
         Inventory inv = player.getOpenInventory().getTopInventory();
         for (Menu menu : menus.values()) {
             if (menu.getInventory().getName().equals(inv.getName())) {

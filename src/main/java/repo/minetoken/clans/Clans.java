@@ -1,16 +1,14 @@
 package repo.minetoken.clans;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import repo.minetoken.clans.structure.combat.CombatManager;
+import repo.minetoken.clans.structure.damage.DamageManager;
 import repo.minetoken.clans.structure.addons.AddonManager;
-import repo.minetoken.clans.blockFix.blockFix;
-import repo.minetoken.clans.combat.CombatManager;
-import repo.minetoken.clans.damage.DamageManager;
 import repo.minetoken.clans.donor.DonorManager;
 import repo.minetoken.clans.structure.clan.ClanManager;
 import repo.minetoken.clans.structure.console.ConsoleManager;
@@ -18,15 +16,13 @@ import repo.minetoken.clans.structure.disguise.DisguiseManager;
 import repo.minetoken.clans.structure.economy.EconomyManager;
 import repo.minetoken.clans.structure.enchant.EnchantManager;
 import repo.minetoken.clans.structure.inventory.MenuManager;
-import repo.minetoken.clans.structure.npc.NPCManager;
 import repo.minetoken.clans.structure.punish.Punish;
 import repo.minetoken.clans.structure.rank.RankManager;
 import repo.minetoken.clans.structure.scoreboard.ScoreboardManager;
 import repo.minetoken.clans.structure.voting.VoteManager;
 import repo.minetoken.clans.structure.world.ExplosionsManager;
-import repo.minetoken.clans.utilities.Updater;
+import repo.minetoken.clans.structure.update.Updater;
 import repo.minetoken.clans.structure.character.CharacterManager;
-import repo.minetoken.clans.structure.character.Skills;
 import repo.minetoken.clans.structure.clancenter.ClansCenterManager;
 import repo.minetoken.clans.structure.shop.ShopManager;
 
@@ -40,7 +36,6 @@ public class Clans extends JavaPlugin {
     MenuManager menuManager;
     VoteManager voteManager;
     ShopManager shopManager;
-    NPCManager npcManager;
     EnchantManager enchantManager;
     ConsoleManager consoleManager;
     ClansCenterManager clansCenterManager;
@@ -51,12 +46,9 @@ public class Clans extends JavaPlugin {
     ExplosionsManager explosionsManager;
 	AddonManager addonManager;
     DisguiseManager disguiseManager;
-    DamageManager damageManager;
-    CombatManager combatManager;
-    blockFix blockfix;
     Updater updater;
-    
-  
+    CombatManager combatManager;
+    DamageManager damageManager;
 
     @Override
     public void onEnable() {
@@ -70,7 +62,6 @@ public class Clans extends JavaPlugin {
         menuManager = new MenuManager(this);
         voteManager = new VoteManager(this, rankManager, economyManager);
         shopManager =new ShopManager(this, economyManager, menuManager);
-        npcManager = new NPCManager(this);
         enchantManager = new EnchantManager(this);
         consoleManager = new ConsoleManager(this, rankManager, economyManager);
         clansCenterManager = new ClansCenterManager(this, clanManager, menuManager);
@@ -79,14 +70,13 @@ public class Clans extends JavaPlugin {
         punish = new Punish(this, rankManager);
         characterManager = new CharacterManager(this, menuManager);
         explosionsManager = new ExplosionsManager(this);
-        
+
+        combatManager = new CombatManager(this);
+        damageManager = new DamageManager(this);
+
         addonManager = new AddonManager(clanManager);
 
         disguiseManager = new DisguiseManager(this);
-        
-        damageManager = new DamageManager(this, combatManager);
-        combatManager = new CombatManager(this);
-        blockfix = new blockFix(this);
         updater = new Updater(this);
     }
 
@@ -127,10 +117,6 @@ public class Clans extends JavaPlugin {
 
     public ShopManager getShopManager() {
         return shopManager;
-    }
-
-    public NPCManager getNpcManager() {
-        return npcManager;
     }
 
     public EnchantManager getEnchantManager() {

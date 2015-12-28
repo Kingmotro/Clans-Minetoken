@@ -1,11 +1,11 @@
 package repo.minetoken.clans.structure.clan.command;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import repo.minetoken.clans.structure.command.SubCommand;
 import repo.minetoken.clans.structure.rank.enums.Result;
-import repo.minetoken.clans.utilities.C;
 import repo.minetoken.clans.utilities.Format;
 import repo.minetoken.clans.utilities.UtilSound;
 import repo.minetoken.clans.utilities.UtilSound.Pitch;
@@ -45,7 +45,7 @@ public class CreateCommand implements SubCommand {
                     	String msg = name.trim(); 
             			String clan = ("" + msg.charAt(0)).toUpperCase() + msg.substring(1);
             			 clanCommand.clanManager.CClans.createClan(clan, player); 
-                        player.sendMessage(Format.main("Clans", "Created Clan: " + C.green + clan));
+                        player.sendMessage(Format.main("Clans", "Created Clan: " + ChatColor.GREEN + clan));
                         UtilSound.play(player, Sound.LEVEL_UP, Pitch.HIGH);
                     } else {
                         player.sendMessage(Format.main("Clans", "Sorry, that Clan name is too long."));

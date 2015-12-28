@@ -1,6 +1,6 @@
 package repo.minetoken.clans.structure.addons.items;
 
-import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -12,21 +12,17 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.material.Door;
 
 import repo.minetoken.clans.Clans;
 import repo.minetoken.clans.structure.addons.Addon;
 import repo.minetoken.clans.structure.addons.AddonManager;
 import repo.minetoken.clans.structure.clan.ClanManager;
-import repo.minetoken.clans.utilities.C;
 import repo.minetoken.clans.utilities.Format;
 
 import java.util.List;
-import java.util.UUID;
 
 public class IronDoor extends Addon {
 
@@ -55,7 +51,8 @@ public class IronDoor extends Addon {
                     block = block.getRelative(BlockFace.DOWN);
                 }
                 if (block.getType() == Material.IRON_DOOR_BLOCK) {
-                    if (isPlayersInSameClan("TEST", evt.getPlayer())) {
+                    //TODO: REPLACE "TEST" FOR CLAN NAME
+                    //if (isPlayersInSameClan("TEST", evt.getPlayer())) {
                         if (block.getData() < 4) {
                             block.setData((byte) (block.getData() + 4));
                             block.getWorld().playEffect(block.getLocation(), Effect.DOOR_TOGGLE, 0);
@@ -67,7 +64,7 @@ public class IronDoor extends Addon {
                     } else {
                         evt.getPlayer().sendMessage(Format.main("Clans", "You can't use this door!"));
                     }
-                }
+                //}
             }
         }
     }
@@ -77,7 +74,7 @@ public class IronDoor extends Addon {
         Block block = evt.getBlock();
         Player pl = evt.getPlayer();
         if (block.getType() == Material.IRON_DOOR || block.getType() == Material.IRON_DOOR_BLOCK) {
-            pl.sendMessage(Format.main("Clans", "Door placed! " + C.gray + "(Only Clan members can open this door)"));
+            pl.sendMessage(Format.main("Clans", "Door placed! " + ChatColor.GRAY + "(Only Clan members can open this door)"));
         }
     }
 
@@ -94,7 +91,6 @@ public class IronDoor extends Addon {
         List<String> uuids = getClanManager().cPlayer.getPlayersInAClan(clan);
 
         for(int i = 0; i < uuids.size(); i++) {
-            UUID uuid = UUID.fromString(uuids.get(i));
             if(uuids.get(i).equalsIgnoreCase(player.getUniqueId().toString())) {
                 return true;
             } else {

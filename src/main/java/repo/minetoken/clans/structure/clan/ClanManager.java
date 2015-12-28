@@ -12,7 +12,6 @@ import repo.minetoken.clans.structure.clan.events.ClanCreateEvent;
 import repo.minetoken.clans.structure.clan.events.ClanDeleteEvent;
 import repo.minetoken.clans.structure.clan.playerCalls.CPlayer;
 import repo.minetoken.clans.structure.database.Database;
-import repo.minetoken.clans.utilities.C;
 import repo.minetoken.clans.utilities.Format;
 
 import java.sql.Connection;
@@ -70,8 +69,9 @@ public class ClanManager extends Database implements Listener {
         for (String uuid : cPlayer.getPlayersInAClan(faction)) {
             try {
                 Player player = Bukkit.getPlayer(UUID.fromString(uuid));
-                Bukkit.broadcastMessage(Format.main("Clans", C.aqua + player.getName() + C.yellow + " has left the Clan " +C.lpurple + faction + C.yellow + "!"));
+                Bukkit.broadcastMessage(Format.main("Clans", ChatColor.AQUA + player.getName() + ChatColor.YELLOW + " has left the Clan " + ChatColor.LIGHT_PURPLE + faction + ChatColor.YELLOW + "!"));
             } catch (Exception ignore) {
+                ignore.printStackTrace();
             }
         }
         cPlayer.kickAllPlayerFromFaction(faction);
@@ -81,6 +81,6 @@ public class ClanManager extends Database implements Listener {
     public void onClanCreate(ClanCreateEvent event) {
         String faction = event.getFaction();
         Player creator = event.getPlayer();
-        Bukkit.broadcastMessage(Format.main("Clans", C.aqua + creator.getName() + C.yellow +" Created the Clan: " + C.green + faction));
+        Bukkit.broadcastMessage(Format.main("Clans", ChatColor.AQUA + creator.getName() + ChatColor.YELLOW +" Created the Clan: " + ChatColor.GREEN + faction));
     }
 }

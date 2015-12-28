@@ -4,10 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import repo.minetoken.clans.structure.scoreboard.Scoreboard;
 import repo.minetoken.clans.structure.scoreboard.ScoreboardManager;
-import repo.minetoken.clans.utilities.C;
 import repo.minetoken.clans.structure.clan.ClanManager;
-import repo.minetoken.clans.structure.clan.enums.ClanRanks;
-import repo.minetoken.clans.structure.rank.enums.Result;
 
 import java.util.UUID;
 
@@ -16,7 +13,7 @@ public class ClanScoreboard extends Scoreboard {
     public Player player;
     public ClanManager clanManager;
 
-    public ClanScoreboard(Player player, ClanManager clanManager, ScoreboardManager scoreboardManager) {
+    public ClanScoreboard(Player player, ClanManager clanManager) {
         super(clanManager.cPlayer.getClan(player.getUniqueId()));
         this.player = player;
 

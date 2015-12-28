@@ -1,12 +1,12 @@
 package repo.minetoken.clans.structure.clan.command;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import repo.minetoken.clans.structure.command.SubCommand;
 import repo.minetoken.clans.structure.clan.ClanManager;
 import repo.minetoken.clans.structure.rank.enums.Result;
-import repo.minetoken.clans.utilities.C;
 import repo.minetoken.clans.utilities.Format;
 import repo.minetoken.clans.utilities.UtilSound;
 import repo.minetoken.clans.utilities.UtilSound.Pitch;
@@ -33,7 +33,7 @@ public class AcceptCommand implements SubCommand {
                         for(String uuid : clanManager.cPlayer.getPlayersInAClan(clanManager.invitedPlayer.get(player.getUniqueId()).getFaction())) {
                             if(Bukkit.getPlayer(UUID.fromString(uuid)).isOnline()) {
                                 Player fPlayer = Bukkit.getPlayer(UUID.fromString(uuid));
-                                fPlayer.sendMessage(Format.main("Clans", C.green + player.getName() + C.yellow + " joined the clan!"));
+                                fPlayer.sendMessage(Format.main("Clans", ChatColor.GREEN + player.getName() + ChatColor.YELLOW + " joined the clan!"));
                                 UtilSound.play(fPlayer, Sound.LEVEL_UP, Pitch.HIGH);
                             }
                         }

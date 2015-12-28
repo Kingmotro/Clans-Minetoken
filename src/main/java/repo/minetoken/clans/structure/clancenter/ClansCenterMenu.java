@@ -7,7 +7,6 @@ import org.bukkit.inventory.ItemStack;
 import repo.minetoken.clans.structure.clan.enums.ClanRanks;
 import repo.minetoken.clans.structure.inventory.Menu;
 import repo.minetoken.clans.structure.rank.enums.Result;
-import repo.minetoken.clans.utilities.C;
 import repo.minetoken.clans.utilities.Format;
 import repo.minetoken.clans.utilities.ItemStackBuilder;
 
@@ -18,14 +17,17 @@ public class ClansCenterMenu extends Menu {
     public ClansCenterMenu(ClansCenterManager clansCenterManager) {
         super("Wise One", 54);
         this.clansCenterManager = clansCenterManager;
+    }
 
+    @Override
+    public void playerInventory(Player player) {
         getInventory().setItem(0, new ItemStackBuilder(Material.WOOL).withData(13).withName(ChatColor.GREEN + "Enlist Faction").build());
         getInventory().setItem(8, new ItemStackBuilder(Material.WOOL).withData(14).withName(ChatColor.RED + "Remove Faction Enlistment").build());
 
         for(int i = 0; i < clansCenterManager.cCenter.getEnlistedFactions().size(); i++) {
             String faction = clansCenterManager.cCenter.getEnlistedFactions().get(i);
             for(int i1 = 18; i < 24; i++) {
-                getInventory().setItem(i1, new ItemStackBuilder(Material.STAINED_CLAY).withData(14).withName(ChatColor.GREEN + faction).withLore(new String[] {"" , C.yellow + "Left-Click to join this Clan" , " "}).build());
+                getInventory().setItem(i1, new ItemStackBuilder(Material.STAINED_CLAY).withData(14).withName(ChatColor.GREEN + faction).withLore(new String[] {"" , ChatColor.YELLOW + "Left-Click to join this Clan" , " "}).build());
             }
         }
     }

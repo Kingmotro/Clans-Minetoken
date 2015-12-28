@@ -13,7 +13,8 @@ public class Skills implements Listener {
 	public String name;
 	public String[] desc;
 	public SkillType type;
-	public Skills(String name, String[] desc, SkillType types) {
+
+	public Skills(String name, String[] desc, SkillType type) {
 		this.name = name;
 		this.desc = desc;
 		this.type = type;
@@ -54,6 +55,4 @@ public class Skills implements Listener {
 			Warrior.BladeTrail.put(player.getName(), new Warrior());
 		}
 	}
-
-
 }

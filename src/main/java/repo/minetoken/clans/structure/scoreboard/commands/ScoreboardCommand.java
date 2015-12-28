@@ -29,7 +29,7 @@ public class ScoreboardCommand implements CommandExecutor {
         Player player = (Player) commandSender;
 
         if(args.length == 0) {
-            new ScoreboardMenu(scoreboardManager).show(player);
+            scoreboardManager.menuManager.getMenu("scoreboard").show(player);
         } else {
             player.sendMessage(help());
         }

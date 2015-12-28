@@ -2,7 +2,7 @@ package repo.minetoken.clans.utilities;
 
 
 
-public class utilTime {
+public class UtilTime {
 
 	public static enum TimeUnit {
 		BEST,
@@ -20,11 +20,11 @@ public class utilTime {
 			else if(time < 86400000L) unit = TimeUnit.HOURS;
 			else unit = TimeUnit.DAYS;
 		}
-		if(unit == TimeUnit.SECONDS) return utilMath.trim(time / 1000.0D, decPoint);
-		if(unit == TimeUnit.MINUTES) return utilMath.trim(time / 60000.0D, decPoint);
-		if(unit == TimeUnit.HOURS) return utilMath.trim(time / 3600000.0D, decPoint);
-		if(unit == TimeUnit.DAYS) return utilMath.trim(time / 86400000.0D, decPoint);
-		return utilMath.trim(time, decPoint);
+		if(unit == TimeUnit.SECONDS) return UtilMath.trim(time / 1000.0D, decPoint);
+		if(unit == TimeUnit.MINUTES) return UtilMath.trim(time / 60000.0D, decPoint);
+		if(unit == TimeUnit.HOURS) return UtilMath.trim(time / 3600000.0D, decPoint);
+		if(unit == TimeUnit.DAYS) return UtilMath.trim(time / 86400000.0D, decPoint);
+		return UtilMath.trim(time, decPoint);
 	}
 
 	public static boolean elapsed(long from, long required)
@@ -49,17 +49,17 @@ public class utilTime {
 			}
 		}
 		if (type == TimeUnit.DAYS) {
-			return utilMath.trim(trim, time / 8.64E7D) + " Days";
+			return UtilMath.trim(trim, time / 8.64E7D) + " Days";
 		}
 		if (type == TimeUnit.HOURS) {
-			return utilMath.trim(trim, time / 3600000.0D) + " Hours";
+			return UtilMath.trim(trim, time / 3600000.0D) + " Hours";
 		}
 		if (type == TimeUnit.MINUTES) {
-			return utilMath.trim(trim, time / 60000.0D) + " Minutes";
+			return UtilMath.trim(trim, time / 60000.0D) + " Minutes";
 		}
 		if (type == TimeUnit.SECONDS) {
-			return utilMath.trim(trim, time / 1000.0D) + " Seconds";
+			return UtilMath.trim(trim, time / 1000.0D) + " Seconds";
 		}
-		return utilMath.trim(trim, time) + " Milliseconds";
+		return UtilMath.trim(trim, time) + " Milliseconds";
 	}
 }

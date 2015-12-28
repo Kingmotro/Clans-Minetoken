@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import repo.minetoken.clans.structure.economy.EconomyManager;
 import repo.minetoken.clans.structure.inventory.MenuManager;
-import repo.minetoken.clans.structure.shop.am.Armory;
 import repo.minetoken.clans.utilities.EntityUtil;
 import repo.minetoken.clans.utilities.Format;
 
@@ -32,8 +31,6 @@ public class ShopManager implements Listener {
         this.economyManager = economyManager;
         this.menuManager = menuManager;
         shopEntityMap = new HashMap<>();
-
-        new Armory(this);
 
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -116,7 +113,6 @@ public class ShopManager implements Listener {
         for (Entity entity : event.getChunk().getEntities()) {
             if (shopEntityMap.containsKey(entity)) {
                 event.setCancelled(true);
-                System.out.println(Format.info("Stopped the unloading " + event.getChunk() + ", cause there is a shop entity in that chunk."));
             }
         }
     }

@@ -14,10 +14,6 @@ import repo.minetoken.clans.utilities.UtilSound.Pitch;
 
 public class SkillSelectorManager implements Listener{
 
-
-	public SkillSelectorManager(CharacterManager characterManager) {
-		//todo
-	}
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event){
 		Action action = event.getAction();
@@ -28,7 +24,5 @@ public class SkillSelectorManager implements Listener{
 				UtilSound.play(event.getPlayer(), Sound.NOTE_PLING, Pitch.VERY_HIGH);
 			}
 		}
-		
-		
 	}
 }

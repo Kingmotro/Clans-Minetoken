@@ -3,6 +3,7 @@ package repo.minetoken.clans;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,13 +11,16 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import repo.minetoken.clans.structure.clancenter.ClansCenterMenu;
 
+import java.util.Random;
+
 public class TestCommand implements CommandExecutor, Listener {
 
-    Clans clans;
+    static Clans clans;
 
     public TestCommand(Clans clans) {
         this.clans = clans;
@@ -25,8 +29,61 @@ public class TestCommand implements CommandExecutor, Listener {
     @Override
     public boolean onCommand(final CommandSender commandSender, Command command, String s, String[] strings) {
         final Player player = (Player) commandSender;
-        clans.disguiseManager.disguisePlayerToAll(player);
+        treeEffect(player.getLocation());
         return false;
+    }
+
+    public static void particleCone(Location location1, double phi) {
+
+        double x, y, z;
+        for (double t = 0; t <= 2 * Math.PI; t = t + Math.PI / 16) {
+            for (double i = 0; i <= 1; i = i + 1) {
+                x = 0.4 * (2 * Math.PI - t) * 0.5 * Math.cos(t + phi + i * Math.PI);
+                y = 0.5 * t;
+                z = 0.4 * (2 * Math.PI - t) * 0.5 * Math.sin(t + phi + i * Math.PI);
+                location1.add(x, y, z);
+                Color mix = Color.fromRGB(255, 195, 0);
+                Random random = new Random();
+                int rand = random.nextInt(6) + 1;
+                random = new Random();
+                int red = (random.nextInt(256) + mix.getRed()) / 2;
+                int green = (random.nextInt(256) + mix.getGreen()) / 2;
+                int blue = (random.nextInt(256) + mix.getBlue()) / 2;
+
+                if (rand < 6) {
+                    ParticleEffect.REDSTONE.display(new ParticleEffect.OrdinaryColor(Color.fromRGB(52, 166, 95)), location1, 50);
+                } else {
+                    ParticleEffect.REDSTONE.display(new ParticleEffect.OrdinaryColor(Color.fromRGB(red, green, blue)), location1, 50);
+                }
+                location1.subtract(x, y, z);
+            }
+        }
+    }
+
+    public static void treeEffect(final Location location) {
+        new BukkitRunnable() {
+            double phi = 0;
+
+            public void run() {
+                phi = phi + Math.PI / 8;
+
+                location.add(0, Math.PI + 0.15, 0);
+                ParticleEffect.REDSTONE.display(new ParticleEffect.OrdinaryColor(Color.fromRGB(255, 195, 0)), location, 50);
+                location.subtract(0, Math.PI + 0.15, 0);
+                for (double t = 0; t <= Math.PI; t = t + Math.PI / 16) {
+                    location.add(0, t, 0);
+                    ParticleEffect.REDSTONE.display(new ParticleEffect.OrdinaryColor(Color.fromRGB(127, 51, 0)), location, 50);
+                    location.subtract(0, t, 0);
+                }
+                particleCone(location, phi);
+
+                /** You can uncomment this part if you want it disapearing in a few seconds. Change 30 to the time in seconds
+                 * if (phi > 30 * Math.PI) {
+                 *    this.cancel();
+                 * }
+                 */
+            }
+        }.runTaskTimer(clans, 0, 3);
     }
 
     public void testMath(final Player player) {
