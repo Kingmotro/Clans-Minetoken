@@ -1,24 +1,26 @@
 package repo.minetoken.clans.structure.playerInfo;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import repo.minetoken.clans.structure.inventory.Menu;
-import repo.minetoken.clans.utilities.C;
 import repo.minetoken.clans.utilities.ItemStackBuilder;
 import repo.minetoken.clans.utilities.UtilSound;
 import repo.minetoken.clans.utilities.UtilSound.Pitch;
 
-public class playerInfoMenu extends Menu{
+public class PlayerInfoMenu extends Menu {
 
-	public playerInfoMenu(String title, int size, Player p) {
-		super("User Profile", 45);
-		getInventory().setItem(4, setOwner(p, new ItemStack(Material.SKULL_ITEM, 1, (short)3), C.yellow + p.getName() + "'s Profile"));
-		getInventory().setItem(9, new ItemStackBuilder(Material.DIAMOND).withName(C.green + "" + C.bold + "Credits").build());
+	public PlayerInfoMenu() {
+		super("User Profile", 45);}
+
+	@Override
+	public void playerInventory(Player player) {
+		getInventory().setItem(4, setOwner(player, new ItemStack(Material.SKULL_ITEM, 1, (short)3), ChatColor.YELLOW + player.getName() + "'s Profile"));
+		getInventory().setItem(9, new ItemStackBuilder(Material.DIAMOND).withName(ChatColor.GREEN + "" + ChatColor.BOLD + "Credits").build());
 	}
 
 	@Override
