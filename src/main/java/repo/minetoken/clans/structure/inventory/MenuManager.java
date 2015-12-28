@@ -47,7 +47,7 @@ public class MenuManager implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
-        addMenu("User Profile", new PlayerInfoMenu(player));
+        addMenu("User Profile", new PlayerInfoMenu());
         Inventory inv = player.getOpenInventory().getTopInventory();
         for (Menu menu : menus.values()) {
             if (menu.getInventory().getName().equals(inv.getName())) {

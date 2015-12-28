@@ -29,7 +29,7 @@ public class PlayerInfoItem implements Listener {
         if (is.getType() == Material.ENCHANTED_BOOK) {
             event.setCancelled(true);
 
-            new PlayerInfoMenu(event.getPlayer()).show(event.getPlayer());
+            new PlayerInfoMenu().show(event.getPlayer());
             UtilSound.play(event.getPlayer(), Sound.NOTE_BASS, Pitch.VERY_HIGH);
         }
     }
