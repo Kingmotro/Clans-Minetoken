@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import repo.minetoken.clans.structure.database.Database;
+import repo.minetoken.clans.structure.punish.commands.PunishCommand;
 import repo.minetoken.clans.structure.rank.RankManager;
 import repo.minetoken.clans.utilities.Format;
 
@@ -29,6 +30,7 @@ public class Punish extends Database {
 		this.rankManager = rankManager;
 		plugin.getServer().getPluginManager().registerEvents(new OffenceListener(this, plugin), plugin);
 		connection = openConnection();
+		new PunishManager(this, rankManager);
 		try {
 			PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `PUNISHMENTS` (`ID` int(32) NOT NULL AUTO_INCREMENT, `Player` varchar(36) NOT NULL, `Type` varchar(32) NOT NULL, `Severity` int(1) NOT NULL, `Reason` varchar(50) NOT NULL, `Admin` varchar(36) NOT NULL, `Date` varchar(25) NOT NULL, `Duration` int(8) NOT NULL, `RemovedBy` varchar(36) NOT NULL, `RemoveReason` varchar(50) NOT NULL, PRIMARY KEY (`ID`))");
 			ps.executeUpdate();

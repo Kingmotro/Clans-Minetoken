@@ -38,8 +38,21 @@ public class PunishCommand implements CommandExecutor {
                 }
             }
 
-            UUID uuid = plugin.rankManager.cPlayer.getUUID(args[0]);
-            String name = plugin.rankManager.cPlayer.getName(uuid);
+            UUID uuid = null;
+            String name = null;
+
+            if(plugin.rankManager.cPlayer.getUUID(args[0]) != null) {
+                uuid = plugin.rankManager.cPlayer.getUUID(args[0]);
+                if(plugin.rankManager.cPlayer.getName(uuid) != null) {
+                    name = plugin.rankManager.cPlayer.getName(uuid);
+                } else {
+                    player.sendMessage(Format.main("Punish", "This player has never joined the server."));
+                    return true;
+                }
+            } else {
+                player.sendMessage(Format.main("Punish", "This player has never joined the server."));
+                return true;
+            }
 
             if(args[1].equalsIgnoreCase("check")) {
                 plugin.checkInventory(player, name);

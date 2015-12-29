@@ -9,6 +9,7 @@ import repo.minetoken.clans.structure.character.characters.Warrior;
 import repo.minetoken.clans.structure.character.characters.check.CheckCharacter;
 import repo.minetoken.clans.structure.character.menu.SkillSelector;
 import repo.minetoken.clans.structure.character.menu.SkillSelectorManager;
+import repo.minetoken.clans.structure.playerInfo.PlayerInfoMenu;
 
 public class CharacterManager {
 
@@ -26,7 +27,8 @@ public class CharacterManager {
 		playerInfo = new PlayerInfoItem();
 		register();
 		HandleCooldowns.handlecooldowns(); 
-		menuManager.addMenu("Select a Character", new SkillSelector());
+		menuManager.addMenu("characterm", new SkillSelector());
+		menuManager.addMenu("profilem", new PlayerInfoMenu());
 	}
 
 	public void register() {

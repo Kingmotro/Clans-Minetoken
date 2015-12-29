@@ -33,7 +33,6 @@ public class ScoreboardManager implements Listener {
     public EconomyManager economyManager;
     public VoteManager voteManager;
     public MenuManager menuManager;
-    public ScoreboardManager scoreboardManager;
     
     public HashMap<UUID, PlayerScoreboard> playerScoreboard;
     public HashMap<UUID, ClanScoreboard> clanScoreboard;
@@ -50,7 +49,7 @@ public class ScoreboardManager implements Listener {
 
         plugin.getCommand("scoreboard").setExecutor(new ScoreboardCommand(this));
 
-        menuManager.addMenu("Scoreboard Menu", new ScoreboardMenu(this));
+        menuManager.addMenu("scoreboardm", new ScoreboardMenu(this));
 
         this.playerScoreboard = new HashMap<>();
         this.clanScoreboard = new HashMap<>();

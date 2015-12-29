@@ -1,6 +1,7 @@
 package repo.minetoken.clans.structure.inventory;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,15 +10,13 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 
-import repo.minetoken.clans.structure.playerInfo.PlayerInfoMenu;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MenuManager implements Listener {
 
-    private Map<Object, Menu> menus = new HashMap<Object, Menu>();
+    private Map<Object, Menu> menus = new HashMap<>();
     public MenuManager(Plugin plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin); 
     }
@@ -47,10 +46,12 @@ public class MenuManager implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
-        addMenu("User Profile", new PlayerInfoMenu());
         Inventory inv = player.getOpenInventory().getTopInventory();
         for (Menu menu : menus.values()) {
-            if (menu.getInventory().getName().equals(inv.getName())) {
+            if (menu.getTitle().equals(inv.getName())) {
+                if(e.getCurrentItem().getType() == Material.AIR || e.getCursor() == null || e.getCurrentItem() == null) {
+                    return;
+                }
                 e.setCancelled(true);
                 if (e.isLeftClick()) {
                     if (e.isShiftClick()) {

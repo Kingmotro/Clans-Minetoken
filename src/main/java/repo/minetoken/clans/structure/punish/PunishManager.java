@@ -13,6 +13,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import repo.minetoken.clans.structure.punish.commands.PunishCommand;
 import repo.minetoken.clans.structure.rank.enums.Ranks;
 import repo.minetoken.clans.structure.rank.RankManager;
 import repo.minetoken.clans.utilities.Format;
@@ -35,6 +36,7 @@ public class PunishManager implements Listener {
         this.punish = punish;
         this.rankManager = rankManager;
         punish.plugin.getServer().getPluginManager().registerEvents(this, punish.plugin);
+        punish.plugin.getCommand("punish").setExecutor(new PunishCommand(this));
     }
 
     public void Help(Player player, String message) {
